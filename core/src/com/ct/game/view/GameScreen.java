@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ct.game.Vigem;
 import com.ct.game.controller.GameController;
-import com.ct.game.model.systems.RenderSystem;
+import com.ct.game.model.systems.*;
 
 /**
  * Created by Cameron on 6/5/2017.
@@ -30,6 +30,7 @@ public class GameScreen implements Screen {
         viewHandler.init();
         gameController.init();
         gameController.addSystem(new RenderSystem(batch));
+        gameController.addSystem(new CameraFocusSystem(viewHandler));
     }
 
     @Override
