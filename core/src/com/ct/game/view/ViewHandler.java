@@ -1,6 +1,6 @@
 package com.ct.game.view;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -31,5 +31,9 @@ public class ViewHandler {
                 .set(cameraPos, 0);
         viewPort.getCamera()
                 .update();
+    }
+
+    public Camera getCamera() {
+        return viewPort.getCamera();
     }
 }

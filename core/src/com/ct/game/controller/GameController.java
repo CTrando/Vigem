@@ -1,15 +1,17 @@
 package com.ct.game.controller;
 
 import com.badlogic.ashley.core.*;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 import com.ct.game.model.entities.Player;
-import com.ct.game.model.systems.MoveSystem;
+import com.ct.game.model.systems.*;
+import com.ct.game.utils.Mappers;
 import com.ct.game.view.*;
 
 /**
  * Created by Cameron on 6/5/2017.
  */
 public class GameController {
-
     private Engine engine;
 
     public void init(){
@@ -18,6 +20,12 @@ public class GameController {
         player.init();
         engine.addEntity(player);
 
+        Player secondPlayer = new Player();
+        secondPlayer.init();
+        Mappers.pm.get(secondPlayer).setPos(new Vector2(5,5));
+        engine.addEntity(secondPlayer);
+
+        engine.addSystem(new PositionSyncSystem());
         engine.addSystem(new MoveSystem());
     }
 

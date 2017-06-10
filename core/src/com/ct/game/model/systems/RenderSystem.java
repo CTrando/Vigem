@@ -24,11 +24,11 @@ public class RenderSystem extends IteratingSystem {
         RenderComponent rc = Mappers.rm.get(entity);
 
         Sprite sprite = rc.getSprite();
-        float x = pc.getPos().x;
-        float y = pc.getPos().y;
         float width = sprite.getWidth()/GameScreen.PPM;
         float height = sprite.getHeight()/GameScreen.PPM;
+        float drawX = pc.getPos().x - width/2;
+        float drawY = pc.getPos().y - height/2;
 
-        batch.draw(sprite, x, y, width, height);
+        batch.draw(sprite, drawX, drawY, width, height);
     }
 }

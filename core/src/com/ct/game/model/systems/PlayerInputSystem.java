@@ -22,11 +22,11 @@ public class PlayerInputSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         if (inputHandler.noKeyPressed()) {
-            entity.remove(MoveComponent.class);
+            entity.add(new MoveComponent(0));
             return;
         }
 
-        MoveComponent mc = new MoveComponent(1);
+        MoveComponent mc = new MoveComponent(5);
 
         if (inputHandler.isKeyPressed(Input.Keys.LEFT)) {
             mc.addVelocity(new Vector2(-1, 0));

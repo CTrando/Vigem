@@ -8,16 +8,17 @@ import com.ct.game.utils.Mappers;
 /**
  * Created by Cameron on 6/9/2017.
  */
-public class MoveSystem extends IteratingSystem {
+public class PositionSyncSystem extends IteratingSystem {
 
-    public MoveSystem(){
-        super(Family.all(MoveComponent.class, PhysicsComponent.class).get());
+    public PositionSyncSystem(){
+        super(Family.all(PositionComponent.class, PhysicsComponent.class).get());
     }
+
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        MoveComponent mc = Mappers.mcm.get(entity);
+        PositionComponent pc = Mappers.pm.get(entity);
         PhysicsComponent pHc = Mappers.pHm.get(entity);
 
-        pHc.getBody().setLinearVelocity(mc.getVelocity());
+        pc.setPos(pHc.getBody().getPosition());
     }
 }
