@@ -2,6 +2,7 @@ package com.ct.game.controller;
 
 import com.badlogic.ashley.core.*;
 import com.ct.game.model.entities.Player;
+import com.ct.game.model.systems.MoveSystem;
 import com.ct.game.view.*;
 
 /**
@@ -12,10 +13,12 @@ public class GameController {
     private Engine engine;
 
     public void init(){
-        engine = new Engine();
+        engine = new Engine();;
         Player player = new Player();
         player.init();
         engine.addEntity(player);
+
+        engine.addSystem(new MoveSystem());
     }
 
     public void update(float dt){

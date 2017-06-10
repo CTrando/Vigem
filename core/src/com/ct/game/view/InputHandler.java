@@ -65,4 +65,13 @@ public class InputHandler implements InputProcessor {
             keyArray.get(keyCode).setPressed(value);
         } else keyArray.put(keyCode, new Key(keyCode, value));
     }
+
+    public boolean noKeyPressed() {
+        for(Key key: keyArray.values()){
+            if(key.isPressed()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

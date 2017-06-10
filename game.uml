@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.ct.game</OriginalElement>
+  <nodes>
+    <node x="722.1666666666666" y="370.0">com.ct.game.view.GameScreen</node>
+    <node x="1018.1666666666666" y="226.0">com.ct.game.Vigem</node>
+    <node x="834.1666666666666" y="237.0">com.ct.game.model.systems.RenderSystem</node>
+    <node x="0.0" y="11.0">com.ct.game.model.components.CameraFocusComponent</node>
+    <node x="0.0" y="679.0">com.ct.game.view.InputHandler</node>
+    <node x="47.5" y="555.0">com.ct.game.view.Key</node>
+    <node x="202.75" y="124.0">com.ct.game.model.entities.Player</node>
+    <node x="206.0" y="0.0">com.ct.game.model.components.RenderComponent</node>
+    <node x="664.75" y="113.0">com.ct.game.view.ViewHandler</node>
+    <node x="442.0" y="0.0">com.ct.game.model.components.PositionComponent</node>
+    <node x="571.5833333333333" y="237.0">com.ct.game.model.systems.CameraFocusSystem</node>
+    <node x="304.75" y="102.0">com.ct.game.utils.Mappers</node>
+    <node x="170.75" y="237.0">com.ct.game.controller.GameController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.ct.game.Vigem" target="com.ct.game.view.GameScreen">
+      <point x="61.33333333333326" y="37.0" />
+      <point x="1171.5" y="350.0" />
+      <point x="913.8888888888889" y="350.0" />
+      <point x="90.22222222222231" y="-70.0" />
+    </edge>
+    <edge source="com.ct.game.view.GameScreen" target="com.ct.game.Vigem">
+      <point x="45.111111111111086" y="-70.0" />
+      <point x="868.7777777777777" y="330.0" />
+      <point x="1048.8333333333335" y="330.0" />
+      <point x="-61.33333333333326" y="37.0" />
+    </edge>
+    <edge source="com.ct.game.view.GameScreen" target="com.ct.game.model.systems.RenderSystem">
+      <point x="22.555555555555543" y="-70.0" />
+      <point x="846.2222222222222" y="320.0" />
+      <point x="916.1666666666666" y="320.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+    <edge source="com.ct.game.model.entities.Player" target="com.ct.game.model.components.CameraFocusComponent">
+      <point x="-27.333333333333314" y="-15.0" />
+      <point x="216.41666666666669" y="82.0" />
+      <point x="93.0" y="82.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.ct.game.model.entities.Player" target="com.ct.game.model.components.PositionComponent">
+      <point x="27.333333333333314" y="-15.0" />
+      <point x="271.0833333333333" y="82.0" />
+      <point x="481.25" y="82.0" />
+      <point x="-39.25" y="26.0" />
+    </edge>
+    <edge source="com.ct.game.view.GameScreen" target="com.ct.game.view.ViewHandler">
+      <point x="-22.555555555555543" y="-70.0" />
+      <point x="801.1111111111111" y="350.0" />
+      <point x="812.6666666666666" y="350.0" />
+      <point x="812.6666666666666" y="201.0" />
+      <point x="765.75" y="201.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+    <edge source="com.ct.game.view.GameScreen" target="com.ct.game.controller.GameController">
+      <point x="-67.66666666666663" y="-70.0" />
+      <point x="756.0" y="340.0" />
+      <point x="280.25" y="340.0" />
+      <point x="36.5" y="26.0" />
+    </edge>
+    <edge source="com.ct.game.view.InputHandler" target="com.ct.game.view.Key">
+      <point x="-83.0" y="-26.0" />
+      <point x="41.5" y="654.0" />
+      <point x="73.16666666666666" y="654.0" />
+      <point x="-51.33333333333334" y="37.0" />
+    </edge>
+    <edge source="com.ct.game.utils.Mappers" target="com.ct.game.model.components.PositionComponent">
+      <point x="85.0" y="-37.0" />
+      <point x="39.25" y="26.0" />
+    </edge>
+    <edge source="com.ct.game.controller.GameController" target="com.ct.game.model.entities.Player">
+      <point x="0.0" y="-26.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="com.ct.game.model.systems.CameraFocusSystem" target="com.ct.game.view.ViewHandler">
+      <point x="0.0" y="-26.0" />
+      <point x="675.0833333333333" y="201.0" />
+      <point x="698.4166666666666" y="201.0" />
+      <point x="-67.33333333333337" y="26.0" />
+    </edge>
+    <edge source="com.ct.game.model.entities.Player" target="com.ct.game.model.components.RenderComponent">
+      <point x="0.0" y="-15.0" />
+      <point x="-37.75" y="26.0" />
+    </edge>
+    <edge source="com.ct.game.utils.Mappers" target="com.ct.game.model.components.RenderComponent">
+      <point x="-85.0" y="-37.0" />
+      <point x="389.75" y="72.0" />
+      <point x="319.25" y="72.0" />
+      <point x="37.75" y="26.0" />
+    </edge>
+    <edge source="com.ct.game.view.GameScreen" target="com.ct.game.model.systems.CameraFocusSystem">
+      <point x="-45.111111111111086" y="-70.0" />
+      <point x="778.5555555555555" y="330.0" />
+      <point x="675.0833333333333" y="330.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="601.5" y="365.5" />
+  <SelectedNodes>
+    <node>com.ct.game.view.GameScreen</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

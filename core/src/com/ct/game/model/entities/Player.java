@@ -16,5 +16,6 @@ public class Player extends Entity {
         add(new PositionComponent(1,10));
         add(new RenderComponent(new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")))));
         add(new CameraFocusComponent());
+        add(new PlayerControlledComponent());
     }
 }

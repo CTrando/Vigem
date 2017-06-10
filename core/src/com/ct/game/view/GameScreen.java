@@ -16,12 +16,14 @@ public class GameScreen implements Screen {
     private Vigem game;
     private SpriteBatch batch;
     private ViewHandler viewHandler;
+    private InputHandler inputHandler;
     private GameController gameController;
 
     public GameScreen(final Vigem game){
         this.game = game;
         this.batch = game.getBatch();
         this.viewHandler = new ViewHandler();
+        this.inputHandler = new InputHandler();
         this.gameController = new GameController();
     }
 
@@ -30,7 +32,10 @@ public class GameScreen implements Screen {
         viewHandler.init();
         gameController.init();
         gameController.addSystem(new RenderSystem(batch));
-        gameController.addSystem(new CameraFocusSystem(viewHandler));
+        //gameController.addSystem(new CameraFocusSystem(viewHandler));
+        gameController.addSystem(new PlayerInputSystem(inputHandler));
+
+        Gdx.input.setInputProcessor(inputHandler);
     }
 
     @Override
