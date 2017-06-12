@@ -11,13 +11,17 @@ import com.ct.game.utils.Mappers;
 public class MoveSystem extends IteratingSystem {
 
     public MoveSystem(){
-        super(Family.all(MoveComponent.class, PhysicsComponent.class).get());
+        super(Family.all(MoveComponent.class,PhysicsComponent.class).get());
     }
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         MoveComponent mc = Mappers.mcm.get(entity);
         PhysicsComponent pHc = Mappers.pHm.get(entity);
-
+        /*if(mc == null) {
+            pHc.getBody().setLinearVelocity(0,0);
+            return;
+        }*/
+        pHc.getBody().setLinearDamping(2f);
         pHc.getBody().setLinearVelocity(mc.getVelocity());
     }
 }

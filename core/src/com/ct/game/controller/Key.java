@@ -1,4 +1,4 @@
-package com.ct.game.view;
+package com.ct.game.controller;
 
 /**
  * Created by Cameron on 6/7/2017.

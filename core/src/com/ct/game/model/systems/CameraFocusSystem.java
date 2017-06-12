@@ -13,13 +13,13 @@ public class CameraFocusSystem extends IteratingSystem {
     private ViewHandler viewHandler;
 
     public CameraFocusSystem(ViewHandler viewHandler) {
-        super(Family.all(CameraFocusComponent.class, PositionComponent.class).get());
+        super(Family.all(CameraFocusComponent.class, TransformComponent.class).get());
         this.viewHandler = viewHandler;
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        PositionComponent pc = Mappers.pm.get(entity);
-        viewHandler.setCameraPos(pc.getPos());
+        TransformComponent tc = Mappers.tm.get(entity);
+        viewHandler.setCameraPos(tc.getPos());
     }
 }

@@ -5,29 +5,31 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.ct.game.model.components.*;
-import com.ct.game.utils.*;
-import com.ct.game.view.InputHandler;
+import com.ct.game.controller.InputHandler;
 
 /**
  * Created by Cameron on 6/9/2017.
  */
-public class PlayerInputSystem extends IteratingSystem {
+public class PlayerInputMoveSystem extends IteratingSystem {
     private InputHandler inputHandler;
 
-    public PlayerInputSystem(InputHandler inputHandler) {
+    public PlayerInputMoveSystem(InputHandler inputHandler) {
         super(Family.all(PlayerControlledComponent.class).get());
         this.inputHandler = inputHandler;
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        if (inputHandler.noKeyPressed()) {
-            entity.add(new MoveComponent(0));
+        if (!inputHandler.areKeysPressed(Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.DOWN, Input.Keys.UP)) {
+            entity.remove(MoveComponent.class);
             return;
         }
 
         MoveComponent mc = new MoveComponent(5);
 
+        if (inputHandler.isKeyPressed(Input.Keys.S)){
+            mc.setSpeedMag(10);
+        }
         if (inputHandler.isKeyPressed(Input.Keys.LEFT)) {
             mc.addVelocity(new Vector2(-1, 0));
         }
