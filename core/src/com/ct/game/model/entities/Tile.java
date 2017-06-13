@@ -22,7 +22,7 @@ public abstract class Tile extends Entity {
 
     public void render(SpriteBatch batch){
         if(sprite != null){
-            batch.draw(sprite, row, col, SIZE, SIZE);
+            batch.draw(sprite, row, col, 1, 1);
         }
     }
 

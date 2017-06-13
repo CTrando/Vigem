@@ -40,7 +40,7 @@ public class GameScreen implements Screen {
         viewHandler.init();
         gameController.init();
         gameController.addSystem(new RenderSystem(batch));
-        //gameController.addSystem(new CameraFocusSystem(viewHandler));
+        gameController.addSystem(new CameraFocusSystem(viewHandler));
 
         gameController.addSystem(new PlayerInputMoveSystem(inputHandler));
         //gameController.addSystem(new PlayerInputTransformSystem(inputHandler));

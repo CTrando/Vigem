@@ -14,7 +14,7 @@ public class TileMap {
     public static int WIDTH = 100;
     public static int HEIGHT = 100;
 
-    public static Sprite sprite = new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")));
+    public static Sprite sprite = new Sprite(new Texture(Gdx.files.internal("grass.png")));
 
     private Tile[][] tileMap;
     private Array<Entity> entities;

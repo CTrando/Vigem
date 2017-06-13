@@ -14,21 +14,21 @@ public class ViewHandler {
 
     public void init() {
         viewPort = new ScreenViewport();
-        viewPort.setUnitsPerPixel(1/GameScreen.PPM);
+        viewPort.setUnitsPerPixel(1 / GameScreen.PPM);
     }
 
-    public void update(SpriteBatch batch){
+    public void update(SpriteBatch batch) {
         batch.setProjectionMatrix(viewPort.getCamera().combined);
     }
 
-    public void resize(int width, int height){
+    public void resize(int width, int height) {
         viewPort.update(width, height, true);
     }
 
     public void setCameraPos(Vector2 cameraPos) {
         viewPort.getCamera()
                 .position
-                .set(cameraPos, 0);
+                .lerp(new Vector3(cameraPos, 0), .3f);
         viewPort.getCamera()
                 .update();
     }
