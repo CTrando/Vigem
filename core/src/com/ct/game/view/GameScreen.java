@@ -59,6 +59,7 @@ public class GameScreen implements Screen {
         viewHandler.update(batch);
         batch.begin();
 
+        gameController.getTileMap().render(batch);
         world.step(dt, 6,2);
         gameController.update(dt);
 
