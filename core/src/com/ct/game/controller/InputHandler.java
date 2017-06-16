@@ -77,13 +77,13 @@ public class InputHandler implements InputProcessor {
         } else keyArray.put(keyCode, new Key(keyCode, value));
     }
 
-    public boolean noKeyPressed() {
+    public boolean anyKeyPressed() {
         for(Key key: keyArray.values()){
             if(key.isPressed()) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public boolean areKeysPressed(int... keyCodes){

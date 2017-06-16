@@ -1,5 +1,6 @@
 package com.ct.game.model.entities;
 
+import com.ct.game.model.components.RenderComponent;
 import com.ct.game.model.utils.TileMap;
 
 /**
@@ -11,6 +12,6 @@ public class GrassTile extends Tile {
     public void init(int row, int col){
         super.init(row, col);
         this.setWalkable(true);
-        this.setSprite(TileMap.sprite);
+        add(new RenderComponent(TileMap.sprite));
     }
 }

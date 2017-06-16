@@ -36,6 +36,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        Assets.getInstance().load();
         Box2D.init();
         viewHandler.init();
         gameController.init();

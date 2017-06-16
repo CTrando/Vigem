@@ -9,14 +9,14 @@ import com.badlogic.gdx.math.Vector2;
 public class MoveComponent implements Component{
     private Vector2 velocity;
     private float speedMag;
+
     public MoveComponent(Vector2 velocity, float speedMag){
         this.velocity = velocity;
         this.speedMag = speedMag;
     }
 
     public MoveComponent(float speedMag){
-        this.velocity = new Vector2();
-        this.speedMag = speedMag;
+        this(new Vector2(), speedMag);
     }
 
     public float getSpeedMag() {
