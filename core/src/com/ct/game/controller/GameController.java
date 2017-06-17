@@ -32,6 +32,7 @@ public class GameController {
         engine.addSystem(new PlayerInputMoveSystem(inputHandler));
         engine.addSystem(new TransformSyncSystem());
         engine.addSystem(new MoveSystem());
+        engine.addSystem(new AnimationSystem());
     }
 
     public void update(float dt){

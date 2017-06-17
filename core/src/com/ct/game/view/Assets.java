@@ -34,8 +34,6 @@ public class Assets {
 
     public void load(){
         String[] assets = Gdx.files.internal("assets").readString().split(", ");
-        FileHandle atlas = Gdx.files.internal("tiles.atlas");
-
         for(String asset: assets){
             if(asset.endsWith(".atlas")){
                 manager.load(asset, TextureAtlas.class);
@@ -51,7 +49,7 @@ public class Assets {
 
     private void loadSpritesFrom(TextureAtlas atlas){
         for(TextureAtlas.AtlasRegion atlasRegion: atlas.getRegions()) {
-            Sprite sprite = new Sprite(atlasRegion.getTexture());
+            Sprite sprite = atlas.createSprite(atlasRegion.name);
             sprites.put(atlasRegion.name, sprite);
         }
     }

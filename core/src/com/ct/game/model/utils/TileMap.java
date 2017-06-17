@@ -17,6 +17,13 @@ public class TileMap {
     public static int HEIGHT = 100;
 
     public static Sprite grassSprite = Assets.getInstance().getSprite("grass");
+    public static Sprite brickSprite = Assets.getInstance().getSprite("brick");
+    public static Animation dragonAnimation = new Animation<TextureRegion>(.33f,
+                                                                           Assets.getInstance()
+                                                                                 .get("tiles.atlas", TextureAtlas
+                                                                                         .class)
+                                                                                 .findRegions("dragon"),
+                                                                           Animation.PlayMode.LOOP);
 
     private Tile[][] tileMap;
     private Array<Entity> entities;
@@ -41,7 +48,7 @@ public class TileMap {
         for (int row = 0; row < HEIGHT; row++) {
             for (int col = 0; col < WIDTH; col++) {
                 Tile tile = getTileAt(row, col);
-                if(tile != null && tile.isEntity() && !entities.contains(tile, true)){
+                if (tile != null && tile.isEntity() && !entities.contains(tile, true)) {
                     entities.add(tile);
                     newEntities.add(tile);
                 }
@@ -53,22 +60,22 @@ public class TileMap {
         for (int row = 0; row < HEIGHT; row++) {
             for (int col = 0; col < WIDTH; col++) {
                 Tile tile = getTileAt(row, col);
-                if(tile != null) {
+                if (tile != null) {
                     tile.render(batch);
                 }
             }
         }
     }
 
-    public void removeTile(Tile tile){
+    public void removeTile(Tile tile) {
         removeTile(tile.getRow(), tile.getCol());
     }
 
-    public void removeTile(int row, int col){
+    public void removeTile(int row, int col) {
         tileMap[row][col] = null;
     }
 
-    public Array<Entity> getNewEntities(){
+    public Array<Entity> getNewEntities() {
         Array<Entity> ret = new Array<Entity>(newEntities);
         newEntities.clear();
         return ret;
@@ -77,12 +84,16 @@ public class TileMap {
     public Tile getTileAt(int row, int col) {
         try {
             return tileMap[row][col];
-        } catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             return null;
         }
     }
 
-    public Tile getTileAt(Vector2 pos){
+    public void set(int row, int col, Tile tile) {
+        tileMap[row][col] = tile;
+    }
+
+    public Tile getTileAt(Vector2 pos) {
         return getTileAt(MathUtils.round(pos.x), MathUtils.round(pos.y));
     }
 }

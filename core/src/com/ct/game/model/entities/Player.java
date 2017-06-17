@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.ct.game.model.components.*;
+import com.ct.game.model.utils.TileMap;
 
 /**
  * Created by Cameron on 6/5/2017.
@@ -18,5 +19,6 @@ public class Player extends Entity {
         add(new PlayerControlledComponent());
         add(new PhysicsComponent());
         add(new KinematicInitComponent());
+        add(new AnimationComponent(TileMap.dragonAnimation, 0));
     }
 }
