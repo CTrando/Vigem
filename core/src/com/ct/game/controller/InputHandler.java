@@ -51,6 +51,7 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        mouseClickPos.set(screenX, screenY);
         return false;
     }
 
@@ -99,7 +100,11 @@ public class InputHandler implements InputProcessor {
         return mousePos;
     }
 
-    public Vector2 getMouseClickPos() {
+    public Vector2 getMouseClickPosPixel() {
         return mouseClickPos;
+    }
+
+    public Vector2 getMouseClickPosMeter() {
+        return mouseClickPos.scl(1/GameScreen.PPM);
     }
 }

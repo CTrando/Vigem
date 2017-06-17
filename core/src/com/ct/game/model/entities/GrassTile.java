@@ -12,6 +12,6 @@ public class GrassTile extends Tile {
     public void init(int row, int col){
         super.init(row, col);
         this.setWalkable(true);
-        add(new RenderComponent(TileMap.sprite));
+        add(new RenderComponent(TileMap.grassSprite));
     }
 }

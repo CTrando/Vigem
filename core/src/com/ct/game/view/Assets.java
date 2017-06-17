@@ -6,12 +6,15 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 
+import java.util.HashMap;
+
 /**
  * Created by Cameron on 6/13/2017.
  */
 public class Assets {
     private static Assets assets;
     private AssetManager manager;
+    private HashMap<String, Sprite> sprites;
 
     private Assets(){
         init();
@@ -19,6 +22,7 @@ public class Assets {
 
     private void init() {
         manager = new AssetManager();
+        sprites = new HashMap<String, Sprite>();
     }
 
     public static Assets getInstance() {
@@ -36,7 +40,19 @@ public class Assets {
             if(asset.endsWith(".atlas")){
                 manager.load(asset, TextureAtlas.class);
                 manager.finishLoading();
+                loadSpritesFrom(manager.get(asset, TextureAtlas.class));
             }
+        }
+    }
+
+    public Sprite getSprite(String name){
+        return sprites.get(name);
+    }
+
+    private void loadSpritesFrom(TextureAtlas atlas){
+        for(TextureAtlas.AtlasRegion atlasRegion: atlas.getRegions()) {
+            Sprite sprite = new Sprite(atlasRegion.getTexture());
+            sprites.put(atlasRegion.name, sprite);
         }
     }
 

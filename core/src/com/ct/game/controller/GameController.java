@@ -6,17 +6,20 @@ import com.ct.game.model.entities.Player;
 import com.ct.game.model.systems.*;
 import com.ct.game.model.utils.TileMap;
 import com.ct.game.utils.Mappers;
+import com.ct.game.view.ViewHandler;
 
 /**
  * Created by Cameron on 6/5/2017.
  */
 public class GameController {
     private Engine engine;
+    private InputHandler inputHandler;
     private TileMap tileMap;
 
-    public void init(){
-        engine = new Engine();
-        tileMap = new TileMap();
+    public void init(InputHandler inputHandler, ViewHandler viewHandler){
+        this.inputHandler = inputHandler;
+        this.engine = new Engine();
+        this.tileMap = new TileMap();
         tileMap.init();
 
         Player player = new Player();
@@ -24,6 +27,9 @@ public class GameController {
 
         engine.addEntity(player);
 
+        engine.addSystem(new CameraFocusSystem(viewHandler));
+        engine.addSystem(new TileMapMouseSystem(inputHandler, tileMap, viewHandler.getCamera()));
+        engine.addSystem(new PlayerInputMoveSystem(inputHandler));
         engine.addSystem(new TransformSyncSystem());
         engine.addSystem(new MoveSystem());
     }

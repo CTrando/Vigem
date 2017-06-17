@@ -4,8 +4,10 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.Array;
 import com.ct.game.model.entities.*;
+import com.ct.game.view.Assets;
 
 /**
  * Created by Cameron on 6/12/2017.
@@ -14,7 +16,7 @@ public class TileMap {
     public static int WIDTH = 100;
     public static int HEIGHT = 100;
 
-    public static Sprite sprite = new Sprite(new Texture(Gdx.files.internal("grass.png")));
+    public static Sprite grassSprite = Assets.getInstance().getSprite("grass");
 
     private Tile[][] tileMap;
     private Array<Entity> entities;
@@ -39,7 +41,7 @@ public class TileMap {
         for (int row = 0; row < HEIGHT; row++) {
             for (int col = 0; col < WIDTH; col++) {
                 Tile tile = getTileAt(row, col);
-                if(tile.isEntity() && !entities.contains(tile, true)){
+                if(tile != null && tile.isEntity() && !entities.contains(tile, true)){
                     entities.add(tile);
                     newEntities.add(tile);
                 }
@@ -51,9 +53,19 @@ public class TileMap {
         for (int row = 0; row < HEIGHT; row++) {
             for (int col = 0; col < WIDTH; col++) {
                 Tile tile = getTileAt(row, col);
-                tile.render(batch);
+                if(tile != null) {
+                    tile.render(batch);
+                }
             }
         }
+    }
+
+    public void removeTile(Tile tile){
+        removeTile(tile.getRow(), tile.getCol());
+    }
+
+    public void removeTile(int row, int col){
+        tileMap[row][col] = null;
     }
 
     public Array<Entity> getNewEntities(){
@@ -63,6 +75,14 @@ public class TileMap {
     }
 
     public Tile getTileAt(int row, int col) {
-        return tileMap[row][col];
+        try {
+            return tileMap[row][col];
+        } catch (ArrayIndexOutOfBoundsException e){
+            return null;
+        }
+    }
+
+    public Tile getTileAt(Vector2 pos){
+        return getTileAt(MathUtils.round(pos.x), MathUtils.round(pos.y));
     }
 }

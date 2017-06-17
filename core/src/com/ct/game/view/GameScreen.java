@@ -1,7 +1,7 @@
 package com.ct.game.view;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -18,7 +18,8 @@ public class GameScreen implements Screen {
     private Vigem game;
     private SpriteBatch batch;
     private ViewHandler viewHandler;
-    private com.ct.game.controller.InputHandler inputHandler;
+    private FPSLogger fpsLogger;
+    private InputHandler inputHandler;
     private GameController gameController;
 
     private World world;
@@ -28,10 +29,11 @@ public class GameScreen implements Screen {
         this.game = game;
         this.batch = game.getBatch();
         this.viewHandler = new ViewHandler();
+        this.fpsLogger = new FPSLogger();
         this.inputHandler = new com.ct.game.controller.InputHandler();
         this.gameController = new GameController();
-        world = new World(new Vector2(0,0), true);
-        debugRenderer = new Box2DDebugRenderer();
+        this.world = new World(new Vector2(0,0), true);
+        this.debugRenderer = new Box2DDebugRenderer();
     }
 
     @Override
@@ -39,15 +41,11 @@ public class GameScreen implements Screen {
         Assets.getInstance().load();
         Box2D.init();
         viewHandler.init();
-        gameController.init();
+        gameController.init(inputHandler, viewHandler);
         gameController.addSystem(new RenderSystem(batch));
-        gameController.addSystem(new CameraFocusSystem(viewHandler));
 
-        gameController.addSystem(new PlayerInputMoveSystem(inputHandler));
         //gameController.addSystem(new PlayerInputTransformSystem(inputHandler));
         gameController.addSystem(new BodyInitSystem(world));
-
-
         Gdx.input.setInputProcessor(inputHandler);
     }
 
@@ -60,6 +58,7 @@ public class GameScreen implements Screen {
         viewHandler.update(batch);
         batch.begin();
 
+        fpsLogger.log();
         gameController.getTileMap().render(batch);
         world.step(dt, 6,2);
         gameController.update(dt);
