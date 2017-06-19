@@ -10,9 +10,13 @@ public class AnimationComponent implements Component {
     private Animation currentAnimation;
     private float currentTime;
 
-    public AnimationComponent(Animation animation, float timeSinceLastLoop){
+    public AnimationComponent(Animation animation, float currentTime){
         currentAnimation = animation;
-        this.currentTime = this.currentTime;
+        this.currentTime = currentTime;
+    }
+
+    public AnimationComponent(float currentTile) {
+        this(null, currentTile);
     }
 
     public Animation getAnimation() {
@@ -29,5 +33,9 @@ public class AnimationComponent implements Component {
 
     public void setCurrentTime(float currentTime) {
         this.currentTime = currentTime;
+    }
+
+    public void setAnimation(Animation animation) {
+        currentAnimation = animation;
     }
 }

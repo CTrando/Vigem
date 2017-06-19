@@ -19,6 +19,6 @@ public class MoveSystem extends IteratingSystem {
         PhysicsComponent pHc = Mappers.pHm.get(entity);
 
         pHc.getBody().setLinearDamping(2f);
-        pHc.getBody().setLinearVelocity(mc.getVelocity());
+        pHc.getBody().applyForceToCenter(mc.getVelocity(), true);
     }
 }

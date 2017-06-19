@@ -24,14 +24,14 @@ public class RenderSystem extends IteratingSystem {
         TransformComponent tc = Mappers.tm.get(entity);
         RenderComponent rc = Mappers.rm.get(entity);
 
-        Sprite sprite = rc.getSprite();
-        float width = sprite.getWidth() / GameScreen.PPM;
-        float height = sprite.getHeight() / GameScreen.PPM;
+        TextureRegion textureRegion = rc.getTextureRegion();
+        float width = textureRegion.getRegionWidth() / GameScreen.PPM;
+        float height = textureRegion.getRegionHeight() / GameScreen.PPM;
         float drawX = tc.getPos().x - width / 2;
         float drawY = tc.getPos().y - height / 2;
         float rotation = tc.getRotation();
 
-        batch.draw(sprite,
+        batch.draw(textureRegion,
                    drawX,
                    drawY,
                    width/2,

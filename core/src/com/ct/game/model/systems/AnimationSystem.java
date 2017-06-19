@@ -23,15 +23,13 @@ public class AnimationSystem extends IteratingSystem {
 
         Animation animation = ac.getAnimation();
         ac.addTime(Gdx.graphics.getDeltaTime());
-        System.out.println(ac.getCurrentTime());
 
-        if(ac.getCurrentTime() > 2*animation.getAnimationDuration()) {
-            ac.setCurrentTime(0);
+        if (animation != null) {
+            if (ac.getCurrentTime() > 2 * animation.getAnimationDuration()) {
+                ac.setCurrentTime(0);
+            }
+
+            rc.setTextureRegion(((TextureRegion) animation.getKeyFrame(ac.getCurrentTime(), true)));
         }
-        /*if(ac.getCurrentTime() > animation.getFrameDuration()){
-            ac.setCurrentTime(0);
-        }*/
-
-        rc.setSprite(new Sprite((TextureRegion)animation.getKeyFrame(ac.getCurrentTime(), true)));
     }
 }

@@ -16,14 +16,9 @@ public class TileMap {
     public static int WIDTH = 100;
     public static int HEIGHT = 100;
 
-    public static Sprite grassSprite = Assets.getInstance().getSprite("grass");
-    public static Sprite brickSprite = Assets.getInstance().getSprite("brick");
-    public static Animation dragonAnimation = new Animation<TextureRegion>(.33f,
-                                                                           Assets.getInstance()
-                                                                                 .get("tiles.atlas", TextureAtlas
-                                                                                         .class)
-                                                                                 .findRegions("dragon"),
-                                                                           Animation.PlayMode.LOOP);
+    public static TextureRegion grassSprite = Assets.getInstance().getTextureRegion("grass", "tiles.atlas");
+    public static TextureRegion brickSprite = Assets.getInstance().getTextureRegion("brick", "tiles.atlas");
+    public static Animation dragonAnimation = Assets.getInstance().getAnimation("frog");
 
     private Tile[][] tileMap;
     private Array<Entity> entities;

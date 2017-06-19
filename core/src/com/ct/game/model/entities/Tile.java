@@ -25,7 +25,7 @@ public abstract class Tile extends Entity {
     public void render(SpriteBatch batch) {
         RenderComponent rc = Mappers.rm.get(this);
         if(rc != null){
-            batch.draw(rc.getSprite(), row, col, SIZE/ GameScreen.PPM, SIZE/GameScreen.PPM);
+            batch.draw(rc.getTextureRegion(), row, col, SIZE/ GameScreen.PPM, SIZE/GameScreen.PPM);
         }
     }
 

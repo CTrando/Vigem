@@ -2,22 +2,22 @@ package com.ct.game.model.components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.*;
 
 /**
  * Created by Cameron on 6/5/2017.
  */
 public class RenderComponent implements Component {
-    private Sprite sprite;
-    public RenderComponent(Sprite sprite){
-        this.sprite = sprite;
+    private TextureRegion textureRegion;
+    public RenderComponent(TextureRegion texture){
+        this.textureRegion = texture;
     }
 
-    public Sprite getSprite() {
-        return sprite;
+    public TextureRegion getTextureRegion() {
+        return textureRegion;
     }
 
-    public void setSprite(Sprite sprite) {
-        this.sprite = sprite;
+    public void setTextureRegion(TextureRegion textureRegion) {
+        this.textureRegion = textureRegion;
     }
 }

@@ -10,6 +10,7 @@ public class MoveComponent implements Component{
     private Vector2 velocity;
     private float speedMag;
 
+    //TODO switch over to acceleration system
     public MoveComponent(Vector2 velocity, float speedMag){
         this.velocity = velocity;
         this.speedMag = speedMag;

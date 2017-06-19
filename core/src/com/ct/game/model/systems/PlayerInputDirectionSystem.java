@@ -3,47 +3,40 @@ package com.ct.game.model.systems;
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Vector2;
-import com.ct.game.model.components.*;
 import com.ct.game.controller.InputHandler;
+import com.ct.game.model.components.*;
+import com.ct.game.utils.Mappers;
+
 
 /**
- * Created by Cameron on 6/9/2017.
+ * Created by Cameron on 6/18/2017.
  */
-public class PlayerInputMoveSystem extends IteratingSystem {
+public class PlayerInputDirectionSystem extends IteratingSystem {
     private InputHandler inputHandler;
 
-    public PlayerInputMoveSystem(InputHandler inputHandler) {
-        super(Family.all(PlayerControlledComponent.class).get());
+    public PlayerInputDirectionSystem(InputHandler inputHandler){
+        super(Family.all(PlayerControlledComponent.class, DirectionComponent.class).get());
         this.inputHandler = inputHandler;
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         if (!inputHandler.areKeysPressed(Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.DOWN, Input.Keys.UP)) {
-            entity.remove(MoveComponent.class);
             return;
         }
-
-        MoveComponent mc = new MoveComponent(10);
-
-        if (inputHandler.isKeyPressed(Input.Keys.S)){
-            mc.setSpeedMag(20);
-        }
+        DirectionComponent dc = Mappers.dm.get(entity);
+        System.out.println(dc.getDirection());
         if (inputHandler.isKeyPressed(Input.Keys.LEFT)) {
-            mc.addVelocity(new Vector2(-1, 0));
+            dc.setDirection(DirectionComponent.Direction.left);
         }
         if (inputHandler.isKeyPressed(Input.Keys.RIGHT)) {
-            mc.addVelocity(new Vector2(1, 0));
+            dc.setDirection(DirectionComponent.Direction.right);
         }
         if (inputHandler.isKeyPressed(Input.Keys.DOWN)) {
-            mc.addVelocity(new Vector2(0, -1));
+            dc.setDirection(DirectionComponent.Direction.down);
         }
         if (inputHandler.isKeyPressed(Input.Keys.UP)) {
-            mc.addVelocity(new Vector2(0, 1));
+            dc.setDirection(DirectionComponent.Direction.up);
         }
-
-        mc.normalizeVelocity();
-        entity.add(mc);
     }
 }

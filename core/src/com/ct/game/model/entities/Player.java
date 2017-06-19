@@ -19,6 +19,8 @@ public class Player extends Entity {
         add(new PlayerControlledComponent());
         add(new PhysicsComponent());
         add(new KinematicInitComponent());
-        add(new AnimationComponent(TileMap.dragonAnimation, 0));
+        add(new AnimationComponent(0));
+        add(new StateComponent());
+        add(new DirectionComponent());
     }
 }

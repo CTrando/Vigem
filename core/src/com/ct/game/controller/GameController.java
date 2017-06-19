@@ -1,11 +1,9 @@
 package com.ct.game.controller;
 
 import com.badlogic.ashley.core.*;
-import com.badlogic.gdx.math.Vector2;
 import com.ct.game.model.entities.Player;
 import com.ct.game.model.systems.*;
 import com.ct.game.model.utils.TileMap;
-import com.ct.game.utils.Mappers;
 import com.ct.game.view.ViewHandler;
 
 /**
@@ -30,9 +28,12 @@ public class GameController {
         engine.addSystem(new CameraFocusSystem(viewHandler));
         engine.addSystem(new TileMapMouseSystem(inputHandler, tileMap, viewHandler.getCamera()));
         engine.addSystem(new PlayerInputMoveSystem(inputHandler));
+        engine.addSystem(new PlayerInputDirectionSystem(inputHandler));
         engine.addSystem(new TransformSyncSystem());
         engine.addSystem(new MoveSystem());
         engine.addSystem(new AnimationSystem());
+        engine.addSystem(new StateSystem());
+        engine.addSystem(new StateAnimationSystem());
     }
 
     public void update(float dt){

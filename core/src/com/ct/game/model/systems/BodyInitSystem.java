@@ -13,7 +13,7 @@ import com.ct.game.view.GameScreen;
 public class BodyInitSystem extends IteratingSystem {
     private World world;
 
-    public BodyInitSystem(World world){
+    public BodyInitSystem(World world) {
         super(Family.all(KinematicInitComponent.class, PhysicsComponent.class, TransformComponent.class, RenderComponent
                 .class).get(), -1);
         this.world = world;
@@ -35,7 +35,8 @@ public class BodyInitSystem extends IteratingSystem {
         FixtureDef fixtureDef = new FixtureDef();
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(rc.getSprite().getWidth()/2/GameScreen.PPM, rc.getSprite().getHeight()/2/GameScreen.PPM);
+        shape.setAsBox(rc.getTextureRegion().getRegionWidth() / 2 / GameScreen.PPM,
+                       rc.getTextureRegion().getRegionHeight() / 2 / GameScreen.PPM);
         fixtureDef.shape = shape;
 
         Fixture fixture = body.createFixture(fixtureDef);
