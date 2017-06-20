@@ -21,13 +21,19 @@ public class StateAnimationSystem extends IteratingSystem {
         StateComponent sc = Mappers.sm.get(entity);
         AnimationComponent ac = Mappers.am.get(entity);
 
-        if (sc.getState() == StateComponent.State.dashing ||
+    /*    if (sc.getState() == StateComponent.State.dashing ||
                 sc.getState() == StateComponent.State.slowing) {
             ac.setAnimation(null);
+        }*/
+
+        ac.setAnimation(Assets.getInstance().getAnimation("player" + sc.getState().toString(), "tiles.atlas"));
+
+        /*if (sc.getState() == StateComponent.State.runningRight) {
+            ac.setAnimation(Assets.getInstance().getAnimation("frog", "tiles.atlas"));
         }
 
-        if (sc.getState() == StateComponent.State.running) {
-            ac.setAnimation(Assets.getInstance().getAnimation("frog"));
-        }
+        if (sc.getState() == StateComponent.State.slowingRight) {
+            ac.setAnimation(Assets.getInstance().getAnimation("dragon", "tiles.atlas"));
+        }*/
     }
 }

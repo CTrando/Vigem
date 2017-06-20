@@ -18,7 +18,6 @@ public class TileMap {
 
     public static TextureRegion grassSprite = Assets.getInstance().getTextureRegion("grass", "tiles.atlas");
     public static TextureRegion brickSprite = Assets.getInstance().getTextureRegion("brick", "tiles.atlas");
-    public static Animation dragonAnimation = Assets.getInstance().getAnimation("frog");
 
     private Tile[][] tileMap;
     private Array<Entity> entities;
