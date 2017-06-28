@@ -20,6 +20,7 @@ public class GameScreen implements Screen {
     private ViewHandler viewHandler;
     private FPSLogger fpsLogger;
     private InputHandler inputHandler;
+    private ShaderManager shaderManager;
     private GameController gameController;
 
     private World world;
@@ -34,6 +35,7 @@ public class GameScreen implements Screen {
         this.gameController = new GameController();
         this.world = new World(new Vector2(0,0), true);
         this.debugRenderer = new Box2DDebugRenderer();
+        this.shaderManager = new ShaderManager();
     }
 
     @Override
@@ -57,12 +59,14 @@ public class GameScreen implements Screen {
         debugRenderer.render(world, viewHandler.getCamera().combined);
         viewHandler.update(batch);
         batch.begin();
+        shaderManager.bindShader(batch);
 
         fpsLogger.log();
         gameController.getTileMap().render(batch);
         world.step(dt, 6,2);
         gameController.update(dt);
 
+        shaderManager.unBindShader(batch);
         batch.end();
     }
 
