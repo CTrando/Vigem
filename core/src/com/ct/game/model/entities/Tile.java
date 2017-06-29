@@ -1,8 +1,8 @@
 package com.ct.game.model.entities;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.ct.game.model.components.RenderComponent;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.ct.game.model.components.*;
 import com.ct.game.utils.Mappers;
 import com.ct.game.view.GameScreen;
 
@@ -11,38 +11,38 @@ import com.ct.game.view.GameScreen;
  */
 public abstract class Tile extends Entity {
 
-    public static float SIZE = 32;
-    private int row;
-    private int col;
+    public static float SIZE_PIXEL = 32;
+    public static float SIZE = SIZE_PIXEL/GameScreen.PPM;
+
     private boolean isEntity;
     private boolean isWalkable;
 
     public void init(int row, int col) {
-        this.row = row;
-        this.col = col;
+        add(new TransformComponent(col, row, 0));
     }
 
     public void render(SpriteBatch batch) {
         RenderComponent rc = Mappers.rm.get(this);
+
         if(rc != null){
-            batch.draw(rc.getTextureRegion(), row, col, SIZE/ GameScreen.PPM, SIZE/GameScreen.PPM);
+           batch.draw(rc.getTextureRegion(), getCol() - SIZE/2, getRow()-SIZE/2, SIZE, SIZE);
         }
     }
 
     public int getRow() {
-        return row;
+        return (int) Mappers.tm.get(this).getPos().y;
     }
 
     public void setRow(int row) {
-        this.row = row;
+        Mappers.tm.get(this).getPos().y = row;
     }
 
     public int getCol() {
-        return col;
+        return (int) Mappers.tm.get(this).getPos().x;
     }
 
     public void setCol(int col) {
-        this.col = col;
+        Mappers.tm.get(this).getPos().x = col;
     }
 
     public boolean isEntity() {

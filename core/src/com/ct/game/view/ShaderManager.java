@@ -16,10 +16,12 @@ public class ShaderManager {
     private final FileHandle vertexShader = Gdx.files.internal("vertex.glsl");
     private final FileHandle fragmentShader = Gdx.files.internal("fragment.glsl");
 
-    public ShaderManager() {
-        testShader = new ShaderProgram(vertexShader, fragmentShader);
-        //testShader = SpriteBatch.createDefaultShader();
+    private float speed = .04f;
+    private float moveFactor = 0;
+
+    public void init() {
         ShaderProgram.pedantic = false;
+        testShader = new ShaderProgram(vertexShader, fragmentShader);
         distortion.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
         if(!testShader.isCompiled()) {
@@ -27,8 +29,6 @@ public class ShaderManager {
         }
     }
 
-    float moveFactor = 0;
-    float speed = .04f;
     public void bindShader(SpriteBatch batch) {
         batch.setShader(testShader);
         moveFactor += speed*Gdx.graphics.getDeltaTime();

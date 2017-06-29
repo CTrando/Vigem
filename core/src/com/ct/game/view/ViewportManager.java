@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 /**
  * Created by Cameron on 6/5/2017.
  */
-public class ViewHandler {
+public class ViewportManager {
 
     private ScreenViewport viewPort;
 

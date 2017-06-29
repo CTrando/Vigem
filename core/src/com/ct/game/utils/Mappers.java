@@ -2,7 +2,6 @@ package com.ct.game.utils;
 
 import com.badlogic.ashley.core.*;
 import com.ct.game.model.components.*;
-import com.ct.game.view.Assets;
 
 /**
  * Created by Cameron on 6/5/2017.
@@ -15,4 +14,5 @@ public class Mappers {
     public static ComponentMapper<PhysicsComponent> pHm = ComponentMapper.getFor(PhysicsComponent.class);
     public static ComponentMapper<AnimationComponent> am = ComponentMapper.getFor(AnimationComponent.class);
     public static ComponentMapper<StateComponent> sm = ComponentMapper.getFor(StateComponent.class);
+    public static ComponentMapper<CreateBodyComponent> bCm = ComponentMapper.getFor(CreateBodyComponent.class);
 }

@@ -4,22 +4,22 @@ import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.ct.game.model.components.*;
 import com.ct.game.utils.Mappers;
-import com.ct.game.view.ViewHandler;
+import com.ct.game.view.ViewportManager;
 
 /**
  * Created by Cameron on 6/6/2017.
  */
 public class CameraFocusSystem extends IteratingSystem {
-    private ViewHandler viewHandler;
+    private ViewportManager viewportManager;
 
-    public CameraFocusSystem(ViewHandler viewHandler) {
+    public CameraFocusSystem(ViewportManager viewportManager) {
         super(Family.all(CameraFocusComponent.class, TransformComponent.class).get());
-        this.viewHandler = viewHandler;
+        this.viewportManager = viewportManager;
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         TransformComponent tc = Mappers.tm.get(entity);
-        viewHandler.setCameraPos(tc.getPos());
+        viewportManager.setCameraPos(tc.getPos());
     }
 }

@@ -1,10 +1,12 @@
 package com.ct.game.controller;
 
 import com.badlogic.ashley.core.*;
-import com.ct.game.model.entities.Player;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import com.ct.game.model.entities.*;
 import com.ct.game.model.systems.*;
 import com.ct.game.model.utils.TileMap;
-import com.ct.game.view.ViewHandler;
+import com.ct.game.view.ViewportManager;
 
 /**
  * Created by Cameron on 6/5/2017.
@@ -13,20 +15,27 @@ public class GameController {
     private Engine engine;
     private InputHandler inputHandler;
     private TileMap tileMap;
+    private World world;
 
-    public void init(InputHandler inputHandler, ViewHandler viewHandler){
-        this.inputHandler = inputHandler;
+    public void init(ViewportManager viewportManager){
+        this.inputHandler = new InputHandler();
         this.engine = new Engine();
         this.tileMap = new TileMap();
+        this.world = new World(new Vector2(0, 0), true);
+
         tileMap.init();
 
         Player player = new Player();
         player.init();
 
-        engine.addEntity(player);
+        Friend friend = new Friend();
+        friend.init();
 
-        engine.addSystem(new CameraFocusSystem(viewHandler));
-        engine.addSystem(new TileMapMouseSystem(inputHandler, tileMap, viewHandler.getCamera()));
+        engine.addEntity(player);
+        engine.addEntity(friend);
+
+        engine.addSystem(new CameraFocusSystem(viewportManager));
+        engine.addSystem(new TileMapMouseSystem(inputHandler, tileMap, viewportManager.getCamera()));
         engine.addSystem(new PlayerInputMoveSystem(inputHandler));
         engine.addSystem(new PlayerInputDirectionSystem(inputHandler));
         engine.addSystem(new TransformSyncSystem());
@@ -34,6 +43,8 @@ public class GameController {
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new StateSystem());
         engine.addSystem(new StateAnimationSystem());
+
+        engine.addSystem(new CreateBodySystem(world));
     }
 
     public void update(float dt){
@@ -58,5 +69,13 @@ public class GameController {
 
     public TileMap getTileMap() {
         return tileMap;
+    }
+
+    public InputHandler getInputHandler() {
+        return inputHandler;
+    }
+
+    public World getWorld() {
+        return world;
     }
 }

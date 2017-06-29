@@ -53,6 +53,6 @@ public class StateSystem extends IteratingSystem {
                 }
             }
         }
-        System.out.println(sc.getState());
+        //System.out.println(sc.getState());
     }
 }

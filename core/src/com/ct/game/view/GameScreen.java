@@ -17,23 +17,19 @@ public class GameScreen implements Screen {
 
     private Vigem game;
     private SpriteBatch batch;
-    private ViewHandler viewHandler;
+    private ViewportManager viewportManager;
     private FPSLogger fpsLogger;
-    private InputHandler inputHandler;
     private ShaderManager shaderManager;
     private GameController gameController;
 
-    private World world;
     private Box2DDebugRenderer debugRenderer;
 
     public GameScreen(final Vigem game){
         this.game = game;
         this.batch = game.getBatch();
-        this.viewHandler = new ViewHandler();
+        this.viewportManager = new ViewportManager();
         this.fpsLogger = new FPSLogger();
-        this.inputHandler = new com.ct.game.controller.InputHandler();
         this.gameController = new GameController();
-        this.world = new World(new Vector2(0,0), true);
         this.debugRenderer = new Box2DDebugRenderer();
         this.shaderManager = new ShaderManager();
     }
@@ -42,13 +38,12 @@ public class GameScreen implements Screen {
     public void show() {
         Assets.getInstance().load();
         Box2D.init();
-        viewHandler.init();
-        gameController.init(inputHandler, viewHandler);
+        shaderManager.init();
+        viewportManager.init();
+        gameController.init(viewportManager);
         gameController.addSystem(new RenderSystem(batch));
 
-        //gameController.addSystem(new PlayerInputTransformSystem(inputHandler));
-        gameController.addSystem(new BodyInitSystem(world));
-        Gdx.input.setInputProcessor(inputHandler);
+        Gdx.input.setInputProcessor(gameController.getInputHandler());
     }
 
     @Override
@@ -56,23 +51,23 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        debugRenderer.render(world, viewHandler.getCamera().combined);
-        viewHandler.update(batch);
+        viewportManager.update(batch);
         batch.begin();
         shaderManager.bindShader(batch);
 
         fpsLogger.log();
         gameController.getTileMap().render(batch);
-        world.step(dt, 6,2);
+        gameController.getWorld().step(dt, 6,2);
         gameController.update(dt);
 
         shaderManager.unBindShader(batch);
         batch.end();
+        debugRenderer.render(gameController.getWorld(), viewportManager.getCamera().combined);
     }
 
     @Override
     public void resize(int width, int height) {
-        viewHandler.resize(width, height);
+        viewportManager.resize(width, height);
     }
 
     @Override

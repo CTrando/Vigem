@@ -26,7 +26,7 @@ public class TileMapMouseSystem extends EntitySystem {
     public void update(float dt){
         if(inputHandler.getMouseClickPosPixel() != null) {
             Vector3 worldCoords = camera.unproject(new Vector3(inputHandler.getMouseClickPosPixel(), 0));
-            Tile tile = tileMap.getTileAt(MathUtils.floor(worldCoords.x), MathUtils.floor(worldCoords.y));
+            Tile tile = tileMap.getTileAt(MathUtils.round(worldCoords.y), MathUtils.round(worldCoords.x));
             if(tile != null){
                 BrickTile brickTile = new BrickTile();
                 brickTile.init(tile.getRow(), tile.getCol());
