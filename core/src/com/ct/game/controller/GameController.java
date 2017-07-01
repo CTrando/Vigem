@@ -1,6 +1,9 @@
 package com.ct.game.controller;
 
+import box2dLight.*;
 import com.badlogic.ashley.core.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ct.game.model.entities.*;
@@ -17,13 +20,18 @@ public class GameController {
     private TileMap tileMap;
     private World world;
 
+    private RayHandler rayHandler;
+
     public void init(ViewportManager viewportManager){
         this.inputHandler = new InputHandler();
         this.engine = new Engine();
         this.tileMap = new TileMap();
         this.world = new World(new Vector2(0, 0), true);
+        this.rayHandler = new RayHandler(world, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.rayHandler.setAmbientLight(.8f);
 
         tileMap.init();
+
 
         Player player = new Player();
         player.init();
@@ -45,10 +53,12 @@ public class GameController {
         engine.addSystem(new StateAnimationSystem());
 
         engine.addSystem(new CreateBodySystem(world));
+        engine.addSystem(new CreateLightSystem(rayHandler));
     }
 
     public void update(float dt){
         engine.update(dt);
+        rayHandler.update();
         tileMap.update();
         addNewTileEntities();
     }
@@ -73,6 +83,10 @@ public class GameController {
 
     public InputHandler getInputHandler() {
         return inputHandler;
+    }
+
+    public RayHandler getRayHandler() {
+        return rayHandler;
     }
 
     public World getWorld() {

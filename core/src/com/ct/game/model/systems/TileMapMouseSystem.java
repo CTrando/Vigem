@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.*;
 import com.ct.game.controller.InputHandler;
 import com.ct.game.model.entities.*;
 import com.ct.game.model.utils.TileMap;
+import com.ct.game.utils.Mappers;
 import com.ct.game.view.*;
 
 /**
@@ -28,10 +29,12 @@ public class TileMapMouseSystem extends EntitySystem {
             Vector3 worldCoords = camera.unproject(new Vector3(inputHandler.getMouseClickPosPixel(), 0));
             Tile tile = tileMap.getTileAt(MathUtils.round(worldCoords.y), MathUtils.round(worldCoords.x));
             if(tile != null){
-                BrickTile brickTile = new BrickTile();
-                brickTile.init(tile.getRow(), tile.getCol());
+                if(Mappers.lm.get(tile) != null) return;
+                WaterTile waterTile = new WaterTile();
+                waterTile.init(tile.getRow(), tile.getCol());
                 tileMap.removeTile(tile);
-                tileMap.set(tile.getRow(), tile.getCol(), brickTile);
+                tileMap.set(tile.getRow(), tile.getCol(), waterTile);
+                tile.dispose();
             }
         }
     }

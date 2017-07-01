@@ -21,7 +21,7 @@ public class Friend extends Entity {
         add(new DirectionComponent());
 
         add(new CreateBodyComponent(BodyDef.BodyType.StaticBody,
-                                    Mappers.tm.get(this),
+                                    Mappers.tm.get(this).getPos(),
                                     5,
                                     5));
     }

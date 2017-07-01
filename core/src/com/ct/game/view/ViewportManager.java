@@ -15,6 +15,7 @@ public class ViewportManager {
     public void init() {
         viewPort = new ScreenViewport();
         viewPort.setUnitsPerPixel(1 / GameScreen.PPM);
+        setCameraPos(new Vector2(0,0));
     }
 
     public void update(SpriteBatch batch) {

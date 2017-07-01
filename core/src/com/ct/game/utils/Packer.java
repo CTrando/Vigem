@@ -15,7 +15,7 @@ public class Packer {
         settings.stripWhitespaceY = true;
         settings.paddingX = 0;
         settings.paddingY = 0;
-        TexturePacker.process(settings, "rawassets", "android/assets", "tiles");
+        TexturePacker.process(settings, "rawassets", "core/assets", "tiles");
         AssetLister.main(args);
     }
 }

@@ -8,14 +8,13 @@ import com.ct.game.utils.Mappers;
 import com.ct.game.view.GameScreen;
 
 /**
- * Created by Cameron on 6/16/2017.
+ * Created by Cameron on 6/30/2017.
  */
-public class BrickTile extends Tile {
+public class WaterTile extends Tile {
 
     @Override
     public void init(int row, int col) {
         super.init(row, col);
-        add(new RenderComponent(TileMap.brickSprite));
         add(new PhysicsComponent());
 
         add(new CreateBodyComponent(
@@ -26,10 +25,6 @@ public class BrickTile extends Tile {
                 Tile.SIZE_PIXEL / GameScreen.PPM
         ));
 
-        add(new CreateLightComponent(
-                Color.BLUE,
-                2,
-                Mappers.tm.get(this).getPos()));
         setWalkable(false);
         setEntity(true);
     }

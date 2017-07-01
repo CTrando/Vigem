@@ -13,7 +13,7 @@ public class CreateBodySystem extends IteratingSystem {
 
     private World world;
     public CreateBodySystem(World world) {
-        super(Family.all(CreateBodyComponent.class, PhysicsComponent.class).get(), -1);
+        super(Family.all(CreateBodyComponent.class, PhysicsComponent.class).get(), -2);
         this.world = world;
     }
 

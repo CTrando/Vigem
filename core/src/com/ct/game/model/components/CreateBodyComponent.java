@@ -29,11 +29,11 @@ public class CreateBodyComponent implements Component {
     }
 
     public CreateBodyComponent(BodyDef.BodyType type,
-                               TransformComponent transformComponent,
+                               Vector2 pos,
                                float width,
                                float height) {
         this.type = type;
-        this.pos = transformComponent.getPos();
+        this.pos = pos;
         this.width = width;
         this.height = height;
     }

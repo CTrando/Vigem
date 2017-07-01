@@ -9,7 +9,7 @@ import com.ct.game.view.GameScreen;
 /**
  * Created by Cameron on 6/12/2017.
  */
-public abstract class Tile extends Entity {
+public abstract class Tile extends GameObject {
 
     public static float SIZE_PIXEL = 32;
     public static float SIZE = SIZE_PIXEL/GameScreen.PPM;

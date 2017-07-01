@@ -9,14 +9,14 @@ import java.util.ArrayList;
 public class AssetLister {
 
     private final static String NAME = "assets";
-    private final static String DIRECTORY = "android/assets";
+    private final static String DIRECTORY = "core/assets";
     private static ArrayList<String> lines = new ArrayList<String>();
 
     public static void main(String[] args) {
         writeLines(new File(DIRECTORY));
         BufferedWriter output = null;
         try {
-            File file = new File("android/assets/assets");
+            File file = new File("core/assets");
             String outputText = lines.toString().substring(1, lines.toString().length()-1);
             output = new BufferedWriter(new FileWriter(file));
             output.write(outputText);

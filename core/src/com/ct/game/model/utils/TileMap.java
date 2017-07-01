@@ -18,6 +18,7 @@ public class TileMap {
 
     public static TextureRegion grassSprite = Assets.getInstance().getTextureRegion("grass", "tiles.atlas");
     public static TextureRegion brickSprite = Assets.getInstance().getTextureRegion("brick", "tiles.atlas");
+    public static TextureRegion waterSprite = Assets.getInstance().getTextureRegion("water", "tiles.atlas");
 
     private Tile[][] tileMap;
     private Array<Entity> entities;
@@ -89,5 +90,9 @@ public class TileMap {
 
     public Tile getTileAt(Vector2 pos) {
         return getTileAt(MathUtils.round(pos.x), MathUtils.round(pos.y));
+    }
+
+    public Tile[][] getTiles() {
+        return tileMap;
     }
 }
