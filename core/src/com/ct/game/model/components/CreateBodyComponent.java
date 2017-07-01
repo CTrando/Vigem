@@ -3,6 +3,7 @@ package com.ct.game.model.components;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.ct.game.model.utils.Box2DUtils;
 
 /**
  * Created by Cameron on 6/28/2017.

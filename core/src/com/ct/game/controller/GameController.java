@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ct.game.model.entities.*;
 import com.ct.game.model.systems.*;
-import com.ct.game.model.utils.TileMap;
+import com.ct.game.model.utils.*;
 import com.ct.game.view.ViewportManager;
 
 /**
@@ -29,6 +29,8 @@ public class GameController {
         this.world = new World(new Vector2(0, 0), true);
         this.rayHandler = new RayHandler(world, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.rayHandler.setAmbientLight(.8f);
+
+        Box2DUtils.init(world, rayHandler);
 
         tileMap.init();
 

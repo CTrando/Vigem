@@ -33,7 +33,7 @@ public class Assets {
     }
 
     public void load() {
-        String[] assets = Gdx.files.internal("assets").readString().split(", ");
+        String[] assets = Gdx.files.internal("asset_list.txt").readString().split("\r\n");
         for (String asset : assets) {
             if (asset.endsWith(".atlas")) {
                 manager.load(asset, TextureAtlas.class);

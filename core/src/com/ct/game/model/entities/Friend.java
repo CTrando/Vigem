@@ -14,7 +14,7 @@ import com.ct.game.utils.Mappers;
 public class Friend extends Entity {
 
     public void init() {
-        add(new TransformComponent(1, 15, 0));
+        add(new TransformComponent(5, 15, 0));
         add(new RenderComponent(new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")))));
         add(new PhysicsComponent());
         add(new StateComponent());
