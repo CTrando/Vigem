@@ -16,11 +16,10 @@ public class Friend extends Entity {
     public void init() {
         add(new TransformComponent(5, 15, 0));
         add(new RenderComponent(new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")))));
-        add(new PhysicsComponent());
         add(new StateComponent());
         add(new DirectionComponent());
 
-        add(new CreateBodyComponent(BodyDef.BodyType.StaticBody,
+        add(new PhysicsComponent(BodyDef.BodyType.StaticBody,
                                     Mappers.tm.get(this).getPos(),
                                     5,
                                     5));

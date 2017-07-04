@@ -16,9 +16,8 @@ public class BrickTile extends Tile {
     public void init(int row, int col) {
         super.init(row, col);
         add(new RenderComponent(TileMap.brickSprite));
-        add(new PhysicsComponent());
 
-        add(new CreateBodyComponent(
+        add(new PhysicsComponent(
                 BodyDef.BodyType.StaticBody,
                 col,
                 row,
@@ -26,10 +25,11 @@ public class BrickTile extends Tile {
                 Tile.SIZE_PIXEL / GameScreen.PPM
         ));
 
-        add(new CreateLightComponent(
+        add(new LightComponent(
                 Color.BLUE,
                 2,
-                Mappers.tm.get(this).getPos()));
+                Mappers.tm.get(this).getPos().x,
+                Mappers.tm.get(this).getPos().y));
         setWalkable(false);
         setEntity(true);
     }

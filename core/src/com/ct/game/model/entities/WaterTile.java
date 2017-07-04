@@ -15,9 +15,8 @@ public class WaterTile extends Tile {
     @Override
     public void init(int row, int col) {
         super.init(row, col);
-        add(new PhysicsComponent());
 
-        add(new CreateBodyComponent(
+        add(new PhysicsComponent(
                 BodyDef.BodyType.StaticBody,
                 col,
                 row,

@@ -1,6 +1,7 @@
 package com.ct.game.model.utils;
 
-import box2dLight.RayHandler;
+import box2dLight.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -23,6 +24,10 @@ public class Box2DUtils {
 
     public static Fixture createFixture(Body body, float width, float height) {
         return box2DFactory.createFixture(body, width, height);
+    }
+
+    public static PointLight createPointLight(Color color,float distance, float x, float y) {
+        return box2DFactory.createPointLight(color, distance, x, y);
     }
 
 
@@ -57,6 +62,10 @@ public class Box2DUtils {
             fixtureDef.shape = shape;
 
             return body.createFixture(fixtureDef);
+        }
+
+        PointLight createPointLight(Color color, float distance, float x, float y) {
+            return new PointLight(rayHandler, 20, color, distance, x, y);
         }
     }
 }

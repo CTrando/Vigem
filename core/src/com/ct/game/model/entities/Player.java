@@ -19,12 +19,11 @@ public class Player extends GameObject {
         add(new RenderComponent(new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")))));
         add(new CameraFocusComponent());
         add(new PlayerControlledComponent());
-        add(new PhysicsComponent());
         add(new AnimationComponent(0));
         add(new StateComponent());
         add(new DirectionComponent());
 
-        add(new CreateBodyComponent(BodyDef.BodyType.DynamicBody,
+        add(new PhysicsComponent(BodyDef.BodyType.DynamicBody,
                                     Mappers.tm.get(this).getPos(),
                                     1,
                                     1));

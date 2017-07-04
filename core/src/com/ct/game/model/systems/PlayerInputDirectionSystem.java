@@ -25,7 +25,7 @@ public class PlayerInputDirectionSystem extends IteratingSystem {
             return;
         }
         DirectionComponent dc = Mappers.dm.get(entity);
-        System.out.println(dc.getDirection());
+        //System.out.println(dc.getDirection());
         if (inputHandler.isKeyPressed(Input.Keys.LEFT)) {
             dc.setDirection(DirectionComponent.Direction.left);
         }

@@ -54,8 +54,7 @@ public class GameController {
         engine.addSystem(new StateSystem());
         engine.addSystem(new StateAnimationSystem());
 
-        engine.addSystem(new CreateBodySystem(world));
-        engine.addSystem(new CreateLightSystem(rayHandler));
+        engine.addSystem(new LightBodyAttachSystem());
     }
 
     public void update(float dt){
