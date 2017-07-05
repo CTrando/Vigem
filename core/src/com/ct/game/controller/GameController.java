@@ -34,7 +34,6 @@ public class GameController {
 
         tileMap.init();
 
-
         Player player = new Player();
         player.init();
 
@@ -53,6 +52,7 @@ public class GameController {
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new StateSystem());
         engine.addSystem(new StateAnimationSystem());
+        //engine.addSystem(new DayNightSystem(rayHandler));
 
         engine.addSystem(new LightBodyAttachSystem());
     }

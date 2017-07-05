@@ -58,17 +58,16 @@ public class GameScreen implements Screen {
         gameController.getRayHandler().setCombinedMatrix((OrthographicCamera) viewportManager.getCamera());
 
         viewportManager.update(batch);
+        waterRenderer.render(batch);
         batch.begin();
-        //shaderManager.bindShader(batch);
         fpsLogger.log();
+
         gameController.getTileMap().render(batch);
         gameController.getWorld().step(dt, 6, 2);
         gameController.update(dt);
 
-        //shaderManager.unBindShader(batch);
         batch.end();
         gameController.getRayHandler().render();
-        waterRenderer.render(batch);
         debugRenderer.render(gameController.getWorld(), viewportManager.getCamera().combined);
     }
 

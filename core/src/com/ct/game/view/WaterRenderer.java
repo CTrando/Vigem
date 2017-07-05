@@ -34,16 +34,16 @@ public class WaterRenderer {
         batch.begin();
         shaderManager.bindShader(batch);
         waterFBO.begin();
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-
 
         for (Tile[] tileRow : tileMap.getTiles()) {
             for (Tile tile : tileRow) {
                 if (tile instanceof WaterTile) {
-                    batch.draw(TileMap.waterSprite, tile.getCol() - Tile.SIZE/2, tile.getRow()-Tile.SIZE/2, Tile
-                            .SIZE, Tile
-                            .SIZE);
+                    //TODO create an algorithm that will cover all the water tiles and render one big rectangle
+                    batch.draw(TileMap.waterSprite,
+                               tile.getCol() - Tile.SIZE/2,
+                               tile.getRow()-Tile.SIZE/2,
+                               Tile.SIZE,
+                               Tile.SIZE);
                 }
             }
         }

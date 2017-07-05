@@ -9,12 +9,13 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * Created by Cameron on 6/5/2017.
  */
 public class ViewportManager {
-
+    private static final float ZOOM = 1f;
     private ScreenViewport viewPort;
 
     public void init() {
         viewPort = new ScreenViewport();
         viewPort.setUnitsPerPixel(1 / GameScreen.PPM);
+        getCamera().zoom = ZOOM;
         setCameraPos(new Vector2(0,0));
     }
 
@@ -32,9 +33,11 @@ public class ViewportManager {
                 .lerp(new Vector3(cameraPos, 0), .3f);
         viewPort.getCamera()
                 .update();
+
+        viewPort.apply();
     }
 
-    public Camera getCamera() {
-        return viewPort.getCamera();
+    public OrthographicCamera getCamera() {
+        return (OrthographicCamera) viewPort.getCamera();
     }
 }
