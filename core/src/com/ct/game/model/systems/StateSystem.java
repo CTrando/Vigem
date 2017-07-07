@@ -48,24 +48,15 @@ public class StateSystem extends IteratingSystem {
                     }
                 } else {
                     sc.setState(StateComponent.State.running);
-                    if (dc != null) {
-                        sc.setStateDirection(dc.getDirection());
-                    }
                 }
             } else {
                 if (body.getLinearVelocity().len() > EPSILON) {
                     sc.setState(StateComponent.State.slowing);
-                    if (dc != null) {
-                        sc.setStateDirection(dc.getDirection());
-                    }
                 } else {
                     sc.setState(StateComponent.State.idle);
-                    if (dc != null) {
-                        sc.setStateDirection(dc.getDirection());
-                    }
                 }
             }
         }
-        //System.out.println(sc.getState());
+        System.out.println(sc.getState() + "-" + dc.getDirection());
     }
 }

@@ -26,7 +26,7 @@ public class BrickTile extends Tile {
         ));
 
         add(new LightComponent(
-                Color.BLUE,
+                Color.FIREBRICK,
                 2,
                 Mappers.tm.get(this).getPos().x,
                 Mappers.tm.get(this).getPos().y));

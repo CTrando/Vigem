@@ -25,7 +25,7 @@ public class Player extends GameObject {
 
         add(new PhysicsComponent(BodyDef.BodyType.DynamicBody,
                                     Mappers.tm.get(this).getPos(),
-                                    1,
-                                    1));
+                                    .9f,
+                                    .9f));
     }
 }

@@ -20,6 +20,8 @@ public class StateAnimationSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         StateComponent sc = Mappers.sm.get(entity);
         AnimationComponent ac = Mappers.am.get(entity);
-        ac.setAnimation(Assets.getInstance().getAnimation("player" + sc.getState().toString(), "tiles.atlas"));
+        DirectionComponent dc = Mappers.dm.get(entity);
+        ac.setAnimation(Assets.getInstance().getAnimation("player" + "-" + sc.getState() + "-" + dc.getDirection(), "tiles" +
+                ".atlas"));
     }
 }

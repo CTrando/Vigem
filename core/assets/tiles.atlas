@@ -6,105 +6,147 @@ filter: Nearest,Nearest
 repeat: none
 brick
   rotate: false
-  xy: 519, 96
+  xy: 519, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 grass
   rotate: false
-  xy: 519, 64
+  xy: 519, 54
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+player-idle-left
+  rotate: false
+  xy: 519, 26
+  size: 16, 28
+  orig: 32, 32
+  offset: 7, 2
+  index: 1
+player-idle-left
+  rotate: false
+  xy: 551, 58
+  size: 16, 28
+  orig: 32, 32
+  offset: 7, 2
+  index: 2
+player-idle-left
+  rotate: false
+  xy: 551, 31
+  size: 15, 27
+  orig: 32, 32
+  offset: 7, 2
+  index: 0
+player-idle-right
+  rotate: false
+  xy: 583, 90
+  size: 16, 28
+  orig: 32, 32
+  offset: 9, 2
+  index: 1
+player-idle-right
+  rotate: false
+  xy: 535, 26
+  size: 16, 28
+  orig: 32, 32
+  offset: 9, 2
+  index: 2
+player-idle-right
+  rotate: false
+  xy: 567, 59
+  size: 15, 27
+  orig: 32, 32
+  offset: 10, 2
+  index: 0
 playerrunningRight
   rotate: false
-  xy: 0, 25
+  xy: 0, 15
   size: 173, 103
   orig: 174, 103
   offset: 0, 0
   index: 0
 playerrunningRight
   rotate: false
-  xy: 173, 25
+  xy: 173, 15
   size: 172, 103
   orig: 174, 103
   offset: 0, 0
   index: 1
 playerrunningRight
   rotate: false
-  xy: 173, 25
+  xy: 173, 15
   size: 172, 103
   orig: 174, 103
   offset: 0, 0
   index: 3
 playerrunningRight
   rotate: false
-  xy: 345, 28
+  xy: 345, 18
   size: 174, 100
   orig: 174, 103
   offset: 0, 0
   index: 2
 playerslowingRight
   rotate: false
-  xy: 0, 10
+  xy: 0, 0
   size: 16, 15
   orig: 16, 16
   offset: 0, 0
   index: 2
 playerslowingRight
   rotate: false
-  xy: 519, 49
+  xy: 599, 103
   size: 16, 15
   orig: 16, 16
   offset: 0, 0
   index: 3
 playerslowingRight
   rotate: false
-  xy: 551, 82
+  xy: 16, 1
   size: 16, 14
   orig: 16, 16
   offset: 0, 0
   index: 1
 playerslowingRight
   rotate: false
-  xy: 583, 115
+  xy: 599, 90
   size: 16, 13
   orig: 16, 16
   offset: 0, 0
   index: 0
 playerslowingRight
   rotate: false
-  xy: 16, 12
+  xy: 615, 105
   size: 16, 13
   orig: 16, 16
   offset: 0, 1
   index: 4
 playerslowingRight
   rotate: false
-  xy: 16, 0
+  xy: 32, 3
   size: 16, 12
   orig: 16, 16
   offset: 0, 1
   index: 5
 playerslowingRight
   rotate: false
-  xy: 519, 37
+  xy: 615, 93
   size: 16, 12
   orig: 16, 16
   offset: 0, 0
   index: 7
 playerslowingRight
   rotate: false
-  xy: 535, 52
+  xy: 631, 106
   size: 15, 12
   orig: 16, 16
   offset: 1, 0
   index: 6
 water
   rotate: false
-  xy: 551, 96
+  xy: 551, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

@@ -78,7 +78,7 @@ public class Assets {
             } else if(regions.size == 0){
                 return null;
             }
-            Animation<TextureRegion> animation = new Animation<TextureRegion>(1f/regions.size, regions);
+            Animation<TextureRegion> animation = new Animation<TextureRegion>(1f/(regions.size+1), regions);
             animations.put(animationName, animation);
         }
         return animations.get(animationName);

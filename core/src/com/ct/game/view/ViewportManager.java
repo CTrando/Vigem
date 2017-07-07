@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * Created by Cameron on 6/5/2017.
  */
 public class ViewportManager {
-    private static final float ZOOM = 1f;
+    private static final float ZOOM = .5f;
     private ScreenViewport viewPort;
 
     public void init() {
