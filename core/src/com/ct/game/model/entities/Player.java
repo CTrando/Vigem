@@ -23,9 +23,14 @@ public class Player extends GameObject {
         add(new StateComponent());
         add(new DirectionComponent());
 
+        //TODO maybe switch to builder pattern
         add(new PhysicsComponent(BodyDef.BodyType.DynamicBody,
                                     Mappers.tm.get(this).getPos(),
                                     .9f,
                                     .9f));
+
+        Mappers.pHm.get(this).setUserData(this);
+
+        add(new BounceComponent());
     }
 }

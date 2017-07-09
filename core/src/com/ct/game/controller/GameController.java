@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ct.game.model.entities.*;
+import com.ct.game.model.listeners.BounceListener;
 import com.ct.game.model.systems.*;
 import com.ct.game.model.utils.*;
 import com.ct.game.view.ViewportManager;
@@ -52,9 +53,11 @@ public class GameController {
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new StateSystem());
         engine.addSystem(new StateAnimationSystem());
-        //engine.addSystem(new DayNightSystem(rayHandler));
+        engine.addSystem(new DayNightSystem(rayHandler));
 
         engine.addSystem(new LightBodyAttachSystem());
+
+        world.setContactListener(new BounceListener());
     }
 
     public void update(float dt){

@@ -63,7 +63,7 @@ public class GameScreen implements Screen {
         fpsLogger.log();
 
         gameController.getTileMap().render(batch);
-        gameController.getWorld().step(dt, 6, 2);
+        gameController.getWorld().step(dt, 6, 4);
         gameController.update(dt);
 
         batch.end();

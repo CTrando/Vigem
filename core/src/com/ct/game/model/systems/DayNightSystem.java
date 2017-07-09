@@ -2,6 +2,7 @@ package com.ct.game.model.systems;
 
 import box2dLight.RayHandler;
 import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.gdx.math.MathUtils;
 
 /**
  * Created by Cameron on 7/4/2017.
@@ -22,12 +23,16 @@ public class DayNightSystem extends EntitySystem {
     public void update(float dt) {
         super.update(dt);
         elapsedTime+=dt;
-        setLighting(elapsedTime);
-
-        elapsedTime%=DAY_LENGTH;
+        setLighting(getLight(elapsedTime));
+        elapsedTime%=DAY_LENGTH*2*MathUtils.PI;
+        //System.out.println(elapsedTime);
     }
 
-    private void setLighting(float elapsedTime) {
-        rayHandler.setAmbientLight(elapsedTime/DAY_LENGTH);
+    private float getLight(float elapsedTime) {
+        return .5f* MathUtils.cos(elapsedTime/DAY_LENGTH) + .5f;
+    }
+
+    private void setLighting(float lightLevel) {
+        rayHandler.setAmbientLight(lightLevel);
     }
 }

@@ -15,4 +15,5 @@ public class Mappers {
     public static ComponentMapper<AnimationComponent> am = ComponentMapper.getFor(AnimationComponent.class);
     public static ComponentMapper<StateComponent> sm = ComponentMapper.getFor(StateComponent.class);
     public static ComponentMapper<LightComponent> lm = ComponentMapper.getFor(LightComponent.class);
+    public static ComponentMapper<BounceComponent> bm = ComponentMapper.getFor(BounceComponent.class);
 }

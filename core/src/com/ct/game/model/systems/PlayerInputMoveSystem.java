@@ -25,10 +25,12 @@ public class PlayerInputMoveSystem extends IteratingSystem {
             return;
         }
 
-        MoveComponent mc = new MoveComponent(10);
+        MoveComponent mc = new MoveComponent(5)
+                .setPrimarySpeed(5)
+                .setSecondarySpeed(10);
 
         if (inputHandler.isKeyPressed(Input.Keys.S)){
-            mc.setSpeedMag(20);
+            mc.setSpeedMag(10);
         }
         if (inputHandler.isKeyPressed(Input.Keys.LEFT)) {
             mc.addVelocity(new Vector2(-1, 0));

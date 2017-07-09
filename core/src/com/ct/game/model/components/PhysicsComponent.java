@@ -27,6 +27,14 @@ public class PhysicsComponent implements Component{
         this(type, pos.x, pos.y, width, height);
     }
 
+    public void setUserData(Object data) {
+        body.setUserData(data);
+    }
+
+    public Object getUserData() {
+        return body.getUserData();
+    }
+
     public Body getBody() {
         return body;
     }
