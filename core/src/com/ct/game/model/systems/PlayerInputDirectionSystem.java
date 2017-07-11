@@ -14,7 +14,7 @@ import com.ct.game.utils.Mappers;
 public class PlayerInputDirectionSystem extends IteratingSystem {
     private InputHandler inputHandler;
 
-    public PlayerInputDirectionSystem(InputHandler inputHandler){
+    public PlayerInputDirectionSystem(InputHandler inputHandler) {
         super(Family.all(PlayerControlledComponent.class, DirectionComponent.class).get());
         this.inputHandler = inputHandler;
     }
@@ -28,14 +28,11 @@ public class PlayerInputDirectionSystem extends IteratingSystem {
         //System.out.println(dc.getDirection());
         if (inputHandler.isKeyPressed(Input.Keys.LEFT)) {
             dc.setDirection(DirectionComponent.Direction.left);
-        }
-        if (inputHandler.isKeyPressed(Input.Keys.RIGHT)) {
+        } else if (inputHandler.isKeyPressed(Input.Keys.RIGHT)) {
             dc.setDirection(DirectionComponent.Direction.right);
-        }
-        if (inputHandler.isKeyPressed(Input.Keys.DOWN)) {
+        } else if (inputHandler.isKeyPressed(Input.Keys.DOWN)) {
             dc.setDirection(DirectionComponent.Direction.down);
-        }
-        if (inputHandler.isKeyPressed(Input.Keys.UP)) {
+        } else if (inputHandler.isKeyPressed(Input.Keys.UP)) {
             dc.setDirection(DirectionComponent.Direction.up);
         }
     }

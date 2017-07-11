@@ -42,7 +42,7 @@ public class GameController {
         friend.init();
 
         engine.addEntity(player);
-        //engine.addEntity(friend);
+        engine.addEntity(friend);
 
         engine.addSystem(new CameraFocusSystem(viewportManager));
         engine.addSystem(new TileMapMouseSystem(inputHandler, tileMap, viewportManager.getCamera()));
@@ -56,6 +56,7 @@ public class GameController {
         engine.addSystem(new DayNightSystem(rayHandler));
 
         engine.addSystem(new LightBodyAttachSystem());
+        engine.addSystem(new FriendAISystem(engine));
 
         world.setContactListener(new BounceListener());
     }

@@ -15,13 +15,16 @@ public class Friend extends Entity {
 
     public void init() {
         add(new TransformComponent(5, 15, 0));
-        add(new RenderComponent(new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")))));
+        //add(new RenderComponent(new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")))));
         add(new StateComponent());
         add(new DirectionComponent());
 
-        add(new PhysicsComponent(BodyDef.BodyType.StaticBody,
+        //will create body in world despite not being in the engine yet
+        add(new PhysicsComponent(BodyDef.BodyType.DynamicBody,
                                     Mappers.tm.get(this).getPos(),
                                     5,
                                     5));
+
+        add(new FriendAIComponent());
     }
 }
