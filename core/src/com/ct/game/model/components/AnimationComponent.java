@@ -15,8 +15,8 @@ public class AnimationComponent implements Component {
         this.currentTime = currentTime;
     }
 
-    public AnimationComponent(float currentTile) {
-        this(null, currentTile);
+    public AnimationComponent(float currentTime) {
+        this(null, currentTime);
     }
 
     public Animation getAnimation() {

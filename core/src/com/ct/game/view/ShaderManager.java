@@ -10,8 +10,9 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
  * Created by Cameron on 6/27/2017.
  */
 public class ShaderManager {
-    private ShaderProgram testShader;
+    private ShaderProgram waterShader;
     private Texture distortion = new Texture(Gdx.files.internal("distortionMap.jpg"));
+    private Texture normal = new Texture(Gdx.files.internal("normalMap.png"));
 
     private final FileHandle vertexShader = Gdx.files.internal("vertex.glsl");
     private final FileHandle fragmentShader = Gdx.files.internal("fragment.glsl");
@@ -21,21 +22,23 @@ public class ShaderManager {
 
     public void init() {
         ShaderProgram.pedantic = false;
-        testShader = new ShaderProgram(vertexShader, fragmentShader);
+        waterShader = new ShaderProgram(vertexShader, fragmentShader);
         distortion.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
-        if(!testShader.isCompiled()) {
-            System.out.println(testShader.getLog());
+        if(!waterShader.isCompiled()) {
+            System.out.println(waterShader.getLog());
         }
     }
 
     public void bindShader(SpriteBatch batch) {
-        batch.setShader(testShader);
+        batch.setShader(waterShader);
         moveFactor += speed*Gdx.graphics.getDeltaTime();
         moveFactor %= 1;
-        testShader.setUniformf("u_time", moveFactor);
-        testShader.setUniformi("u_distortion_map", 2);
+        waterShader.setUniformf("u_time", moveFactor);
+        waterShader.setUniformi("u_distortion_map", 2);
+        waterShader.setUniformi("u_normal_map", 3);
         distortion.bind(2);
+        normal.bind(3);
         Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE0);
     }
 

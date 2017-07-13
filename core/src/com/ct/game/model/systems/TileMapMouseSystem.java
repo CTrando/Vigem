@@ -30,7 +30,7 @@ public class TileMapMouseSystem extends EntitySystem {
             Tile tile = tileMap.getTileAt(MathUtils.round(worldCoords.y), MathUtils.round(worldCoords.x));
             if(tile != null){
                 if(Mappers.lm.get(tile) != null) return;
-                BounceTile waterTile = new BounceTile();
+                WaterTile waterTile = new WaterTile();
                 waterTile.init(tile.getRow(), tile.getCol());
                 tileMap.removeTile(tile);
                 tileMap.set(tile.getRow(), tile.getCol(), waterTile);
