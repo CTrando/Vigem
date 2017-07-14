@@ -6,8 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.Array;
+import com.ct.game.model.components.TransformComponent;
 import com.ct.game.model.entities.*;
+import com.ct.game.utils.Mappers;
 import com.ct.game.view.Assets;
+
+import java.util.HashMap;
 
 /**
  * Created by Cameron on 6/12/2017.
@@ -21,11 +25,13 @@ public class TileMap {
     public static TextureRegion waterSprite = Assets.getInstance().getTextureRegion("water", "tiles.atlas");
 
     private Tile[][] tileMap;
+    private HashMap<TileType, Array<Tile>> tileTypes;
     private Array<Entity> entities;
     private Array<Entity> newEntities;
 
     public void init() {
         this.tileMap = new Tile[HEIGHT][WIDTH];
+        this.tileTypes = new HashMap<TileType, Array<Tile>>(TileType.values().length+1);
         this.entities = new Array<Entity>();
         this.newEntities = new Array<Entity>();
         //make a tilemap builder later
@@ -34,7 +40,7 @@ public class TileMap {
             for (int col = 0; col < WIDTH; col++) {
                 Tile tile = new GrassTile();
                 tile.init(row, col);
-                tileMap[row][col] = tile;
+                set(row, col, tile, TileType.GRASS);
             }
         }
     }
@@ -84,8 +90,32 @@ public class TileMap {
         }
     }
 
-    public void set(int row, int col, Tile tile) {
+    public void set(int row, int col, Tile tile, TileType type) {
         tileMap[row][col] = tile;
+        if(tileTypes.get(type) == null) {
+            tileTypes.put(type, new Array<Tile>());
+        }
+        Array<Tile> tiles = tileTypes.get(type);
+        if(tiles.contains(tile, true)) return;
+
+        if(tiles.size == 0){
+            tiles.add(tile);
+        } else {
+            for (int i = 0; i < tiles.size; i++) {
+                TransformComponent tTm = Mappers.tm.get(tiles.get(i));
+                TransformComponent tAm = Mappers.tm.get(tile);
+
+                if (tAm.getPos().x < tTm.getPos().x || tAm.getPos().y < tTm.getPos().y) {
+                    tiles.insert(i, tile);
+                    break;
+                }
+
+                if(i == tiles.size-1){
+                    tiles.add(tile);
+                    break;
+                }
+            }
+        }
     }
 
     public Tile getTileAt(Vector2 pos) {
@@ -94,5 +124,16 @@ public class TileMap {
 
     public Tile[][] getTiles() {
         return tileMap;
+    }
+
+    public Array<Tile> getTilesOfType(TileType type){
+        if(tileTypes.get(type) == null){
+            tileTypes.put(type, new Array<Tile>());
+        }
+        return tileTypes.get(type);
+    }
+
+    public enum TileType{
+        GRASS, WATER, BRICK, BOUNCE;
     }
 }

@@ -49,6 +49,6 @@ public class StateSystem extends IteratingSystem {
                 }
             }
         }
-        System.out.println(sc.getState() + "-" + dc.getDirection());
+        //System.out.println(sc.getState() + "-" + dc.getDirection());
     }
 }

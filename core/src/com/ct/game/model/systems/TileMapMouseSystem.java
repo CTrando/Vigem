@@ -28,13 +28,13 @@ public class TileMapMouseSystem extends EntitySystem {
         if(inputHandler.getMouseClickPosPixel() != null) {
             Vector3 worldCoords = camera.unproject(new Vector3(inputHandler.getMouseClickPosPixel(), 0));
             Tile tile = tileMap.getTileAt(MathUtils.round(worldCoords.y), MathUtils.round(worldCoords.x));
-            if(tile != null){
+            if(tile != null && !(tile instanceof WaterTile)){
                 if(Mappers.lm.get(tile) != null) return;
                 WaterTile waterTile = new WaterTile();
                 waterTile.init(tile.getRow(), tile.getCol());
                 tileMap.removeTile(tile);
-                tileMap.set(tile.getRow(), tile.getCol(), waterTile);
-                tile.dispose();
+                tileMap.set(tile.getRow(), tile.getCol(), waterTile, TileMap.TileType.WATER);
+                //tile.dispose();
             }
         }
     }
