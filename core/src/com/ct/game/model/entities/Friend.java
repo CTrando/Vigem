@@ -18,6 +18,7 @@ public class Friend extends Entity {
         //add(new RenderComponent(new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")))));
         add(new StateComponent());
         add(new DirectionComponent());
+        add(new TransformSyncComponent());
 
         //will create body in world despite not being in the engine yet
         add(new PhysicsComponent(BodyDef.BodyType.DynamicBody,

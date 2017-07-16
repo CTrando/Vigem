@@ -12,7 +12,7 @@ import com.ct.game.utils.Mappers;
 public class TransformSyncSystem extends IteratingSystem {
 
     public TransformSyncSystem(){
-        super(Family.all(TransformComponent.class, PhysicsComponent.class).get());
+        super(Family.all(TransformSyncComponent.class, TransformComponent.class, PhysicsComponent.class).get());
     }
 
     @Override

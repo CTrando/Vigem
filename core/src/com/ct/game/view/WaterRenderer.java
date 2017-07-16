@@ -42,11 +42,20 @@ public class WaterRenderer {
             Vector2 bottomLeftPos = Mappers.tm.get(tileMap.getTilesOfType(TileMap.TileType.WATER).first()).getPos();
             Vector2 topRightPos = Mappers.tm.get(tileMap.getTilesOfType(TileMap.TileType.WATER).peek()).getPos();
 
-            batch.draw(TileMap.waterSprite,
+            /*batch.draw(TileMap.waterSprite,
                        bottomLeftPos.x - Tile.SIZE / 2,
                        bottomLeftPos.y - Tile.SIZE / 2,
                        topRightPos.x - bottomLeftPos.x + 1,
-                       topRightPos.y - bottomLeftPos.y + 1);
+                       topRightPos.y - bottomLeftPos.y + 1);*/
+
+
+            Vector2 pos = Mappers.tm.get(waterTile).getPos();
+            batch.draw(TileMap.waterSprite,
+                       pos.x - Tile.SIZE/2,
+                       pos.y - Tile.SIZE/2,
+                       Tile.SIZE,
+                       Tile.SIZE
+                       );
 
         }
 

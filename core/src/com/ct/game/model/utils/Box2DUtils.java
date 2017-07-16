@@ -26,6 +26,10 @@ public class Box2DUtils {
         return box2DFactory.createFixture(body, width, height);
     }
 
+    public static Fixture createFixture(Body body, float[] vertices) {
+        return box2DFactory.createFixture(body, vertices);
+    }
+
     public static PointLight createPointLight(Color color,float distance, float x, float y) {
         return box2DFactory.createPointLight(color, distance, x, y);
     }
@@ -57,11 +61,28 @@ public class Box2DUtils {
             FixtureDef fixtureDef = new FixtureDef();
 
             PolygonShape shape = new PolygonShape();
-            shape.setAsBox(width/2,
-                           height/2);
+            //shape.setAsBox(width/2,
+                        //   height/2);
+            shape.set(new float[]{
+                -width/2,-height/2,-width/2,height/2,width/2,height/2,width/2,-height/2
+            });
             fixtureDef.shape = shape;
+            Fixture fixture = body.createFixture(fixtureDef);
+            shape.dispose();
 
-            return body.createFixture(fixtureDef);
+            return fixture;
+        }
+
+        Fixture createFixture(Body body, float[] vertices) {
+            FixtureDef fixtureDef = new FixtureDef();
+
+            PolygonShape shape = new PolygonShape();
+            shape.set(vertices);
+            fixtureDef.shape = shape;
+            Fixture fixture = body.createFixture(fixtureDef);
+            shape.dispose();
+
+            return fixture;
         }
 
         PointLight createPointLight(Color color, float distance, float x, float y) {

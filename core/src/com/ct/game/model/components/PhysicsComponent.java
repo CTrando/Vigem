@@ -11,13 +11,17 @@ import com.ct.game.model.utils.Box2DUtils;
 public class PhysicsComponent implements Component{
     private Body body;
     private Fixture fixture;
+    private float[] vertices;
 
     public PhysicsComponent(BodyDef.BodyType type, float x, float y, float width, float height) {
-        if(type == null) {
-            throw new IllegalArgumentException("You must define a body type!");
-        }
-        body = Box2DUtils.createBody(type, x, y);
-        fixture = Box2DUtils.createFixture(body, width, height);
+        //positions are relative to the center
+        //goes counter clockwise
+        this(type,x, y,  new float[]{
+                -width/2, -height/2, //(0,0)
+                -width/2, height/2,  //(0,1)
+                width/2, height/2,   //(1,1)
+                width/2, -height/2   //(1,0)
+        });
     }
 
     public PhysicsComponent(BodyDef.BodyType type,
@@ -25,6 +29,18 @@ public class PhysicsComponent implements Component{
                          float width,
                          float height) {
         this(type, pos.x, pos.y, width, height);
+    }
+
+    public PhysicsComponent(BodyDef.BodyType type,
+                            float x,
+                            float y,
+                            float[] vertices) {
+        if(type == null) {
+            throw new IllegalArgumentException("You must define a body type!");
+        }
+        this.body = Box2DUtils.createBody(type, x, y);
+        this.fixture = Box2DUtils.createFixture(body, vertices);
+        this.vertices = vertices;
     }
 
     public void setUserData(Object data) {
@@ -49,5 +65,17 @@ public class PhysicsComponent implements Component{
 
     public void setFixture(Fixture fixture) {
         this.fixture = fixture;
+    }
+
+    public float[] getVertices() {
+        return vertices;
+    }
+
+    public void destroyCurrentFixture() {
+        body.destroyFixture(fixture);
+    }
+
+    public void setVertices(float[] vertices) {
+        this.vertices = vertices;
     }
 }

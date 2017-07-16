@@ -23,6 +23,7 @@ public class Player extends GameObject {
         add(new AnimationComponent(Assets.getInstance().getAnimation("player-idle-right", "tiles.atlas"), 0));
         add(new StateComponent());
         add(new DirectionComponent());
+        add(new TransformSyncComponent());
 
         //TODO maybe switch to builder pattern
         add(new PhysicsComponent(BodyDef.BodyType.DynamicBody,
