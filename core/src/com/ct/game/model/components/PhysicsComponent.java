@@ -78,4 +78,9 @@ public class PhysicsComponent implements Component{
     public void setVertices(float[] vertices) {
         this.vertices = vertices;
     }
+
+    public void destroyBody() {
+        Box2DUtils.destroyBody(body);
+        body = null;
+    }
 }

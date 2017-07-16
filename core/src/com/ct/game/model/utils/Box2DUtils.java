@@ -34,6 +34,10 @@ public class Box2DUtils {
         return box2DFactory.createPointLight(color, distance, x, y);
     }
 
+    public static void destroyBody(Body body) {
+        box2DFactory.destroyBody(body);
+    }
+
 
     private static class Box2DFactory {
         private World world;
@@ -55,6 +59,10 @@ public class Box2DUtils {
 
             Body body = world.createBody(bodyDef);
             return body;
+        }
+
+        void destroyBody(Body body) {
+            world.destroyBody(body);
         }
 
         Fixture createFixture(Body body, float width, float height) {

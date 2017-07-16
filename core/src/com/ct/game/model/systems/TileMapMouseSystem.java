@@ -37,7 +37,6 @@ public class TileMapMouseSystem extends EntitySystem {
                 tileMap.removeTile(tile);
                 tileMap.set(tile.getRow(), tile.getCol(), waterTile, TileMap.TileType.WATER);
                 //tile.dispose();
-
                 combinePhysicsBodies(waterTile);
             }
         }
@@ -53,18 +52,46 @@ public class TileMapMouseSystem extends EntitySystem {
             pHc.getBody().destroyFixture(pHc.getFixture());
         }
 */
-        for(int row = tileRow-1 ; row < tileRow+1 && row >= 0 && row < TileMap.HEIGHT; row++) {
-            Tile tile = tileMap.getTileAt(row, tileCol);
+        for(int row = -1 ; row <= +1 && tileRow + row >= 0 && tileRow + row < TileMap.HEIGHT; row++) {
+            Tile tile = tileMap.getTileAt(tileRow + row, tileCol);
             if(Mappers.pHm.get(tile) == null || tile == placedTile) continue;
             System.out.println("FOUND SOMETHING");
+            mergeBodies(placedTile, tile, 0, -1*row);
+
         }
 
-        for(int col = tileCol-1 ; col < tileCol+1 && col >= 0 && col < TileMap.WIDTH; col++) {
-            Tile tile = tileMap.getTileAt(tileRow, col);
+        for(int col = -1 ; col <= 1 && tileCol+ col >= 0 && tileCol + col < TileMap.WIDTH; col++) {
+            Tile tile = tileMap.getTileAt(tileRow, tileCol + col);
             if(Mappers.pHm.get(tile) == null || tile == placedTile) continue;
-            mergeTileBodies(placedTile, tile);
+            //mergeTileBodies(placedTile, tile);
+            mergeBodies(placedTile, tile, 1, -1*col);
         }
+    }
 
+    /**
+     *
+     * @param newTile
+     * @param prevTile
+     * @param orientation will be 1 or -1, telling whether going East or West or North or South
+     */
+    private void mergeBodies(Tile newTile, Tile prevTile, int direction, int orientation) {
+        PhysicsComponent pHcNewTile = Mappers.pHm.get(newTile);
+        PhysicsComponent pHcPrevTile = Mappers.pHm.get(prevTile);
+
+        if(pHcNewTile.getBody() == pHcPrevTile.getBody()) return;
+        if(pHcNewTile.getBody().getFixtureList().size > pHcPrevTile.getBody().getFixtureList().size) return;
+
+        pHcNewTile.destroyBody();
+        pHcNewTile.setBody(pHcPrevTile.getBody());
+
+        if(direction == 1) {
+            float width = getDimension(pHcPrevTile.getVertices(), 0);
+            pHcNewTile.setVertices(add(pHcPrevTile.getVertices(), orientation * width, 0));
+        } else {
+            float height = getDimension(pHcPrevTile.getVertices(), 1);
+            pHcNewTile.setVertices(add(pHcPrevTile.getVertices(), orientation * height, 1));
+        }
+        pHcNewTile.setFixture(Box2DUtils.createFixture(pHcNewTile.getBody(), pHcNewTile.getVertices()));
     }
 
     private void mergeTileBodies(Tile newTile, Tile prevTile) {
@@ -98,5 +125,24 @@ public class TileMapMouseSystem extends EntitySystem {
         corners[2] = vertices[vertices.length/2];
         corners[3] = vertices[vertices.length/2+1];
         return corners;
+    }
+
+    private float[] add(float[] vertices, float add, int offset) {
+        float[] copy = new float[vertices.length];
+        System.arraycopy(vertices, 0, copy, 0, vertices.length);
+        for(int i = offset; i< copy.length; i+=2) {
+            copy[i]+=add;
+        }
+        return copy;
+    }
+
+    /**
+     *
+     * @param vertices
+     * @param offset 0 for width, 1 for height
+     * @return
+     */
+    private float getDimension(float[] vertices, int offset) {
+        return Math.abs(vertices[offset] - vertices[vertices.length/2+offset]);
     }
 }
