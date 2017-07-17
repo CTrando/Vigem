@@ -24,6 +24,7 @@ public class Player extends GameObject {
         add(new StateComponent());
         add(new DirectionComponent());
         add(new TransformSyncComponent());
+        add(new AttackComponent(5));
 
         //TODO maybe switch to builder pattern
         add(new PhysicsComponent(BodyDef.BodyType.DynamicBody,

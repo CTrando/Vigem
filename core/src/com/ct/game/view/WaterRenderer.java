@@ -40,45 +40,42 @@ public class WaterRenderer {
         shaderManager.bindShader(batch);
         waterFBO.begin();
 
-        HashMap<Body,Vector2[]> coordinates = new HashMap<Body, Vector2[]>();
+        HashMap<Body, Vector2[]> coordinates = new HashMap<Body, Vector2[]>();
         for (Tile waterTile : tileMap.getTilesOfType(TileMap.TileType.WATER)) {
             PhysicsComponent pHc = Mappers.pHm.get(waterTile);
             Body body = pHc.getBody();
-            if(coordinates.get(body) == null) {
+            if (coordinates.get(body) == null) {
                 coordinates.put(body, new Vector2[3]);
                 coordinates.get(body)[0] = new Vector2();
                 coordinates.get(body)[1] = new Vector2();
                 coordinates.get(body)[2] = new Vector2();
             }
-            if(pHc.getVertices()[0] < coordinates.get(body)[0].x && pHc.getVertices()[1] < coordinates.get(body)[0].y) {
-                coordinates.get(body)[0] = new Vector2(pHc.getVertices()[0], pHc.getVertices()[1]);
+            if (pHc.getVertices()[0] < coordinates.get(body)[0].x) {
+                coordinates.get(body)[0].x = pHc.getVertices()[0];
+            }
+            if (pHc.getVertices()[1] < coordinates.get(body)[0].y) {
+                coordinates.get(body)[0].y = pHc.getVertices()[1];
+            }
+
+            if(pHc.getVertices()[0] == -.5f && pHc.getVertices()[1] == -.5f) {
                 coordinates.get(body)[2] = Mappers.tm.get(waterTile).getPos();
             }
             //store width and height into the second vector2
             //WIDTH
-            float width = getDimension(pHc.getVertices(),0);
-            if(width > coordinates.get(body)[1].x) {
+            float width = getDimension(pHc.getVertices(), 0);
+            if (width > coordinates.get(body)[1].x) {
                 coordinates.get(body)[1].x = width;
             }
 
             //HEIGHT
-            float height = getDimension(pHc.getVertices(),1);
-            if(height > coordinates.get(body)[1].y) {
+            float height = getDimension(pHc.getVertices(), 1);
+            if (height > coordinates.get(body)[1].y) {
                 coordinates.get(body)[1].y = height;
             }
 
             //TODO create an algorithm that will cover all the water tiles and render one big rectangle
-            Vector2 bottomLeftPos = Mappers.tm.get(tileMap.getTilesOfType(TileMap.TileType.WATER).first()).getPos();
-            Vector2 topRightPos = Mappers.tm.get(tileMap.getTilesOfType(TileMap.TileType.WATER).peek()).getPos();
 
-            /*batch.draw(TileMap.waterSprite,
-                       bottomLeftPos.x - Tile.SIZE / 2,
-                       bottomLeftPos.y - Tile.SIZE / 2,
-                       topRightPos.x - bottomLeftPos.x + 1,
-                       topRightPos.y - bottomLeftPos.y + 1);*/
-
-/*
-            Vector2 pos = Mappers.tm.get(waterTile).getPos();
+            /*Vector2 pos = Mappers.tm.get(waterTile).getPos();
             batch.draw(TileMap.waterSprite,
                        pos.x - Tile.SIZE/2,
                        pos.y - Tile.SIZE/2,
@@ -88,12 +85,12 @@ public class WaterRenderer {
 
         }
 
-        for(Vector2[] dimensions: coordinates.values()) {
-            float x = dimensions[2].x;
-            float y = dimensions[2].y;
+        for (Vector2[] dimensions : coordinates.values()) {
+            float x = dimensions[0].x + dimensions[2].x;
+            float y = dimensions[0].y + dimensions[2].y;
 
-            float width = dimensions[1].x;
-            float height = dimensions[1].y;
+            float width = 2*dimensions[1].x;
+            float height = 2*dimensions[1].y;
 
             batch.draw(TileMap.waterSprite,
                        x - Tile.SIZE / 2,
@@ -113,12 +110,12 @@ public class WaterRenderer {
     }
 
     /**
-     *
      * @param vertices
-     * @param offset 0 for width, 1 for height
+     * @param offset   0 for width, 1 for height
      * @return
      */
     private float getDimension(float[] vertices, int offset) {
-        return 2*Math.abs(-.5f + vertices[offset]);
+        float dim = Math.abs(-.5f - vertices[offset]) + 1;
+        return dim == 0 ? 2 : dim;
     }
 }

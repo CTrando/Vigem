@@ -35,7 +35,7 @@ public class StateSystem extends IteratingSystem {
                 // animation if the magnitude is close to speed even if it is going wrong way
                 // Also slowing down by hitting opposite key does not work, so fix that through velocity manipulation
                 // here
-                System.out.println(body.getLinearVelocity().len());
+                //System.out.println(body.getLinearVelocity().len());
                 if (body.getLinearVelocity().len() - mc.getPrimarySpeed() / 2 > EPSILON) {
                     sc.setState(StateComponent.State.running);
                 } else {

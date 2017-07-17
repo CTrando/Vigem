@@ -23,8 +23,8 @@ public class Friend extends Entity {
         //will create body in world despite not being in the engine yet
         add(new PhysicsComponent(BodyDef.BodyType.DynamicBody,
                                     Mappers.tm.get(this).getPos(),
-                                    5,
-                                    5));
+                                    1,
+                                    1));
 
         add(new FriendAIComponent());
     }

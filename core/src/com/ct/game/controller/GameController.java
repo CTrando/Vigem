@@ -48,12 +48,15 @@ public class GameController {
         engine.addSystem(new TileMapMouseSystem(inputHandler, tileMap, viewportManager.getCamera()));
         engine.addSystem(new PlayerInputMoveSystem(inputHandler));
         engine.addSystem(new PlayerInputDirectionSystem(inputHandler));
+        engine.addSystem(new PlayerInputAttackSystem(inputHandler));
         engine.addSystem(new TransformSyncSystem());
         engine.addSystem(new MoveSystem());
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new StateSystem());
         engine.addSystem(new StateAnimationSystem());
         engine.addSystem(new DayNightSystem(rayHandler));
+
+        engine.addSystem(new AttackSystem(world));
 
         engine.addSystem(new LightBodyAttachSystem());
         engine.addSystem(new FriendAISystem(engine));
@@ -96,5 +99,10 @@ public class GameController {
 
     public World getWorld() {
         return world;
+    }
+
+    public void dispose() {
+        world.dispose();
+        rayHandler.dispose();
     }
 }
