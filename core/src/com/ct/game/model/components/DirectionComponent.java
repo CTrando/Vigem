@@ -22,8 +22,8 @@ public class DirectionComponent implements Component {
             right.reverse = left;
 
             up.coordinateDirection = Vector2.Y;
-            down.coordinateDirection = Vector2.Y.scl(-1);
-            left.coordinateDirection = Vector2.X.scl(-1);
+            down.coordinateDirection = Vector2.Y.cpy().scl(-1);
+            left.coordinateDirection = Vector2.X.cpy().scl(-1);
             right.coordinateDirection = Vector2.X;
 
             up.angle = MathUtils.PI/2;

@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Input;
 import com.ct.game.controller.InputHandler;
-import com.ct.game.model.components.PlayerControlledComponent;
+import com.ct.game.model.components.*;
 
 /**
  * Created by Cameron on 7/16/2017.
@@ -19,10 +19,13 @@ public class PlayerInputAttackSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        if(!inputHandler.areKeysPressed(Input.Keys.A)) return;
+        if(!inputHandler.areKeysPressed(Input.Keys.A)) {
+            entity.remove(AttackComponent.class);
+            return;
+        }
 
         if (inputHandler.isKeyPressed(Input.Keys.A)) {
-            System.out.println("Attack successful");
+            entity.add(new AttackComponent(5));
         }
     }
 }

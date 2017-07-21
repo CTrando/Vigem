@@ -56,7 +56,7 @@ public class GameController {
         engine.addSystem(new StateAnimationSystem());
         engine.addSystem(new DayNightSystem(rayHandler));
 
-        engine.addSystem(new AttackSystem(world));
+        engine.addSystem(new AttackSystem(engine, world));
 
         engine.addSystem(new LightBodyAttachSystem());
         engine.addSystem(new FriendAISystem(engine));
