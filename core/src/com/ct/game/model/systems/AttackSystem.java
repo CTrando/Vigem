@@ -13,6 +13,7 @@ import com.ct.game.utils.Mappers;
  * Created by Cameron on 7/16/2017.
  */
 public class AttackSystem extends IteratingSystem {
+    private static final float EPSILON = .5f;
     private World world;
     private Engine engine;
     private Vector2 collisionPoint;
@@ -32,11 +33,14 @@ public class AttackSystem extends IteratingSystem {
         PhysicsComponent pHc = Mappers.pHm.get(entity);
         DirectionComponent dc = Mappers.dm.get(entity);
 
-        Vector2 pos = pHc.getBody().getPosition();
-        Vector2 scaledDirection = dc.getDirection().getCoordinateDirection().cpy().scl(.5f);
-        Vector2 pos2 = pHc.getBody().getPosition().cpy().add(scaledDirection);
+        if(aTc.getCurrentTime() < EPSILON) {
+            Vector2 pos = pHc.getBody().getPosition();
+            Vector2 vel = pHc.getBody().getLinearVelocity();
+            Vector2 scaledDirection = dc.getDirection().getCoordinateDirection().cpy().scl(.5f);
+            Vector2 pos2 = pHc.getBody().getPosition().cpy().add(scaledDirection).add(vel);
 
-        rayCast.update(scaledDirection);
-        world.rayCast(rayCast, pos, pos2);
+            rayCast.update(scaledDirection);
+            world.rayCast(rayCast, pos, pos2);
+        }
     }
 }

@@ -34,7 +34,7 @@ player-idle-left
   index: 2
 player-idle-left
   rotate: false
-  xy: 804, 101
+  xy: 819, 101
   size: 15, 27
   orig: 32, 32
   offset: 7, 2
@@ -55,7 +55,7 @@ player-idle-right
   index: 2
 player-idle-right
   rotate: false
-  xy: 819, 101
+  xy: 834, 101
   size: 15, 27
   orig: 32, 32
   offset: 10, 2
@@ -116,16 +116,30 @@ player-running-right
   orig: 32, 32
   offset: 5, 0
   index: 0
-player-walking-right
+player-walking-left
   rotate: false
   xy: 789, 99
+  size: 15, 29
+  orig: 32, 32
+  offset: 8, 1
+  index: 1
+player-walking-left
+  rotate: false
+  xy: 849, 101
+  size: 15, 27
+  orig: 32, 32
+  offset: 7, 2
+  index: 0
+player-walking-right
+  rotate: false
+  xy: 804, 99
   size: 15, 29
   orig: 32, 32
   offset: 9, 1
   index: 1
 player-walking-right
   rotate: false
-  xy: 834, 101
+  xy: 864, 101
   size: 15, 27
   orig: 32, 32
   offset: 10, 2
@@ -167,7 +181,7 @@ playerslowingRight
   index: 2
 playerslowingRight
   rotate: false
-  xy: 849, 113
+  xy: 879, 113
   size: 16, 15
   orig: 16, 16
   offset: 0, 0
@@ -181,14 +195,7 @@ playerslowingRight
   index: 1
 playerslowingRight
   rotate: false
-  xy: 865, 115
-  size: 16, 13
-  orig: 16, 16
-  offset: 0, 0
-  index: 0
-playerslowingRight
-  rotate: false
-  xy: 32, 12
+  xy: 895, 115
   size: 16, 13
   orig: 16, 16
   offset: 0, 1
@@ -202,18 +209,32 @@ playerslowingRight
   index: 5
 playerslowingRight
   rotate: false
-  xy: 849, 101
+  xy: 879, 101
   size: 16, 12
   orig: 16, 16
   offset: 0, 0
   index: 7
 playerslowingRight
   rotate: false
-  xy: 865, 103
+  xy: 895, 103
   size: 15, 12
   orig: 16, 16
   offset: 1, 0
   index: 6
+playerslowing_left
+  rotate: false
+  xy: 32, 12
+  size: 16, 13
+  orig: 16, 16
+  offset: 0, 0
+  index: 0
+playerslowing_right
+  rotate: false
+  xy: 911, 115
+  size: 16, 13
+  orig: 16, 16
+  offset: 0, 0
+  index: 0
 water
   rotate: false
   xy: 551, 96

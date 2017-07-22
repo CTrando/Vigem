@@ -23,6 +23,7 @@ public class StateSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         StateComponent sc = Mappers.sm.get(entity);
 
+        AttackComponent aTc = Mappers.aTm.get(entity);
         PhysicsComponent pHc = Mappers.pHm.get(entity);
         MoveComponent mc = Mappers.mcm.get(entity);
         DirectionComponent dc = Mappers.dm.get(entity);
@@ -48,6 +49,10 @@ public class StateSystem extends IteratingSystem {
                     sc.setState(StateComponent.State.idle);
                 }
             }
+        }
+
+        if (aTc != null) {
+            sc.setState(StateComponent.State.attacking);
         }
         //System.out.println(sc.getState() + "-" + dc.getDirection());
     }

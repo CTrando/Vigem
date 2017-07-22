@@ -8,7 +8,7 @@ import com.badlogic.ashley.core.Component;
 public class StateComponent implements Component {
 
     public enum State {
-        running, slowing, idle, walking;
+        running, slowing, idle, walking, attacking;
 
         State(){
         }

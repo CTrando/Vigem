@@ -7,8 +7,24 @@ import com.badlogic.ashley.core.Component;
  */
 public class AttackComponent implements Component {
     private int attackDamage;
-    public AttackComponent(int attackDamage) {
+    private float refreshTime;
+    private float currentTime;
+
+    public AttackComponent(float refreshTime, int attackDamage) {
         this.attackDamage = attackDamage;
+        this.refreshTime = refreshTime;
+    }
+
+    public float getRefreshTime() {
+        return refreshTime;
+    }
+
+    public void addTime(float deltaTime) {
+        currentTime+=deltaTime;
+    }
+
+    public float getCurrentTime() {
+        return currentTime;
     }
 }
 
