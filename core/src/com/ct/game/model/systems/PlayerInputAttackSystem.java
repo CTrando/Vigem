@@ -21,11 +21,7 @@ public class PlayerInputAttackSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         if(Mappers.aTm.has(entity)) {
-            AttackComponent aTc = Mappers.aTm.get(entity);
-            aTc.addTime(Gdx.graphics.getDeltaTime());
-            if(aTc.getCurrentTime() < aTc.getRefreshTime()){
-                return;
-            }
+            return;
         }
 
         if(!inputHandler.areKeysPressed(Input.Keys.A)) {
@@ -34,7 +30,7 @@ public class PlayerInputAttackSystem extends IteratingSystem {
         }
 
         if (inputHandler.isKeyPressed(Input.Keys.A)) {
-            entity.add(new AttackComponent(3f,5));
+            entity.add(new AttackComponent(1.5f, 3f,25));
         }
     }
 }

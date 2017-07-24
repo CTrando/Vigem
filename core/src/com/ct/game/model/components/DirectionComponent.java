@@ -43,6 +43,27 @@ public class DirectionComponent implements Component {
         public float getAngle() {
             return angle;
         }
+
+        public static Direction getClosestDirection(Vector2 vec) {
+            return getClosestDirection(vec, 0);
+        }
+
+        public static Direction getClosestDirection(Vector2 vec, float rotation) {
+            vec.nor();
+            int angle = (int) ((vec.angle() + rotation)/90);
+            switch(angle) {
+                case 0:
+                    return right;
+                case 1:
+                    return up;
+                case 2:
+                    return left;
+                case 3:
+                    return down;
+                default:
+                    return down;
+            }
+        }
     }
 
     private Direction direction;

@@ -7,15 +7,17 @@ import com.badlogic.gdx.math.Vector2;
  * Created by Cameron on 6/9/2017.
  */
 public class MoveComponent implements Component{
-    private Vector2 velocity;
+    private Vector2 movementForce;
     private float speedMag;
     private float primarySpeed;
     private float secondarySpeed;
+    private boolean enabled;
 
     //TODO switch over to acceleration system
-    public MoveComponent(Vector2 velocity, float speedMag){
-        this.velocity = velocity;
+    public MoveComponent(Vector2 movementForce, float speedMag){
+        this.movementForce = movementForce;
         this.speedMag = speedMag;
+        this.enabled = true;
     }
 
     public MoveComponent(float speedMag){
@@ -48,19 +50,33 @@ public class MoveComponent implements Component{
         this.speedMag = speedMag;
     }
 
-    public Vector2 getVelocity() {
-        return velocity;
+    public Vector2 getForce() {
+        return movementForce;
     }
 
-    public void setVelocity(Vector2 velocity) {
-        this.velocity = velocity;
+    public void setMovementForce(Vector2 movementForce) {
+        this.movementForce = movementForce;
     }
 
     public void addVelocity(Vector2 dVelocity){
-        this.velocity.add(dVelocity);
+        this.movementForce.add(dVelocity);
     }
 
-    public void normalizeVelocity(){
-        this.velocity.setLength(speedMag);
+    public void normalizeForce(){
+        this.movementForce.setLength(speedMag);
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void reset() {
+        this.movementForce.setZero();
+        this.speedMag = 0;
+        this.enabled = true;
     }
 }

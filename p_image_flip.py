@@ -7,8 +7,8 @@ os.chdir("C:\\Users\Cameron\\Desktop\\LibGDXGames\\Vigem\\rawassets")
 desired_files =[]
 
 # @param-endswith checks if the word ends with the string
-# @param-filter is the string we are searching for
-def filterFiles(files, filter, endswith=""):
+# @param-filter is the string we are searching for, will return empty list if not found
+def filter_files(files, filter, endswith=""):
     list = []
     for file in files:
         file_name = str(file)
@@ -30,9 +30,11 @@ def reverse_image(image):
 for root, dirs, filepaths in os.walk(os.getcwd()):
     desired_files = filepaths
 
-desired_files = filterFiles(desired_files, ".png")
+desired_files = filter_files(desired_files, ".png")
+#printing files for debug
 pprint.pprint(desired_files)
-desired_files = filterFiles(desired_files, "right", endswith=".png")
+desired_files = filter_files(desired_files, "right", endswith=".png")
+#printing new files for debug
 pprint.pprint(desired_files)
 
 for file in desired_files:

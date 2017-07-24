@@ -34,7 +34,7 @@ public class RayCast implements RayCastCallback {
             }
         }
 
-        fixture.getBody().applyForceToCenter(hitDirection.cpy().scl(100), true);
+        fixture.getBody().applyForceToCenter(hitDirection.cpy().scl(10), true);
         return 0;
     }
 

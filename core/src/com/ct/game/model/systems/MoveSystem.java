@@ -16,9 +16,11 @@ public class MoveSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         MoveComponent mc = Mappers.mcm.get(entity);
-        PhysicsComponent pHc = Mappers.pHm.get(entity);
+        if(!mc.isEnabled()) return;
+        mc.normalizeForce();
 
+        PhysicsComponent pHc = Mappers.pHm.get(entity);
         pHc.getBody().setLinearDamping(2f);
-        pHc.getBody().applyForceToCenter(mc.getVelocity(), true);
+        pHc.getBody().applyForceToCenter(mc.getForce(), true);
     }
 }

@@ -3,7 +3,6 @@ package com.ct.game.controller;
 import box2dLight.*;
 import com.badlogic.ashley.core.*;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ct.game.model.entities.*;
@@ -41,8 +40,12 @@ public class GameController {
         Friend friend = new Friend();
         friend.init();
 
+        Friend friend1 = new Friend();
+        friend1.init();
+
         engine.addEntity(player);
         engine.addEntity(friend);
+        engine.addEntity(friend1);
 
         engine.addSystem(new CameraFocusSystem(viewportManager));
         engine.addSystem(new TileMapMouseSystem(inputHandler, tileMap, viewportManager.getCamera()));
@@ -59,7 +62,8 @@ public class GameController {
         engine.addSystem(new AttackSystem(engine, world));
 
         engine.addSystem(new LightBodyAttachSystem());
-        engine.addSystem(new FriendAISystem(engine));
+        engine.addSystem(new FriendAttackSystem(engine));
+        engine.addSystem(new FriendMovementSystem(engine));
 
         world.setContactListener(new BounceListener());
     }
