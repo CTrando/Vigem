@@ -31,7 +31,7 @@ public class StateSystem extends IteratingSystem {
         if (pHc != null) {
             Body body = pHc.getBody();
 
-            if (mc != null) {
+            if (mc != null && mc.isEnabled()) {
                 // TODO fix bug here where it doesn't realize the direction of the speed, so it will turn to another
                 // animation if the magnitude is close to speed even if it is going wrong way
                 // Also slowing down by hitting opposite key does not work, so fix that through velocity manipulation

@@ -17,5 +17,5 @@ public class Mappers {
     public static ComponentMapper<LightComponent> lm = ComponentMapper.getFor(LightComponent.class);
     public static ComponentMapper<BounceComponent> bm = ComponentMapper.getFor(BounceComponent.class);
     public static ComponentMapper<AttackComponent> aTm = ComponentMapper.getFor(AttackComponent.class);
-
+    public static ComponentMapper<HealthComponent> hm = ComponentMapper.getFor(HealthComponent.class);
 }

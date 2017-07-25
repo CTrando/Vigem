@@ -14,11 +14,12 @@ import com.ct.game.utils.Mappers;
 public class Friend extends Entity {
 
     public void init() {
-        add(new TransformComponent(5, 15, 0));
+        add(new TransformComponent(45, 50, 0));
         //add(new RenderComponent(new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")))));
         add(new StateComponent());
         add(new DirectionComponent());
         add(new TransformSyncComponent());
+        add(new HealthComponent(100));
 
         //will create body in world despite not being in the engine yet
         add(new PhysicsComponent(BodyDef.BodyType.DynamicBody,

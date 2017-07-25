@@ -16,7 +16,7 @@ import com.ct.game.view.Assets;
 public class Player extends GameObject {
 
     public void init() {
-        add(new TransformComponent(1, 10, 0));
+        add(new TransformComponent(TileMap.WIDTH/2, TileMap.HEIGHT/2, 0));
         add(new RenderComponent(new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")))));
         add(new CameraFocusComponent());
         add(new PlayerControlledComponent());
@@ -24,6 +24,7 @@ public class Player extends GameObject {
         add(new StateComponent());
         add(new DirectionComponent());
         add(new TransformSyncComponent());
+        add(new HealthComponent(100));
 
         //TODO maybe switch to builder pattern
         add(new PhysicsComponent(BodyDef.BodyType.DynamicBody,

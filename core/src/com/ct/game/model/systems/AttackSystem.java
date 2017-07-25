@@ -2,12 +2,11 @@ package com.ct.game.model.systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ct.game.model.components.*;
-import com.ct.game.model.listeners.RayCast;
+import com.ct.game.model.listeners.AttackRayCast;
 import com.ct.game.utils.Mappers;
 
 /**
@@ -18,14 +17,14 @@ public class AttackSystem extends IteratingSystem {
     private World world;
     private Engine engine;
     private Vector2 collisionPoint;
-    private RayCast rayCast;
+    private AttackRayCast rayCast;
 
     public AttackSystem(final Engine engine, World world) {
         super(Family.all(AttackComponent.class, PhysicsComponent.class, DirectionComponent.class).get());
         this.world = world;
         this.engine = engine;
         this.collisionPoint = new Vector2();
-        this.rayCast = new RayCast(engine);
+        this.rayCast = new AttackRayCast(engine);
     }
 
     @Override
@@ -43,9 +42,12 @@ public class AttackSystem extends IteratingSystem {
                                         .cpy()
                                         .scl(aTc.getRange());
             Vector2 pos2 = pHc.getBody().getPosition().cpy().add(scaledDirection);
-            Vector2 damage = scaledDirection.cpy().add(vel).scl(aTc.getAttackDamage());
+            Vector2 damage = scaledDirection.cpy()
+                                            .add(vel)
+                                            .clamp(0, aTc.getAttackDamage()/2)
+                                            .scl(aTc.getAttackDamage());
 
-            rayCast.update(damage);
+            rayCast.update(damage, aTc.getAttackDamage());
             world.rayCast(rayCast, pos, pos2);
         }
 
