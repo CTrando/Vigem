@@ -57,7 +57,6 @@ project(":core") {
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
-        compile "io.socket:socket.io-client:0.6.2"
 
      /*   testCompile "junit:junit:4.4"
         testCompile "org.mockito:mockito-core:2.2.7"
