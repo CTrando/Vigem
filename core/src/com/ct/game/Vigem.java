@@ -1,14 +1,13 @@
 package com.ct.game;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.net.Socket;
-import com.ct.game.utils.Server;
+import com.ct.game.utils.*;
 import com.ct.game.view.GameScreen;
 
-import java.net.URISyntaxException;
+import java.io.*;
+import java.net.Socket;
+
 
 public class Vigem extends Game {
 	private SpriteBatch batch;
@@ -22,7 +21,7 @@ public class Vigem extends Game {
 		gameScreen = new GameScreen(this);
 		setScreen(gameScreen);
 		this.server = new Server();
-		this.client = Gdx.net.newClientSocket(Net.Protocol.TCP, "localhost", 9021, null);
+		createClient();
 	}
 
 	@Override
@@ -37,5 +36,10 @@ public class Vigem extends Game {
 
 	public SpriteBatch getBatch() {
 		return batch;
+	}
+
+	private void createClient() {
+		Client client = new Client();
+		client.start();
 	}
 }
