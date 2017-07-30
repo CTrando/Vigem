@@ -10,36 +10,37 @@ import java.net.Socket;
 
 
 public class Vigem extends Game {
-	private SpriteBatch batch;
-	private GameScreen gameScreen;
-	private Server server;
-	private Socket client;
+    private SpriteBatch batch;
+    private GameScreen gameScreen;
+    private Server server;
+    private Client client;
 
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		gameScreen = new GameScreen(this);
-		setScreen(gameScreen);
-		this.server = new Server();
-		createClient();
-	}
+    @Override
+    public void create() {
+        batch = new SpriteBatch();
+        gameScreen = new GameScreen(this);
+        setScreen(gameScreen);
+        //this.server = new Server();
+        createClient();
+    }
 
-	@Override
-	public void render () {
-		screen.render(Gdx.graphics.getDeltaTime());
-	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-	}
+    @Override
+    public void render() {
+        screen.render(Gdx.graphics.getDeltaTime());
+    }
 
-	public SpriteBatch getBatch() {
-		return batch;
-	}
+    @Override
+    public void dispose() {
+        batch.dispose();
+        client.end();
+    }
 
-	private void createClient() {
-		Client client = new Client();
-		client.start();
-	}
+    public SpriteBatch getBatch() {
+        return batch;
+    }
+
+    private void createClient() {
+        client = new Client();
+        client.start();
+    }
 }
