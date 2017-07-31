@@ -28,7 +28,7 @@ public class Server implements Disposable {
 
         this.serverThread = new ServerThread(serverSocket);
         ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
-        exec.schedule(serverThread, 10, TimeUnit.MILLISECONDS);
+        exec.scheduleAtFixedRate(serverThread, 0, 10, TimeUnit.MILLISECONDS);
     }
 
     @Override
