@@ -39,7 +39,6 @@ public class GameController {
 
         Friend friend = new Friend();
         friend.init();
-
         Friend friend1 = new Friend();
         friend1.init();
 

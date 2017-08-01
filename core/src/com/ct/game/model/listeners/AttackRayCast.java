@@ -2,7 +2,7 @@ package com.ct.game.model.listeners;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ct.game.model.components.*;
 import com.ct.game.utils.Mappers;
@@ -12,28 +12,34 @@ import com.ct.game.utils.Mappers;
  */
 public class AttackRayCast implements RayCastCallback {
     private Vector2 collisionPoint;
-    private Vector2 hitDirection;
-    private float damage;
+    private Entity collidedEntity;
     private Engine engine;
+    private World world;
+    private boolean hasCollided;
 
-    public AttackRayCast(Engine engine) {
+    public AttackRayCast(Engine engine, World world) {
         this.engine = engine;
+        this.world = world;
         this.collisionPoint = new Vector2();
     }
 
     @Override
     public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+        hasCollided = true;
         collisionPoint.set(point);
-        Entity entity = identifyEntity(fixture);
-        if(entity == null) return 0;
-        //get the entities from the engine and loop through them to see which entity the fixture is from
-        fixture.getBody().applyForceToCenter(hitDirection.cpy().scl(10), true);
-        if(Mappers.hm.has(entity)) {
-            HealthComponent hc = Mappers.hm.get(entity);
-            hc.takeDamage(damage);
-            System.out.print(hc.getHp());
-        }
+        collidedEntity = identifyEntity(fixture);
         return 0;
+    }
+
+    public void rayCast(Vector2 startPos, Vector2 endPos){
+        collisionPoint.setZero();
+        collidedEntity = null;
+        hasCollided = false;
+        world.rayCast(this, startPos, endPos);
+    }
+
+    public boolean hasCollided() {
+        return hasCollided;
     }
 
     public Vector2 getCollisionPoint() {
@@ -42,11 +48,6 @@ public class AttackRayCast implements RayCastCallback {
 
     public void setCollisionPoint(Vector2 collisionPoint) {
         this.collisionPoint = collisionPoint;
-    }
-
-    public void update(Vector2 scaledDirection, float damage) {
-        this.hitDirection = scaledDirection;
-        this.damage = damage;
     }
 
     /**
@@ -63,5 +64,9 @@ public class AttackRayCast implements RayCastCallback {
             }
         }
         return null;
+    }
+
+    public Entity getCollidedEntity() {
+        return collidedEntity;
     }
 }

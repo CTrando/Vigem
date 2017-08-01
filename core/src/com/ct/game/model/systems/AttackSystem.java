@@ -14,41 +14,40 @@ import com.ct.game.utils.Mappers;
  */
 public class AttackSystem extends IteratingSystem {
     private static final float EPSILON = .1f;
-    private World world;
-    private Engine engine;
-    private Vector2 collisionPoint;
+
+    //the indices for specific information in the Vector2 array
+    private static final int START_POS = 0;
+    private static final int END_POS = 1;
+    private static final int SCALED_DIRECTION = 2;
+
     private AttackRayCast rayCast;
 
     public AttackSystem(final Engine engine, World world) {
         super(Family.all(AttackComponent.class, PhysicsComponent.class, DirectionComponent.class).get());
-        this.world = world;
-        this.engine = engine;
-        this.collisionPoint = new Vector2();
-        this.rayCast = new AttackRayCast(engine);
+        this.rayCast = new AttackRayCast(engine, world);
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         AttackComponent aTc = Mappers.aTm.get(entity);
-        PhysicsComponent pHc = Mappers.pHm.get(entity);
-        DirectionComponent dc = Mappers.dm.get(entity);
 
         if (!aTc.isAttackComplete()) {
             aTc.setAttackComplete(true);
-            Vector2 pos = pHc.getBody().getPosition();
-            Vector2 vel = pHc.getBody().getLinearVelocity();
-            Vector2 scaledDirection = dc.getDirection()
-                                        .getCoordinateDirection()
-                                        .cpy()
-                                        .scl(aTc.getRange());
-            Vector2 pos2 = pHc.getBody().getPosition().cpy().add(scaledDirection);
-            Vector2 damage = scaledDirection.cpy()
-                                            .add(vel)
-                                            .clamp(0, aTc.getAttackDamage()/2)
-                                            .scl(aTc.getAttackDamage());
 
-            rayCast.update(damage, aTc.getAttackDamage());
-            world.rayCast(rayCast, pos, pos2);
+            Vector2[] endPoints;
+            if (aTc.isTargetKnown()) {
+                endPoints = handleTargetKnown(entity);
+            } else {
+                endPoints = handleTargetUnknown(entity);
+            }
+            Vector2 scaledDirection = endPoints[SCALED_DIRECTION];
+
+            rayCast.rayCast(endPoints[START_POS], endPoints[END_POS]);
+            if (rayCast.hasCollided()) {
+                Entity collidedEntity = rayCast.getCollidedEntity();
+                handleKnockBack(collidedEntity, scaledDirection.nor().cpy(), 5);
+                handleDamage(collidedEntity, aTc.getAttackDamage());
+            }
         }
 
         if (aTc.getCurrentTime() > aTc.getRefreshTime()) {
@@ -56,5 +55,56 @@ public class AttackSystem extends IteratingSystem {
         }
 
         aTc.addTime(Gdx.graphics.getDeltaTime());
+    }
+
+    private Vector2[] handleTargetKnown(Entity entity) {
+        AttackComponent aTc = Mappers.aTm.get(entity);
+        PhysicsComponent pHc = Mappers.pHm.get(entity);
+
+        Vector2 targetPos = aTc.getTargetPos().cpy();
+        Vector2 startPos = Mappers.tm.get(entity).getPos().cpy();
+        Vector2 normDirection = targetPos.cpy().sub(startPos).nor();
+
+        //Vector2 vel = pHc.getBody().getLinearVelocity();
+        Vector2 scaledDirection = normDirection.cpy().scl(aTc.getRange());
+
+        Vector2 endPos = startPos.cpy().add(scaledDirection);
+
+        Vector2[] retVecs = new Vector2[3];
+        retVecs[START_POS] = startPos;
+        retVecs[END_POS] = endPos;
+        retVecs[SCALED_DIRECTION] = scaledDirection;
+        return retVecs;
+    }
+
+    private Vector2[] handleTargetUnknown(Entity entity) {
+        AttackComponent aTc = Mappers.aTm.get(entity);
+        PhysicsComponent pHc = Mappers.pHm.get(entity);
+        DirectionComponent dc = Mappers.dm.get(entity);
+
+        Vector2 startPos = pHc.getBody().getPosition();
+        //Vector2 vel = pHc.getBody().getLinearVelocity();
+        Vector2 scaledDirection = dc.getDirection()
+                                    .getCoordinateDirection()
+                                    .cpy()
+                                    .scl(aTc.getRange());
+        Vector2 endPos = pHc.getBody().getPosition().cpy().add(scaledDirection);
+
+        Vector2[] retVecs = new Vector2[3];
+        retVecs[START_POS] = startPos;
+        retVecs[END_POS] = endPos;
+        retVecs[SCALED_DIRECTION] = scaledDirection;
+        return retVecs;
+    }
+
+    private void handleKnockBack(Entity collidedEntity, Vector2 direction, int knockback) {
+        PhysicsComponent collidedEntityPHC = Mappers.pHm.get(collidedEntity);
+        collidedEntityPHC.getBody().setLinearVelocity(direction.scl(knockback));
+    }
+
+    private void handleDamage(Entity collidedEntity, int damage) {
+        HealthComponent hc = Mappers.hm.get(collidedEntity);
+        hc.takeDamage(damage);
+        System.out.println(hc.getHp());
     }
 }

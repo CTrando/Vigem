@@ -6,6 +6,7 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.ct.game.model.components.*;
+import com.ct.game.model.entities.Friend;
 import com.ct.game.utils.Mappers;
 
 /**
@@ -27,7 +28,7 @@ public class FriendAttackSystem extends IteratingSystem {
         TransformComponent entityTc = Mappers.tm.get(entity);
 
         for(Entity logicEntity: logicEntities) {
-            if(entity == logicEntity) continue;
+            if(entity == logicEntity || logicEntity instanceof Friend) continue;
             TransformComponent tc = Mappers.tm.get(logicEntity);
 
             if(tc.getPos().dst(entityTc.getPos()) < 1.5) {
@@ -35,7 +36,7 @@ public class FriendAttackSystem extends IteratingSystem {
                     return;
                 }
 
-                AttackComponent aTc = new AttackComponent(1.5f, .8f, 15);
+                AttackComponent aTc = new AttackComponent(logicEntity,1.5f, .8f, 15);
                 System.out.println("ATTACKING");
                 entity.add(aTc);
             }

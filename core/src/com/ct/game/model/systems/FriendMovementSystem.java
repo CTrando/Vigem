@@ -5,6 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
 import com.ct.game.model.components.*;
+import com.ct.game.model.entities.Friend;
 import com.ct.game.utils.Mappers;
 
 public class FriendMovementSystem extends IteratingSystem {
@@ -16,6 +17,7 @@ public class FriendMovementSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+        if(Mappers.aTm.has(entity)) return;
         DirectionComponent dc = Mappers.dm.get(entity);
 
         ImmutableArray<Entity> logicEntities = engine.getEntitiesFor(
@@ -24,7 +26,7 @@ public class FriendMovementSystem extends IteratingSystem {
         TransformComponent entityTc = Mappers.tm.get(entity);
 
         for(Entity logicEntity: logicEntities) {
-            if (entity == logicEntity) continue;
+            if (entity == logicEntity || logicEntity instanceof Friend) continue;
 
             TransformComponent tc = Mappers.tm.get(logicEntity);
 

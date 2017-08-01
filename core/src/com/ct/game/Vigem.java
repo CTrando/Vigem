@@ -21,7 +21,7 @@ public class Vigem extends Game {
         gameScreen = new GameScreen(this);
         setScreen(gameScreen);
         //this.server = new Server();
-        createClient();
+        //createClient();
     }
 
     @Override
