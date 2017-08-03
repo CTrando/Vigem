@@ -2,6 +2,7 @@ package com.ct.game;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.ct.game.model.utils.QuadTree;
 import com.ct.game.utils.*;
 import com.ct.game.view.GameScreen;
 
@@ -20,6 +21,12 @@ public class Vigem extends Game {
         batch = new SpriteBatch();
         gameScreen = new GameScreen(this);
         setScreen(gameScreen);
+
+        QuadTree<Integer> quadTree = new QuadTree<Integer>(16);
+        quadTree.insert(10, 10, 10);
+        quadTree.insert(4,10,10);
+        quadTree.insert(14,4,10);
+        quadTree.insert(2,4,10);
         //this.server = new Server();
         //createClient();
     }

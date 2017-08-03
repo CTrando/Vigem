@@ -57,6 +57,7 @@ public class AttackSystem extends IteratingSystem {
         aTc.addTime(Gdx.graphics.getDeltaTime());
     }
 
+    //TODO include velocity into knockback
     private Vector2[] handleTargetKnown(Entity entity) {
         AttackComponent aTc = Mappers.aTm.get(entity);
         PhysicsComponent pHc = Mappers.pHm.get(entity);
