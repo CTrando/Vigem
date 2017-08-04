@@ -1,17 +1,17 @@
 package com.ct.game.model.utils;
 
 class TreeNode<T> {
-    public int x;
-    public int y;
-    public int width;
-    public T data;
+    int x;
+    int y;
+    int width;
+    T data;
 
-    public TreeNode NW;
-    public TreeNode NE;
-    public TreeNode SW;
-    public TreeNode SE;
+    TreeNode NW;
+    TreeNode NE;
+    TreeNode SW;
+    TreeNode SE;
 
-    public TreeNode(int x, int y, int width, T data) {
+    TreeNode(int x, int y, int width, T data) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -20,8 +20,8 @@ class TreeNode<T> {
 }
 
 public class QuadTree<T> {
-    TreeNode root;
-    int width;
+    private TreeNode root;
+    private int width;
 
     public QuadTree(int width) {
         this.width = width;
@@ -35,9 +35,9 @@ public class QuadTree<T> {
 
     private TreeNode insert(int x, int y, int width, int centerX, int centerY, TreeNode root, T data) {
         int newWidth = width / 2;
-        if(root == null){
-            root = new TreeNode<T>(centerX+1, centerY+1, newWidth, null);
-            if(newWidth <= 1) {
+        if (root == null) {
+            root = new TreeNode<T>(centerX + 1, centerY + 1, newWidth, null);
+            if (newWidth <= 1) {
                 root.data = data;
                 return root;
             }
@@ -45,25 +45,33 @@ public class QuadTree<T> {
 
         if (greaterThan(x, root.x) && greaterThan(y, root.y)) {
             root.NE = insert(x, y, newWidth,
-                   centerX + newWidth / 2 ,
-                   centerY + newWidth / 2,
-                   root.NE, data);
+                             centerX + newWidth / 2,
+                             centerY + newWidth / 2,
+                             root.NE, data);
         } else if (!greaterThan(x, root.x) && greaterThan(y, root.y)) {
             root.NW = insert(x, y, newWidth,
-                   centerX - newWidth/2,
-                   centerY + newWidth/2,
-                   root.NW, data);
+                             centerX - newWidth / 2,
+                             centerY + newWidth / 2,
+                             root.NW, data);
         } else if (!greaterThan(x, root.x) && !greaterThan(y, root.y)) {
             root.SW = insert(x, y, newWidth,
-                   centerX - newWidth/2,
-                   centerY - newWidth/2,
-                   root.SW, data);
+                             centerX - newWidth / 2,
+                             centerY - newWidth / 2,
+                             root.SW, data);
         } else if (greaterThan(x, root.x) && !greaterThan(y, root.y)) {
             root.SE = insert(x, y, newWidth,
-                   centerX + newWidth/2,
-                   centerY - newWidth/2,
-                   root.SE, data);
+                             centerX + newWidth / 2,
+                             centerY - newWidth / 2,
+                             root.SE, data);
         }
+        return root;
+    }
+
+    /*public T get(int x, int y) {
+        return get(x, y, root);
+    }*/
+
+    public TreeNode<T> getRoot() {
         return root;
     }
 

@@ -22,11 +22,6 @@ public class Vigem extends Game {
         gameScreen = new GameScreen(this);
         setScreen(gameScreen);
 
-        QuadTree<Integer> quadTree = new QuadTree<Integer>(16);
-        quadTree.insert(10, 10, 10);
-        quadTree.insert(4,10,10);
-        quadTree.insert(14,4,10);
-        quadTree.insert(2,4,10);
         //this.server = new Server();
         //createClient();
     }

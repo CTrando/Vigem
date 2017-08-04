@@ -25,13 +25,15 @@ public class TileMap {
     public static TextureRegion waterSprite = Assets.getInstance().getTextureRegion("water", "tiles.atlas");
 
     private Tile[][] tileMap;
+    private QuadTree<Tile> quadMap;
     private HashMap<TileType, Array<Tile>> tileTypes;
     private Array<Entity> entities;
     private Array<Entity> newEntities;
 
     public void init() {
+        this.quadMap = new QuadTree<Tile>(WIDTH);
         this.tileMap = new Tile[HEIGHT][WIDTH];
-        this.tileTypes = new HashMap<TileType, Array<Tile>>(TileType.values().length+1);
+        this.tileTypes = new HashMap<TileType, Array<Tile>>(TileType.values().length + 1);
         this.entities = new Array<Entity>();
         this.newEntities = new Array<Entity>();
         //make a tilemap builder later
@@ -58,13 +60,61 @@ public class TileMap {
     }
 
     public void render(SpriteBatch batch) {
-        for (int row = 0; row < HEIGHT; row++) {
+        render(batch, quadMap.getRoot());
+        /*for (int row = 0; row < HEIGHT; row++) {
             for (int col = 0; col < WIDTH; col++) {
                 Tile tile = getTileAt(row, col);
                 if (tile != null) {
                     tile.render(batch);
                 }
             }
+        }*/
+    }
+
+    private void render(SpriteBatch batch, TreeNode node) {
+        if(node.data != null) {
+            Tile tile = (Tile) node .data;
+            tile.render(batch);
+            return;
+        }
+
+        int width = node.width / 2;
+
+        if (node.NE == null) {
+            for (int col = node.x; col < node.x + width; col++) {
+                for (int row = node.y; row < node.y + width; row++) {
+                    batch.draw(grassSprite, col, row, Tile.SIZE, Tile.SIZE);
+                }
+            }
+        } else {
+            render(batch, node.NE);
+        }
+        if (node.NW == null) {
+            for (int col = node.x - width; col < node.x; col++) {
+                for (int row = node.y; row < node.y + width; row++) {
+                    batch.draw(grassSprite, col, row, Tile.SIZE, Tile.SIZE);
+                }
+            }
+        } else {
+            render(batch, node.NW);
+        }
+        if (node.SW == null) {
+            for (int col = node.x - width; col < node.x; col++) {
+                for (int row = node.y - width; row < node.y; row++) {
+                    batch.draw(grassSprite, col, row, Tile.SIZE, Tile.SIZE);
+                }
+            }
+        } else {
+            render(batch, node.SW);
+        }
+        if (node.SE == null) {
+            for (int col = node.x; col < node.x + width; col++) {
+                for (int row = node.y - width; row < node.y; row++) {
+                    batch.draw(grassSprite, col, row, Tile.SIZE, Tile.SIZE);
+                }
+            }
+        } else {
+            render(batch, node.SE);
         }
     }
 
@@ -92,13 +142,16 @@ public class TileMap {
 
     public void set(int row, int col, Tile tile, TileType type) {
         tileMap[row][col] = tile;
-        if(tileTypes.get(type) == null) {
+        quadMap.insert(row, col, tile);
+        if (tileTypes.get(type) == null) {
             tileTypes.put(type, new Array<Tile>());
         }
         Array<Tile> tiles = tileTypes.get(type);
-        if(tiles.contains(tile, true)) return;
+        if (tiles.contains(tile, true)) {
+            return;
+        }
 
-        if(tiles.size == 0){
+        if (tiles.size == 0) {
             tiles.add(tile);
         } else {
             for (int i = 0; i < tiles.size; i++) {
@@ -110,7 +163,7 @@ public class TileMap {
                     break;
                 }
 
-                if(i == tiles.size-1){
+                if (i == tiles.size - 1) {
                     tiles.add(tile);
                     break;
                 }
@@ -126,14 +179,14 @@ public class TileMap {
         return tileMap;
     }
 
-    public Array<Tile> getTilesOfType(TileType type){
-        if(tileTypes.get(type) == null){
+    public Array<Tile> getTilesOfType(TileType type) {
+        if (tileTypes.get(type) == null) {
             tileTypes.put(type, new Array<Tile>());
         }
         return tileTypes.get(type);
     }
 
-    public enum TileType{
+    public enum TileType {
         GRASS, WATER, BRICK, BOUNCE;
     }
 }
