@@ -31,7 +31,7 @@ public class TileMapMouseSystem extends EntitySystem {
             try {
                 int row = MathUtils.round(worldCoords.y);
                 int col =  MathUtils.round(worldCoords.x);
-                Tile tile = tileMap.getTileAt(col, row);
+                Tile tile = tileMap.getTileAt(row, col);
                 if(tile == null) {
                     BrickTile waterTile = new BrickTile();
                     waterTile.init(row, col);

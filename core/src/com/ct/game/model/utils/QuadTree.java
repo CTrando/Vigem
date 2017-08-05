@@ -78,7 +78,7 @@ public class QuadTree<T> {
         if (x > this.root.width || y > this.root.width) {
             return null;
         }
-        if (root.width <= 1) {
+        if (root.width <= 0) {
             return root.data;
         }
         if (root.x == x && root.y == y) {
