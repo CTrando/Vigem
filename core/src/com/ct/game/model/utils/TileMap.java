@@ -17,7 +17,7 @@ import java.util.HashMap;
  * Created by Cameron on 6/12/2017.
  */
 public class TileMap {
-    public static int WIDTH = 100;
+    public static int WIDTH = 128;
     public static int HEIGHT = 100;
 
     public static TextureRegion grassSprite = Assets.getInstance().getTextureRegion("grass", "tiles.atlas");
@@ -38,17 +38,17 @@ public class TileMap {
         this.newEntities = new Array<Entity>();
         //make a tilemap builder later
 
-        for (int row = 0; row < HEIGHT; row++) {
+        /*for (int row = 0; row < HEIGHT; row++) {
             for (int col = 0; col < WIDTH; col++) {
                 Tile tile = new GrassTile();
                 tile.init(row, col);
                 set(row, col, tile, TileType.GRASS);
             }
-        }
+        }*/
     }
 
     public void update() {
-        for (int row = 0; row < HEIGHT; row++) {
+        /*for (int row = 0; row < HEIGHT; row++) {
             for (int col = 0; col < WIDTH; col++) {
                 Tile tile = getTileAt(row, col);
                 if (tile != null && tile.isEntity() && !entities.contains(tile, true)) {
@@ -56,7 +56,7 @@ public class TileMap {
                     newEntities.add(tile);
                 }
             }
-        }
+        }*/
     }
 
     public void render(SpriteBatch batch) {
@@ -78,12 +78,12 @@ public class TileMap {
             return;
         }
 
-        int width = node.width / 2;
+        int width = node.width / 4;
 
         if (node.NE == null) {
             for (int col = node.x; col < node.x + width; col++) {
                 for (int row = node.y; row < node.y + width; row++) {
-                    batch.draw(grassSprite, col, row, Tile.SIZE, Tile.SIZE);
+                    batch.draw(grassSprite, col - Tile.SIZE/2, row - Tile.SIZE/2, Tile.SIZE, Tile.SIZE);
                 }
             }
         } else {
@@ -92,7 +92,7 @@ public class TileMap {
         if (node.NW == null) {
             for (int col = node.x - width; col < node.x; col++) {
                 for (int row = node.y; row < node.y + width; row++) {
-                    batch.draw(grassSprite, col, row, Tile.SIZE, Tile.SIZE);
+                    batch.draw(grassSprite, col - Tile.SIZE/2, row - Tile.SIZE/2, Tile.SIZE, Tile.SIZE);
                 }
             }
         } else {
@@ -101,7 +101,7 @@ public class TileMap {
         if (node.SW == null) {
             for (int col = node.x - width; col < node.x; col++) {
                 for (int row = node.y - width; row < node.y; row++) {
-                    batch.draw(grassSprite, col, row, Tile.SIZE, Tile.SIZE);
+                    batch.draw(grassSprite, col - Tile.SIZE/2, row - Tile.SIZE/2, Tile.SIZE, Tile.SIZE);
                 }
             }
         } else {
@@ -110,7 +110,7 @@ public class TileMap {
         if (node.SE == null) {
             for (int col = node.x; col < node.x + width; col++) {
                 for (int row = node.y - width; row < node.y; row++) {
-                    batch.draw(grassSprite, col, row, Tile.SIZE, Tile.SIZE);
+                    batch.draw(grassSprite, col - Tile.SIZE/2, row - Tile.SIZE/2, Tile.SIZE, Tile.SIZE);
                 }
             }
         } else {
@@ -132,9 +132,12 @@ public class TileMap {
         return ret;
     }
 
-    public Tile getTileAt(int row, int col) {
+    public Tile getTileAt(int row, int col) throws IllegalArgumentException {
+        if(row > WIDTH || row < 0 || col > WIDTH || col < 0) throw new IllegalArgumentException("Coordinates are not in world");
         try {
-            return tileMap[row][col];
+            //return null;
+            return quadMap.get(row, col);
+            //return tileMap[row][col];
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
         }

@@ -28,16 +28,20 @@ public class TileMapMouseSystem extends EntitySystem {
     public void update(float dt){
         if(inputHandler.getMouseClickPosPixel() != null) {
             Vector3 worldCoords = camera.unproject(new Vector3(inputHandler.getMouseClickPosPixel(), 0));
-            Tile tile = tileMap.getTileAt(MathUtils.round(worldCoords.y), MathUtils.round(worldCoords.x));
-            if(tile != null && !(tile instanceof WaterTile)){
-                if(Mappers.lm.get(tile) != null) return;
-                WaterTile waterTile = new WaterTile();
-                waterTile.init(tile.getRow(), tile.getCol());
+            try {
+                int row = MathUtils.round(worldCoords.y);
+                int col =  MathUtils.round(worldCoords.x);
+                Tile tile = tileMap.getTileAt(col, row);
+                if(tile == null) {
+                    BrickTile waterTile = new BrickTile();
+                    waterTile.init(row, col);
 
-                tileMap.removeTile(tile);
-                tileMap.set(tile.getRow(), tile.getCol(), waterTile, TileMap.TileType.WATER);
-                //tile.dispose();
-                combinePhysicsBodies(waterTile);
+                    tileMap.set(row, col, waterTile, TileMap.TileType.BRICK);
+                    //tile.dispose();
+                    //combinePhysicsBodies(waterTile);
+                }
+            } catch (IllegalArgumentException e) {
+                return;
             }
         }
     }

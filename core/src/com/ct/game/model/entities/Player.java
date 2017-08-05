@@ -16,7 +16,7 @@ import com.ct.game.view.Assets;
 public class Player extends GameObject {
 
     public void init() {
-        add(new TransformComponent(TileMap.WIDTH/2, TileMap.HEIGHT/2, 0));
+        add(new TransformComponent(TileMap.WIDTH/2, TileMap.WIDTH/2, 0));
         add(new RenderComponent(new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")))));
         add(new CameraFocusComponent());
         add(new PlayerControlledComponent());
