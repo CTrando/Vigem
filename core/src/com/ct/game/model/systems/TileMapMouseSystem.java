@@ -29,8 +29,10 @@ public class TileMapMouseSystem extends EntitySystem {
         if(inputHandler.getMouseClickPosPixel() != null) {
             Vector3 worldCoords = camera.unproject(new Vector3(inputHandler.getMouseClickPosPixel(), 0));
             try {
-                int row = MathUtils.round(worldCoords.y);
-                int col =  MathUtils.round(worldCoords.x);
+                //convert row and column to odd numbers for quad tree
+                int row = MathUtils.floor(worldCoords.y)/2 * 2 + 1;
+                int col =  MathUtils.floor(worldCoords.x)/2 * 2 + 1;
+
                 Tile tile = tileMap.getTileAt(row, col);
                 if(tile == null) {
                     BrickTile waterTile = new BrickTile();

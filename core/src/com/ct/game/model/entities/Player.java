@@ -29,8 +29,8 @@ public class Player extends GameObject {
         //TODO maybe switch to builder pattern
         add(new PhysicsComponent(BodyDef.BodyType.DynamicBody,
                                     Mappers.tm.get(this).getPos(),
-                                    .9f,
-                                    .9f));
+                                    1.9f,
+                                    1.9f));
 
         Mappers.pHm.get(this).setUserData(this);
 

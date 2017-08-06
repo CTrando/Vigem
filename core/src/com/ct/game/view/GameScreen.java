@@ -15,7 +15,7 @@ import com.ct.game.model.utils.Box2DUtils;
  * Created by Cameron on 6/5/2017.
  */
 public class GameScreen implements Screen {
-    public static final float PPM = 32;
+    public static final float PPM = 16;
 
     private Vigem game;
     private SpriteBatch batch;

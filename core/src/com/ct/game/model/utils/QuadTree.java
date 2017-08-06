@@ -37,7 +37,8 @@ public class QuadTree<T> {
         int newWidth = width / 2;
         if (root == null) {
             root = new TreeNode<T>(centerX, centerY, newWidth, null);
-            if (newWidth <= 0) {
+
+            if (newWidth <= 1) {
                 root.data = data;
                 return root;
             }
@@ -78,11 +79,11 @@ public class QuadTree<T> {
         if (x > this.root.width || y > this.root.width) {
             return null;
         }
-        if (root.width <= 0) {
+        if (root.width <= 1) {
             return root.data;
         }
         if (root.x == x && root.y == y) {
-            root.width/= 2;
+            root.width /= 2;
             return get(x, y, root);
         }
 

@@ -62,8 +62,8 @@ public class TileMap {
     public void render(SpriteBatch batch) {
         TreeNode<Tile> root = quadMap.getRoot();
         int width = root.width/2;
-        for (int col = root.x - width; col < root.x + width; col++) {
-            for (int row = root.y - width; row < root.y + width; row++) {
+        for (int col = root.x - width + 1; col < root.x + width; col+=2) {
+            for (int row = root.y - width + 1; row < root.y + width; row+=2) {
                 batch.draw(grassSprite, col - Tile.SIZE / 2, row - Tile.SIZE / 2, Tile.SIZE, Tile.SIZE);
             }
         }
@@ -87,7 +87,7 @@ public class TileMap {
             return;
         }
 
-        if(node.width <= 0 && node.data != null) {
+        if(node.width <= 1 && node.data != null) {
             Tile tile = (Tile) node.data;
             tile.render(batch);
             return;
