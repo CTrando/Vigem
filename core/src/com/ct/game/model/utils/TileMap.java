@@ -19,7 +19,7 @@ import static com.ct.game.view.GameScreen.PPM;
  * Created by Cameron on 6/12/2017.
  */
 public class TileMap {
-    public static int WIDTH = 1024;
+    public static int WIDTH = 32;
     public static int HEIGHT = 100;
 
     public static TextureRegion grassSprite = Assets.getInstance().getTextureRegion("grass", "tiles.atlas");
@@ -40,8 +40,11 @@ public class TileMap {
         this.newEntities = new Array<Entity>();
 
         TreeNode<Tile> root = quadMap.getRoot();
-        float width = root.width / 2;
+        initQuadTree(root);
+    }
 
+    private void initQuadTree(TreeNode<Tile> root) {
+        float width = root.width / 2;
         for (float col = root.x - width + .5f; col < root.x + width; col++) {
             for (float row = root.y - width + .5f; row < root.y + width; row++) {
                 GrassTile grassTile = new GrassTile();
@@ -51,7 +54,31 @@ public class TileMap {
         }
     }
 
-    public void update() {
+    public void update(ViewportManager viewportManager) {
+        TreeNode<Tile> root = quadMap.getRoot();
+        TreeNode<Tile> newRoot;
+        Vector2 position = new Vector2(viewportManager.getCamera().position.x, viewportManager.getCamera().position.y);
+        Vector2 rootPos = new Vector2(quadMap.getRoot().x, quadMap.getRoot().y);
+
+        if (rootPos.dst2(position) > quadMap.getRoot().width * quadMap.getRoot().width / 4) {
+            if (position.x > root.x && position.y > root.y) {
+                newRoot = new TreeNode<Tile>(root.x + root.width / 2, root.y + root.width / 2, 2 * root.width, null);
+                newRoot.SW = root;
+            } else if (position.x > root.x && position.y < root.y) {
+                newRoot = new TreeNode<Tile>(root.x + root.width / 2, root.y - root.width / 2, 2 * root.width, null);
+                newRoot.NW = root;
+            } else if (position.x < root.x && position.y > root.y) {
+                newRoot = new TreeNode<Tile>(root.x - root.width / 2, root.y + root.width / 2, 2 * root.width, null);
+                newRoot.SE = root;
+            } else {
+                newRoot = new TreeNode<Tile>(root.x - root.width / 2, root.y - root.width / 2, 2 * root.width, null);
+                newRoot.NE = root;
+            }
+            quadMap.setRoot(newRoot);
+            initQuadTree(newRoot);
+        }
+
+
         /*for (int row = 0; row < HEIGHT; row++) {
             for (int col = 0; col < WIDTH; col++) {
                 Tile tile = getTileAt(row, col);
@@ -84,14 +111,18 @@ public class TileMap {
 
         Rectangle rect = GameScreen.getRenderBoundCoordsRelativeTo(bottomLeftX, bottomLeftY);
 
-        if (node.width <= .5 && node.data != null) {
-            Tile tile = (Tile) node.data;
-            tile.render(batch);
-            return;
+        if (node.width <= .5) {
+            if(node.data == null){
+                batch.draw(grassSprite, node.x - Tile.SIZE/2, node.y - Tile.SIZE/2, Tile.SIZE, Tile.SIZE);
+            } else {
+                Tile tile = (Tile) node.data;
+                tile.render(batch);
+                return;
+            }
         }
 
 
-        if(rect.contains(node.x, node.y)){
+        if (rect.contains(node.x, node.y)) {
             render(batch, node.NE, relativePosition);
             render(batch, node.NW, relativePosition);
             render(batch, node.SE, relativePosition);
@@ -130,7 +161,7 @@ public class TileMap {
     }
 
     public Tile getTileAt(float y, float x) throws IllegalArgumentException {
-        if (y > WIDTH || y < 0 || x > WIDTH || x < 0) {
+        if (y > WIDTH/2 || y < -WIDTH/2 || x > WIDTH/2 || x < -WIDTH/2) {
             throw new IllegalArgumentException("Coordinates are not in world");
         }
         try {

@@ -25,11 +25,11 @@ public class QuadTree<T> {
 
     public QuadTree(int width) {
         this.width = width;
-        this.root = new TreeNode<T>(this.width / 2, this.width / 2, this.width, null);
+        this.root = new TreeNode<T>(0, 0, this.width, null);
     }
 
     public void insert(float x, float y, T data) {
-        this.root = insert(x, y, width, width / 2, width / 2, root, data);
+        this.root = insert(x, y, root.width, root.x, root.y, root, data);
         System.out.println("Complete");
     }
 
@@ -72,48 +72,52 @@ public class QuadTree<T> {
         return get(x, y, root);
     }
 
-    private T get(float x, float y, TreeNode<T> root) {
-        if (x < 0 || y < 0) {
+    private T get(float x, float y, TreeNode<T> node) {
+        if (x < -this.root.width/2 || y < -this.root.width/2) {
             return null;
         }
-        if (x > this.root.width || y > this.root.width) {
+        if (x > this.root.width/2 || y > this.root.width/2) {
             return null;
         }
-        if (root.width <= .5) {
-            return root.data;
+        if (node.width <= .5) {
+            return node.data;
         }
-        if (root.x == x && root.y == y) {
-            root.width /= 2;
-            return get(x, y, root);
+        if (node.x == x && node.y == y) {
+            node.width /= 2;
+            return get(x, y, node);
         }
 
 
-        if (greaterThan(x, root.x) && greaterThan(y, root.y)) {
-            if (root.NE == null) {
+        if (greaterThan(x, node.x) && greaterThan(y, node.y)) {
+            if (node.NE == null) {
                 return null;
             } else {
-                return get(x, y, root.NE);
+                return get(x, y, node.NE);
             }
-        } else if (!greaterThan(x, root.x) && greaterThan(y, root.y)) {
-            if (root.NW == null) {
+        } else if (!greaterThan(x, node.x) && greaterThan(y, node.y)) {
+            if (node.NW == null) {
                 return null;
             } else {
-                return get(x, y, root.NW);
+                return get(x, y, node.NW);
             }
-        } else if (!greaterThan(x, root.x) && !greaterThan(y, root.y)) {
-            if (root.SW == null) {
+        } else if (!greaterThan(x, node.x) && !greaterThan(y, node.y)) {
+            if (node.SW == null) {
                 return null;
             } else {
-                return get(x, y, root.SW);
+                return get(x, y, node.SW);
             }
-        } else if (greaterThan(x, root.x) && !greaterThan(y, root.y)) {
-            if (root.SE == null) {
+        } else if (greaterThan(x, node.x) && !greaterThan(y, node.y)) {
+            if (node.SE == null) {
                 return null;
             } else {
-                return get(x, y, root.SE);
+                return get(x, y, node.SE);
             }
         }
         return null;
+    }
+
+    public void setRoot(TreeNode<T> newRoot) {
+        this.root = newRoot;
     }
 
     public TreeNode<T> getRoot() {

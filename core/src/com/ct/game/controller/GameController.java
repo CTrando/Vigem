@@ -16,6 +16,7 @@ import com.ct.game.view.ViewportManager;
  */
 public class GameController {
     private Engine engine;
+    private ViewportManager viewportManager;
     private InputHandler inputHandler;
     private TileMap tileMap;
     private World world;
@@ -24,6 +25,7 @@ public class GameController {
 
     public void init(ViewportManager viewportManager){
         this.inputHandler = new InputHandler();
+        this.viewportManager = viewportManager;
         this.engine = new Engine();
         this.tileMap = new TileMap();
         this.world = new World(new Vector2(0, 0), true);
@@ -70,7 +72,7 @@ public class GameController {
     public void update(float dt){
         engine.update(dt);
         rayHandler.update();
-        tileMap.update();
+        tileMap.update(viewportManager);
         addNewTileEntities();
     }
 
