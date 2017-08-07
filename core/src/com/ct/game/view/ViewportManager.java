@@ -33,7 +33,6 @@ public class ViewportManager {
                 .lerp(new Vector3(cameraPos, 0), .3f);
         viewPort.getCamera()
                 .update();
-
         viewPort.apply();
     }
 

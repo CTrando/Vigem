@@ -1,9 +1,9 @@
 package com.ct.game.model.utils;
 
 class TreeNode<T> {
-    int x;
-    int y;
-    int width;
+    float x;
+    float y;
+    float width;
     T data;
 
     TreeNode<T> NW;
@@ -11,7 +11,7 @@ class TreeNode<T> {
     TreeNode<T> SW;
     TreeNode<T> SE;
 
-    TreeNode(int x, int y, int width, T data) {
+    TreeNode(float x, float y, float width, T data) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -24,24 +24,24 @@ public class QuadTree<T> {
     private int width;
 
     public QuadTree(int width) {
-        this.width = 2 * width;
+        this.width = width;
         this.root = new TreeNode<T>(this.width / 2, this.width / 2, this.width, null);
     }
 
-    public void insert(int x, int y, T data) {
+    public void insert(float x, float y, T data) {
         this.root = insert(x, y, width, width / 2, width / 2, root, data);
         System.out.println("Complete");
     }
 
-    private TreeNode<T> insert(int x, int y, int width, int centerX, int centerY, TreeNode<T> root, T data) {
-        int newWidth = width / 2;
+    private TreeNode<T> insert(float x, float y, float width, float centerX, float centerY, TreeNode<T> root, T data) {
+        float newWidth = width / 2;
         if (root == null) {
             root = new TreeNode<T>(centerX, centerY, newWidth, null);
+        }
 
-            if (newWidth <= 1) {
-                root.data = data;
-                return root;
-            }
+        if (newWidth <= .5) {
+            root.data = data;
+            return root;
         }
 
         if (greaterThan(x, root.x) && greaterThan(y, root.y)) {
@@ -68,18 +68,18 @@ public class QuadTree<T> {
         return root;
     }
 
-    public T get(int x, int y) {
+    public T get(float x, float y) {
         return get(x, y, root);
     }
 
-    private T get(int x, int y, TreeNode<T> root) {
+    private T get(float x, float y, TreeNode<T> root) {
         if (x < 0 || y < 0) {
             return null;
         }
         if (x > this.root.width || y > this.root.width) {
             return null;
         }
-        if (root.width <= 1) {
+        if (root.width <= .5) {
             return root.data;
         }
         if (root.x == x && root.y == y) {
@@ -120,7 +120,7 @@ public class QuadTree<T> {
         return root;
     }
 
-    private boolean greaterThan(int num1, int num2) {
+    private boolean greaterThan(float num1, float num2) {
         return num1 > num2;
     }
 }

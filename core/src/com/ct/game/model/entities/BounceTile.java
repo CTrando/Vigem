@@ -11,7 +11,7 @@ import com.ct.game.view.GameScreen;
 public class BounceTile extends Tile {
 
     @Override
-    public void init(int row, int col) {
+    public void init(float row, float col) {
         super.init(row, col);
 
         add(new PhysicsComponent(

@@ -4,7 +4,7 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ct.game.Vigem;
 import com.ct.game.controller.*;
@@ -15,8 +15,9 @@ import com.ct.game.model.utils.Box2DUtils;
  * Created by Cameron on 6/5/2017.
  */
 public class GameScreen implements Screen {
-    public static final float PPM = 16;
+    public static final float PPM = 32;
 
+    private static Rectangle renderBound;
     private Vigem game;
     private SpriteBatch batch;
     private ViewportManager viewportManager;
@@ -36,6 +37,9 @@ public class GameScreen implements Screen {
         this.debugRenderer = new Box2DDebugRenderer();
         this.shaderManager = new ShaderManager();
         this.waterRenderer = new WaterRenderer();
+
+        //bottom left and top right coordinates
+        renderBound = new Rectangle(0, 0, Gdx.graphics.getWidth() / PPM, Gdx.graphics.getHeight() / PPM);
     }
 
     @Override
@@ -62,7 +66,7 @@ public class GameScreen implements Screen {
         batch.begin();
         fpsLogger.log();
 
-        gameController.getTileMap().render(batch);
+        gameController.getTileMap().render(batch, viewportManager);
         gameController.getWorld().step(dt, 6, 4);
         gameController.update(dt);
 
@@ -94,5 +98,19 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         gameController.dispose();
+    }
+
+    public static Rectangle getRenderBound() {
+        float width = Gdx.graphics.getWidth() / PPM;
+        float height = Gdx.graphics.getHeight() / PPM;
+
+        renderBound.set(0, 0, width, height);
+        return renderBound;
+    }
+
+    public static Rectangle getRenderBoundCoordsRelativeTo(float x, float y) {
+        Rectangle bounds = new Rectangle(getRenderBound());
+        bounds.set(x, y, Gdx.graphics.getWidth() / PPM, Gdx.graphics.getHeight() / PPM);
+        return bounds;
     }
 }

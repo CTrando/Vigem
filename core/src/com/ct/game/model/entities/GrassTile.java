@@ -9,7 +9,7 @@ import com.ct.game.model.utils.TileMap;
 public class GrassTile extends Tile {
 
     @Override
-    public void init(int row, int col){
+    public void init(float row, float col){
         super.init(row, col);
         this.setWalkable(true);
         add(new RenderComponent(TileMap.grassSprite));

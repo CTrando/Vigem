@@ -18,30 +18,31 @@ public class TileMapMouseSystem extends EntitySystem {
     private TileMap tileMap;
     private Camera camera;
 
-    public TileMapMouseSystem(InputHandler inputHandler, TileMap tileMap, Camera camera){
+    public TileMapMouseSystem(InputHandler inputHandler, TileMap tileMap, Camera camera) {
         this.inputHandler = inputHandler;
         this.tileMap = tileMap;
         this.camera = camera;
     }
 
     @Override
-    public void update(float dt){
-        if(inputHandler.getMouseClickPosPixel() != null) {
+    public void update(float dt) {
+        if (inputHandler.getMouseClickPosPixel() != null) {
             Vector3 worldCoords = camera.unproject(new Vector3(inputHandler.getMouseClickPosPixel(), 0));
             try {
                 //convert row and column to odd numbers for quad tree
-                int row = MathUtils.floor(worldCoords.y)/2 * 2 + 1;
-                int col =  MathUtils.floor(worldCoords.x)/2 * 2 + 1;
+                float row = MathUtils.floor(worldCoords.y) + .5f;
+                float col = MathUtils.floor(worldCoords.x) + .5f;
 
-                Tile tile = tileMap.getTileAt(row, col);
-                if(tile == null) {
+                Tile tile = tileMap.getTileAt(col, row);
+                if(tile instanceof GrassTile) {
                     BrickTile waterTile = new BrickTile();
                     waterTile.init(row, col);
 
-                    tileMap.set(row, col, waterTile, TileMap.TileType.BRICK);
-                    //tile.dispose();
-                    //combinePhysicsBodies(waterTile);
+                    tileMap.set(col, row, waterTile, TileMap.TileType.BRICK);
                 }
+                //tile.dispose();
+                //combinePhysicsBodies(waterTile);
+
             } catch (IllegalArgumentException e) {
                 return;
             }
@@ -50,32 +51,35 @@ public class TileMapMouseSystem extends EntitySystem {
 
     private void combinePhysicsBodies(Tile placedTile) {
         TransformComponent tC = Mappers.tm.get(placedTile);
-        int tileRow = (int)tC.getPos().y;
-        int tileCol = (int)tC.getPos().x;
+        int tileRow = (int) tC.getPos().y;
+        int tileCol = (int) tC.getPos().x;
 
       /*  PhysicsComponent pHc = Mappers.pHm.get(placedTile);
         if(pHc != null) {
             pHc.getBody().destroyFixture(pHc.getFixture());
         }
 */
-        for(int row = -1 ; row <= +1 && tileRow + row >= 0 && tileRow + row < TileMap.HEIGHT; row++) {
+        for (int row = -1; row <= +1 && tileRow + row >= 0 && tileRow + row < TileMap.HEIGHT; row++) {
             Tile tile = tileMap.getTileAt(tileRow + row, tileCol);
-            if(Mappers.pHm.get(tile) == null || tile == placedTile) continue;
+            if (Mappers.pHm.get(tile) == null || tile == placedTile) {
+                continue;
+            }
             System.out.println("FOUND SOMETHING");
-            mergeBodies(placedTile, tile, 0, -1*row);
+            mergeBodies(placedTile, tile, 0, -1 * row);
 
         }
 
-        for(int col = -1 ; col <= 1 && tileCol+ col >= 0 && tileCol + col < TileMap.WIDTH; col++) {
+        for (int col = -1; col <= 1 && tileCol + col >= 0 && tileCol + col < TileMap.WIDTH; col++) {
             Tile tile = tileMap.getTileAt(tileRow, tileCol + col);
-            if(Mappers.pHm.get(tile) == null || tile == placedTile) continue;
+            if (Mappers.pHm.get(tile) == null || tile == placedTile) {
+                continue;
+            }
             //mergeTileBodies(placedTile, tile);
-            mergeBodies(placedTile, tile, 1, -1*col);
+            mergeBodies(placedTile, tile, 1, -1 * col);
         }
     }
 
     /**
-     *
      * @param newTile
      * @param prevTile
      * @param orientation will be 1 or -1, telling whether going East or West or North or South
@@ -84,13 +88,17 @@ public class TileMapMouseSystem extends EntitySystem {
         PhysicsComponent pHcNewTile = Mappers.pHm.get(newTile);
         PhysicsComponent pHcPrevTile = Mappers.pHm.get(prevTile);
 
-        if(pHcNewTile.getBody() == pHcPrevTile.getBody()) return;
-        if(pHcNewTile.getBody().getFixtureList().size > pHcPrevTile.getBody().getFixtureList().size) return;
+        if (pHcNewTile.getBody() == pHcPrevTile.getBody()) {
+            return;
+        }
+        if (pHcNewTile.getBody().getFixtureList().size > pHcPrevTile.getBody().getFixtureList().size) {
+            return;
+        }
 
         pHcNewTile.destroyBody();
         pHcNewTile.setBody(pHcPrevTile.getBody());
 
-        if(direction == 1) {
+        if (direction == 1) {
             float width = getDimension(pHcPrevTile.getVertices(), 0);
             pHcNewTile.setVertices(add(pHcPrevTile.getVertices(), orientation * width, 0));
         } else {
@@ -111,8 +119,8 @@ public class TileMapMouseSystem extends EntitySystem {
         float[] prevTileCorners = getCorners(pHcPrevTile.getVertices());
 
         //should work when placing tile to the right of old tile
-        if(newTileCorners[0]*-1 == prevTileCorners[3]) {
-            oldVertices[oldVertices.length/2] = prevTileCorners[2] + newTileCorners[2] + -1*newTileCorners[0];
+        if (newTileCorners[0] * -1 == prevTileCorners[3]) {
+            oldVertices[oldVertices.length / 2] = prevTileCorners[2] + newTileCorners[2] + -1 * newTileCorners[0];
         }
 
         pHcNewTile.destroyCurrentFixture();
@@ -128,27 +136,26 @@ public class TileMapMouseSystem extends EntitySystem {
         corners[0] = vertices[0];
         corners[1] = vertices[1];
         //top right
-        corners[2] = vertices[vertices.length/2];
-        corners[3] = vertices[vertices.length/2+1];
+        corners[2] = vertices[vertices.length / 2];
+        corners[3] = vertices[vertices.length / 2 + 1];
         return corners;
     }
 
     private float[] add(float[] vertices, float add, int offset) {
         float[] copy = new float[vertices.length];
         System.arraycopy(vertices, 0, copy, 0, vertices.length);
-        for(int i = offset; i< copy.length; i+=2) {
-            copy[i]+=add;
+        for (int i = offset; i < copy.length; i += 2) {
+            copy[i] += add;
         }
         return copy;
     }
 
     /**
-     *
      * @param vertices
-     * @param offset 0 for width, 1 for height
+     * @param offset   0 for width, 1 for height
      * @return
      */
     private float getDimension(float[] vertices, int offset) {
-        return Math.abs(vertices[offset] - vertices[vertices.length/2+offset]);
+        return Math.abs(vertices[offset] - vertices[vertices.length / 2 + offset]);
     }
 }

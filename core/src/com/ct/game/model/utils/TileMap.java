@@ -9,15 +9,17 @@ import com.badlogic.gdx.utils.Array;
 import com.ct.game.model.components.TransformComponent;
 import com.ct.game.model.entities.*;
 import com.ct.game.utils.Mappers;
-import com.ct.game.view.Assets;
+import com.ct.game.view.*;
 
 import java.util.HashMap;
+
+import static com.ct.game.view.GameScreen.PPM;
 
 /**
  * Created by Cameron on 6/12/2017.
  */
 public class TileMap {
-    public static int WIDTH = 128;
+    public static int WIDTH = 1024;
     public static int HEIGHT = 100;
 
     public static TextureRegion grassSprite = Assets.getInstance().getTextureRegion("grass", "tiles.atlas");
@@ -36,15 +38,17 @@ public class TileMap {
         this.tileTypes = new HashMap<TileType, Array<Tile>>(TileType.values().length + 1);
         this.entities = new Array<Entity>();
         this.newEntities = new Array<Entity>();
-        //make a tilemap builder later
 
-        /*for (int row = 0; row < HEIGHT; row++) {
-            for (int col = 0; col < WIDTH; col++) {
-                Tile tile = new GrassTile();
-                tile.init(row, col);
-                set(row, col, tile, TileType.GRASS);
+        TreeNode<Tile> root = quadMap.getRoot();
+        float width = root.width / 2;
+
+        for (float col = root.x - width + .5f; col < root.x + width; col++) {
+            for (float row = root.y - width + .5f; row < root.y + width; row++) {
+                GrassTile grassTile = new GrassTile();
+                grassTile.init(row, col);
+                quadMap.insert(col, row, grassTile);
             }
-        }*/
+        }
     }
 
     public void update() {
@@ -59,93 +63,65 @@ public class TileMap {
         }*/
     }
 
-    public void render(SpriteBatch batch) {
-        TreeNode<Tile> root = quadMap.getRoot();
-        int width = root.width/2;
-        for (int col = root.x - width + 1; col < root.x + width; col+=2) {
-            for (int row = root.y - width + 1; row < root.y + width; row+=2) {
+    public void render(SpriteBatch batch, ViewportManager viewport) {
+        /*TreeNode<Tile> root = quadMap.getRoot();
+        float width = root.width/2;
+        for (float col = root.x - width + .5f; col < root.x + width; col++) {
+            for (float row = root.y - width + .5f; row < root.y + width; row++) {
                 batch.draw(grassSprite, col - Tile.SIZE / 2, row - Tile.SIZE / 2, Tile.SIZE, Tile.SIZE);
             }
-        }
-        render(batch, quadMap.getRoot());
-        /*for (int row = 0; row < HEIGHT; row++) {
-            for (int col = 0; col < WIDTH; col++) {
-                Tile tile = getTileAt(row, col);
-                if (tile != null) {
-                    tile.render(batch);
-                }
-            }
         }*/
+        render(batch, quadMap.getRoot(), viewport.getCamera().position.cpy());
     }
 
-    private void render(SpriteBatch batch, TreeNode node) {
-        /*if (node.data != null) {
-
-        }*/
-
-        if(node == null) {
+    private void render(SpriteBatch batch, TreeNode node, Vector3 relativePosition) {
+        if (node == null) {
             return;
         }
 
-        if(node.width <= 1 && node.data != null) {
+        float bottomLeftX = MathUtils.round(relativePosition.x - Gdx.graphics.getWidth() / GameScreen.PPM / 2);
+        float bottomLeftY = MathUtils.round(relativePosition.y - Gdx.graphics.getWidth() / GameScreen.PPM / 2);
+
+        Rectangle rect = GameScreen.getRenderBoundCoordsRelativeTo(bottomLeftX, bottomLeftY);
+
+        if (node.width <= .5 && node.data != null) {
             Tile tile = (Tile) node.data;
             tile.render(batch);
             return;
         }
 
-        render(batch, node.NE);
-        render(batch, node.NW);
-        render(batch, node.SE);
-        render(batch, node.SW);
 
-
-        /*int width = node.width / 2;
-
-        if (node.NE == null) {
-            for (int col = node.x; col < node.x + width; col++) {
-                for (int row = node.y; row < node.y + width; row++) {
-                    batch.draw(grassSprite, col - Tile.SIZE / 2, row - Tile.SIZE / 2, Tile.SIZE, Tile.SIZE);
-                }
-            }
+        if(rect.contains(node.x, node.y)){
+            render(batch, node.NE, relativePosition);
+            render(batch, node.NW, relativePosition);
+            render(batch, node.SE, relativePosition);
+            render(batch, node.SW, relativePosition);
         } else {
-            render(batch, node.NE);
+            if ((rect.x > node.x && rect.y > node.y) || (rect.x + rect.width > node.x && rect.y + rect.height > node.y)) {
+                render(batch, node.NE, relativePosition);
+            }
+            if ((rect.x < node.x && rect.y > node.y) || (rect.x + rect.width < node.x && rect.y + rect.height >
+                    node.y)) {
+                render(batch, node.NW, relativePosition);
+            }
+            if ((rect.x > node.x && rect.y < node.y) || (rect.x + rect.width > node.x && rect.y + rect.height <
+                    node.y)) {
+                render(batch, node.SE, relativePosition);
+            }
+            if ((rect.x < node.x && rect.y < node.y) || (rect.x + rect.width < node.x && rect.y + rect.height <
+                    node.y)) {
+                render(batch, node.SW, relativePosition);
+            }
         }
-        if (node.NW == null) {
-            for (int col = node.x - width; col < node.x; col++) {
-                for (int row = node.y; row < node.y + width; row++) {
-                    batch.draw(grassSprite, col - Tile.SIZE / 2, row - Tile.SIZE / 2, Tile.SIZE, Tile.SIZE);
-                }
-            }
-        } else {
-            render(batch, node.NW);
-        }
-        if (node.SW == null) {
-            for (int col = node.x - width; col < node.x; col++) {
-                for (int row = node.y - width; row < node.y; row++) {
-                    batch.draw(grassSprite, col - Tile.SIZE / 2, row - Tile.SIZE / 2, Tile.SIZE, Tile.SIZE);
-                }
-            }
-        } else {
-            render(batch, node.SW);
-        }
-        if (node.SE == null) {
-            for (int col = node.x; col < node.x + width; col++) {
-                for (int row = node.y - width; row < node.y; row++) {
-                    batch.draw(grassSprite, col - Tile.SIZE / 2, row - Tile.SIZE / 2, Tile.SIZE, Tile.SIZE);
-                }
-            }
-        } else {
-            render(batch, node.SE);
-        }*/
     }
 
-    public void removeTile(Tile tile) {
+    /*public void removeTile(Tile tile) {
         removeTile(tile.getRow(), tile.getCol());
     }
 
     public void removeTile(int row, int col) {
         tileMap[row][col] = null;
-    }
+    }*/
 
     public Array<Entity> getNewEntities() {
         Array<Entity> ret = new Array<Entity>(newEntities);
@@ -153,26 +129,26 @@ public class TileMap {
         return ret;
     }
 
-    public Tile getTileAt(int row, int col) throws IllegalArgumentException {
-        if (row > WIDTH || row < 0 || col > WIDTH || col < 0) {
+    public Tile getTileAt(float y, float x) throws IllegalArgumentException {
+        if (y > WIDTH || y < 0 || x > WIDTH || x < 0) {
             throw new IllegalArgumentException("Coordinates are not in world");
         }
         try {
             //return null;
-            return quadMap.get(row, col);
+            return quadMap.get(y, x);
             //return tileMap[row][col];
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
         }
     }
 
-    public void set(int row, int col, Tile tile, TileType type) {
-        tileMap[row][col] = tile;
-        quadMap.insert(row, col, tile);
-        if (tileTypes.get(type) == null) {
+    public void set(float x, float y, Tile tile, TileType type) {
+        //tileMap[row][col] = tile;
+        quadMap.insert(x, y, tile);
+        /*if (tileTypes.get(type) == null) {
             tileTypes.put(type, new Array<Tile>());
-        }
-        Array<Tile> tiles = tileTypes.get(type);
+        }*/
+       /* Array<Tile> tiles = tileTypes.get(type);
         if (tiles.contains(tile, true)) {
             return;
         }
@@ -194,7 +170,7 @@ public class TileMap {
                     break;
                 }
             }
-        }
+        }*/
     }
 
     public Tile getTileAt(Vector2 pos) {

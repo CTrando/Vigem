@@ -17,7 +17,7 @@ public abstract class Tile extends GameObject {
     private boolean isEntity;
     private boolean isWalkable;
 
-    public void init(int row, int col) {
+    public void init(float row, float col) {
         add(new TransformComponent(col, row, 0));
     }
 
@@ -29,16 +29,16 @@ public abstract class Tile extends GameObject {
         }
     }
 
-    public int getRow() {
-        return (int) Mappers.tm.get(this).getPos().y;
+    public float getRow() {
+        return Mappers.tm.get(this).getPos().y;
     }
 
     public void setRow(int row) {
         Mappers.tm.get(this).getPos().y = row;
     }
 
-    public int getCol() {
-        return (int) Mappers.tm.get(this).getPos().x;
+    public float getCol() {
+        return Mappers.tm.get(this).getPos().x;
     }
 
     public void setCol(int col) {

@@ -13,7 +13,7 @@ import com.ct.game.view.GameScreen;
 public class BrickTile extends Tile {
 
     @Override
-    public void init(int row, int col) {
+    public void init(float row, float col) {
         super.init(row, col);
         add(new RenderComponent(TileMap.brickSprite));
 
@@ -28,8 +28,8 @@ public class BrickTile extends Tile {
         add(new LightComponent(
                 Color.FIREBRICK,
                 2,
-                Mappers.tm.get(this).getPos().x,
-                Mappers.tm.get(this).getPos().y));
+                col,
+                row));
         setWalkable(false);
         setEntity(true);
     }
