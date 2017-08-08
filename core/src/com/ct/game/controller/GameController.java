@@ -28,6 +28,7 @@ public class GameController {
         this.viewportManager = viewportManager;
         this.engine = new Engine();
         this.tileMap = new TileMap();
+
         this.world = new World(new Vector2(0, 0), true);
         this.rayHandler = new RayHandler(world, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.rayHandler.setAmbientLight(.8f);
@@ -35,6 +36,7 @@ public class GameController {
         Box2DUtils.init(world, rayHandler);
 
         tileMap.init();
+        tileMap.initExpansion(viewportManager);
 
         Player player = new Player();
         player.init();

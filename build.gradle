@@ -2,7 +2,6 @@ buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
     }
     dependencies {
@@ -11,7 +10,6 @@ buildscript {
 }
 
 allprojects {
-    apply plugin: "eclipse"
     apply plugin: "idea"
 
     version = '1.0'
@@ -27,7 +25,6 @@ allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
 }
@@ -49,7 +46,7 @@ project(":desktop") {
 project(":core") {
     apply plugin: "java"
 
-    sourceSets.test.java.srcDirs = ["/test"]
+    //sourceSets.test.java.srcDirs = ["/test"]
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -61,13 +58,9 @@ project(":core") {
      /*   testCompile "junit:junit:4.4"
         testCompile "org.mockito:mockito-core:2.2.7"
         testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"*/
-        testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        /*testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
         testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         testCompile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        testCompile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        testCompile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"*/
     }
-}
-
-tasks.eclipse.doLast {
-    delete ".project"
 }

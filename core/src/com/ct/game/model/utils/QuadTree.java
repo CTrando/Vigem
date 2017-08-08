@@ -21,9 +21,9 @@ class TreeNode<T> {
 
 public class QuadTree<T> {
     private TreeNode<T> root;
-    private int width;
+    private float width;
 
-    public QuadTree(int width) {
+    public QuadTree(float width) {
         this.width = width;
         this.root = new TreeNode<T>(0, 0, this.width, null);
     }

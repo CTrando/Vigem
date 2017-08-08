@@ -44,6 +44,7 @@ public class TileMapMouseSystem extends EntitySystem {
                 //combinePhysicsBodies(waterTile);
 
             } catch (IllegalArgumentException e) {
+                e.printStackTrace();
                 return;
             }
         }
@@ -69,6 +70,7 @@ public class TileMapMouseSystem extends EntitySystem {
 
         }
 
+        //can't use width here
         for (int col = -1; col <= 1 && tileCol + col >= 0 && tileCol + col < TileMap.WIDTH; col++) {
             Tile tile = tileMap.getTileAt(tileRow, tileCol + col);
             if (Mappers.pHm.get(tile) == null || tile == placedTile) {
