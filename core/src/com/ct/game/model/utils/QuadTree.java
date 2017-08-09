@@ -68,11 +68,13 @@ public class QuadTree<T> {
         return root;
     }
 
-    public T get(float x, float y) {
-        return get(x, y, root);
+    public T getData(float x, float y) {
+        TreeNode<T> retNode = get(x,y, root);
+        if(retNode == null) return null;
+        else return retNode.data;
     }
 
-    private T get(float x, float y, TreeNode<T> node) {
+    private TreeNode<T> get(float x, float y, TreeNode<T> node) {
         if (x < -this.root.width/2 || y < -this.root.width/2) {
             return null;
         }
@@ -80,7 +82,7 @@ public class QuadTree<T> {
             return null;
         }
         if (node.width <= .5) {
-            return node.data;
+            return node;
         }
         if (node.x == x && node.y == y) {
             node.width /= 2;
@@ -114,6 +116,20 @@ public class QuadTree<T> {
             }
         }
         return null;
+    }
+
+    public void remove(TreeNode<T> removeNode) {
+        if(removeNode == null) return;
+        removeNode.data = null;
+        remove(removeNode.NE);
+        remove(removeNode.NW);
+        remove(removeNode.SE);
+        remove(removeNode.SW);
+    }
+
+    public void remove(float x, float y) {
+        TreeNode<T> removeNode = get(x, y, root);
+        remove(removeNode);
     }
 
     public void setRoot(TreeNode<T> newRoot) {

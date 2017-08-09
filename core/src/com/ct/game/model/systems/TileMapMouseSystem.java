@@ -55,7 +55,7 @@ public class TileMapMouseSystem extends EntitySystem {
         int tileRow = (int) tC.getPos().y;
         int tileCol = (int) tC.getPos().x;
 
-      /*  PhysicsComponent pHc = Mappers.pHm.get(placedTile);
+      /*  PhysicsComponent pHc = Mappers.pHm.getData(placedTile);
         if(pHc != null) {
             pHc.getBody().destroyFixture(pHc.getFixture());
         }

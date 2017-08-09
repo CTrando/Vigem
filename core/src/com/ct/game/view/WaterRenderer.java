@@ -75,7 +75,7 @@ public class WaterRenderer {
 
             //TODO create an algorithm that will cover all the water tiles and render one big rectangle
 
-            /*Vector2 pos = Mappers.tm.get(waterTile).getPos();
+            /*Vector2 pos = Mappers.tm.getData(waterTile).getPos();
             batch.draw(TileMap.waterSprite,
                        pos.x - Tile.SIZE/2,
                        pos.y - Tile.SIZE/2,

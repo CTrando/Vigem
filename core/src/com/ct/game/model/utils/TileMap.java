@@ -126,7 +126,7 @@ public class TileMap {
         }
         try {
             //return null;
-            return quadMap.get(y, x);
+            return quadMap.getData(y, x);
             //return tileMap[row][col];
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
@@ -136,10 +136,10 @@ public class TileMap {
     public void set(float x, float y, Tile tile, TileType type) {
         //tileMap[row][col] = tile;
         quadMap.insert(x, y, tile);
-        /*if (tileTypes.get(type) == null) {
+        /*if (tileTypes.getData(type) == null) {
             tileTypes.put(type, new Array<Tile>());
         }*/
-       /* Array<Tile> tiles = tileTypes.get(type);
+       /* Array<Tile> tiles = tileTypes.getData(type);
         if (tiles.contains(tile, true)) {
             return;
         }
@@ -148,8 +148,8 @@ public class TileMap {
             tiles.add(tile);
         } else {
             for (int i = 0; i < tiles.size; i++) {
-                TransformComponent tTm = Mappers.tm.get(tiles.get(i));
-                TransformComponent tAm = Mappers.tm.get(tile);
+                TransformComponent tTm = Mappers.tm.getData(tiles.getData(i));
+                TransformComponent tAm = Mappers.tm.getData(tile);
 
                 if (tAm.getPos().x < tTm.getPos().x || tAm.getPos().y < tTm.getPos().y) {
                     tiles.insert(i, tile);
