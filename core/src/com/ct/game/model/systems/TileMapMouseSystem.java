@@ -1,6 +1,6 @@
 package com.ct.game.model.systems;
 
-import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.ashley.core.*;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.*;
 import com.ct.game.controller.InputHandler;
@@ -15,11 +15,13 @@ import com.ct.game.view.*;
  */
 public class TileMapMouseSystem extends EntitySystem {
     private InputHandler inputHandler;
+    private Engine engine;
     private TileMap tileMap;
     private Camera camera;
 
-    public TileMapMouseSystem(InputHandler inputHandler, TileMap tileMap, Camera camera) {
+    public TileMapMouseSystem(InputHandler inputHandler, Engine engine, TileMap tileMap, Camera camera) {
         this.inputHandler = inputHandler;
+        this.engine = engine;
         this.tileMap = tileMap;
         this.camera = camera;
     }
@@ -35,10 +37,13 @@ public class TileMapMouseSystem extends EntitySystem {
 
                 Tile tile = tileMap.getTileAt(col, row);
                 if(tile instanceof GrassTile) {
-                    BrickTile waterTile = new BrickTile();
-                    waterTile.init(row, col);
+                    Tree tree = new Tree();
+                    tree.init(worldCoords.x, worldCoords.y);
+                    engine.addEntity(tree);
+                    //BrickTile waterTile = new BrickTile()yup;
+                  //  waterTile.init(row, col);
 
-                    tileMap.set(col, row, waterTile, TileMap.TileType.BRICK);
+                //    tileMap.set(col, row, waterTile, TileMap.TileType.BRICK);
                 }
                 //tile.dispose();
                 //combinePhysicsBodies(waterTile);

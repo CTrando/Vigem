@@ -51,7 +51,7 @@ public class GameController {
         //engine.addEntity(friend1);
 
         engine.addSystem(new CameraFocusSystem(viewportManager));
-        engine.addSystem(new TileMapMouseSystem(inputHandler, tileMap, viewportManager.getCamera()));
+        engine.addSystem(new TileMapMouseSystem(inputHandler, engine, tileMap, viewportManager.getCamera()));
         engine.addSystem(new PlayerInputMoveSystem(inputHandler));
         engine.addSystem(new PlayerInputDirectionSystem(inputHandler));
         engine.addSystem(new PlayerInputAttackSystem(inputHandler));

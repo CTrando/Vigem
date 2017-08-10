@@ -25,21 +25,17 @@ public class RenderSystem extends IteratingSystem {
         RenderComponent rc = Mappers.rm.get(entity);
 
         TextureRegion textureRegion = rc.getTextureRegion();
-        float width = textureRegion.getRegionWidth() / GameScreen.PPM;
-        float height = textureRegion.getRegionHeight() / GameScreen.PPM;
-        float drawX = tc.getPos().x - width / 2;
-        float drawY = tc.getPos().y - height / 2;
+        float width = textureRegion.getRegionWidth()/ GameScreen.PPM;
+        float height = textureRegion.getRegionHeight()/GameScreen.PPM;
+
+        float drawX = tc.getPos().x + rc.getXOffset();
+        float drawY = tc.getPos().y + rc.getYOffset();
         float rotation = tc.getRotation();
 
         batch.draw(textureRegion,
                    drawX,
                    drawY,
-                   width/2,
-                   height/2,
                    width,
-                   height,
-                   1,
-                   1,
-                   rotation* MathUtils.radiansToDegrees);
+                   height);
     }
 }
