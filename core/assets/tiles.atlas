@@ -18,44 +18,170 @@ grass
   orig: 32, 32
   offset: 0, 0
   index: -1
-player-idle-left
+player-attacking-left
+  rotate: false
+  xy: 345, 0
+  size: 27, 28
+  orig: 48, 48
+  offset: 4, 10
+  index: 7
+player-attacking-left
+  rotate: false
+  xy: 399, 0
+  size: 21, 28
+  orig: 48, 48
+  offset: 10, 10
+  index: 5
+player-attacking-left
+  rotate: false
+  xy: 420, 0
+  size: 21, 28
+  orig: 48, 48
+  offset: 10, 10
+  index: 8
+player-attacking-left
+  rotate: false
+  xy: 483, 0
+  size: 20, 28
+  orig: 48, 48
+  offset: 11, 10
+  index: 6
+player-attacking-left
   rotate: false
   xy: 591, 68
+  size: 17, 28
+  orig: 48, 48
+  offset: 14, 10
+  index: 2
+player-attacking-left
+  rotate: false
+  xy: 574, 38
+  size: 17, 28
+  orig: 48, 48
+  offset: 14, 10
+  index: 3
+player-attacking-left
+  rotate: false
+  xy: 774, 100
+  size: 17, 28
+  orig: 48, 48
+  offset: 14, 10
+  index: 4
+player-attacking-left
+  rotate: false
+  xy: 608, 40
+  size: 16, 28
+  orig: 48, 48
+  offset: 15, 10
+  index: 0
+player-attacking-left
+  rotate: false
+  xy: 888, 100
+  size: 15, 28
+  orig: 48, 48
+  offset: 16, 10
+  index: 1
+player-attacking-right
+  rotate: false
+  xy: 372, 0
+  size: 27, 28
+  orig: 48, 48
+  offset: 17, 10
+  index: 7
+player-attacking-right
+  rotate: false
+  xy: 441, 0
+  size: 21, 28
+  orig: 48, 48
+  offset: 17, 10
+  index: 5
+player-attacking-right
+  rotate: false
+  xy: 462, 0
+  size: 21, 28
+  orig: 48, 48
+  offset: 17, 10
+  index: 8
+player-attacking-right
+  rotate: false
+  xy: 503, 0
+  size: 20, 28
+  orig: 48, 48
+  offset: 17, 10
+  index: 6
+player-attacking-right
+  rotate: false
+  xy: 591, 40
+  size: 17, 28
+  orig: 48, 48
+  offset: 17, 10
+  index: 2
+player-attacking-right
+  rotate: false
+  xy: 608, 68
+  size: 17, 28
+  orig: 48, 48
+  offset: 17, 10
+  index: 3
+player-attacking-right
+  rotate: false
+  xy: 791, 100
+  size: 17, 28
+  orig: 48, 48
+  offset: 17, 10
+  index: 4
+player-attacking-right
+  rotate: false
+  xy: 808, 100
+  size: 16, 28
+  orig: 48, 48
+  offset: 17, 10
+  index: 0
+player-attacking-right
+  rotate: false
+  xy: 903, 100
+  size: 15, 28
+  orig: 48, 48
+  offset: 17, 10
+  index: 1
+player-idle-left
+  rotate: false
+  xy: 824, 100
   size: 16, 28
   orig: 32, 32
   offset: 7, 2
   index: 1
 player-idle-left
   rotate: false
-  xy: 574, 38
+  xy: 840, 100
   size: 16, 28
   orig: 32, 32
   offset: 7, 2
   index: 2
 player-idle-left
   rotate: false
-  xy: 820, 101
+  xy: 948, 101
   size: 15, 27
   orig: 32, 32
   offset: 7, 2
   index: 0
 player-idle-right
   rotate: false
-  xy: 774, 100
+  xy: 856, 100
   size: 16, 28
   orig: 32, 32
   offset: 9, 2
   index: 1
 player-idle-right
   rotate: false
-  xy: 607, 68
+  xy: 872, 100
   size: 16, 28
   orig: 32, 32
   offset: 9, 2
   index: 2
 player-idle-right
   rotate: false
-  xy: 835, 101
+  xy: 963, 101
   size: 15, 27
   orig: 32, 32
   offset: 10, 2
@@ -118,28 +244,28 @@ player-running-right
   index: 3
 player-walking-left
   rotate: false
-  xy: 790, 99
+  xy: 918, 99
   size: 15, 29
   orig: 32, 32
   offset: 8, 1
   index: 1
 player-walking-left
   rotate: false
-  xy: 850, 101
+  xy: 978, 101
   size: 15, 27
   orig: 32, 32
   offset: 7, 2
   index: 0
 player-walking-right
   rotate: false
-  xy: 805, 99
+  xy: 933, 99
   size: 15, 29
   orig: 32, 32
   offset: 9, 1
   index: 1
 player-walking-right
   rotate: false
-  xy: 865, 101
+  xy: 993, 101
   size: 15, 27
   orig: 32, 32
   offset: 10, 2
@@ -174,49 +300,49 @@ playerrunningRight
   index: 2
 playerslowingRight
   rotate: false
-  xy: 0, 10
+  xy: 1008, 113
   size: 16, 15
   orig: 16, 16
   offset: 0, 0
   index: 2
 playerslowingRight
   rotate: false
-  xy: 880, 113
+  xy: 1008, 98
   size: 16, 15
   orig: 16, 16
   offset: 0, 0
   index: 3
 playerslowingRight
   rotate: false
-  xy: 16, 11
+  xy: 0, 11
   size: 16, 14
   orig: 16, 16
   offset: 0, 0
   index: 1
 playerslowingRight
   rotate: false
-  xy: 896, 115
+  xy: 16, 12
   size: 16, 13
   orig: 16, 16
   offset: 0, 1
   index: 4
 playerslowingRight
   rotate: false
-  xy: 32, 0
+  xy: 16, 0
   size: 16, 12
   orig: 16, 16
   offset: 0, 1
   index: 5
 playerslowingRight
   rotate: false
-  xy: 880, 101
+  xy: 32, 0
   size: 16, 12
   orig: 16, 16
   offset: 0, 0
   index: 7
 playerslowingRight
   rotate: false
-  xy: 896, 103
+  xy: 48, 0
   size: 15, 12
   orig: 16, 16
   offset: 1, 0
@@ -230,7 +356,7 @@ playerslowing_left
   index: 0
 playerslowing_right
   rotate: false
-  xy: 912, 115
+  xy: 48, 12
   size: 16, 13
   orig: 16, 16
   offset: 0, 0

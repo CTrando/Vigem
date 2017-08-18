@@ -30,7 +30,7 @@ public class PlayerInputAttackSystem extends IteratingSystem {
         }
 
         if (inputHandler.isKeyPressed(Input.Keys.A)) {
-            entity.add(new AttackComponent(1.5f, 3f,25));
+            entity.add(new AttackComponent(1.5f, 1f,25));
         }
     }
 }
