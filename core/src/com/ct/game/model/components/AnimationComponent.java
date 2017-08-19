@@ -36,6 +36,9 @@ public class AnimationComponent implements Component {
     }
 
     public void setAnimation(Animation animation) {
-        currentAnimation = animation;
+        if(animation != currentAnimation) {
+            currentAnimation = animation;
+            setCurrentTime(0);
+        }
     }
 }

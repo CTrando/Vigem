@@ -54,6 +54,6 @@ public class StateSystem extends IteratingSystem {
         if (aTc != null) {
             sc.setState(StateComponent.State.attacking);
         }
-        System.out.println(sc.getState() + "-" + dc.getDirection());
+        //System.out.println(sc.getState() + "-" + dc.getDirection());
     }
 }

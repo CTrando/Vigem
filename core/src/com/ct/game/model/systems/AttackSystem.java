@@ -31,22 +31,27 @@ public class AttackSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         AttackComponent aTc = Mappers.aTm.get(entity);
 
-        if (!aTc.isAttackComplete()) {
-            aTc.setAttackComplete(true);
+        if (aTc.getCurrentTime() > 3 * aTc.getRefreshTime() / 4) {
+            if (!aTc.isAttackComplete()) {
+                aTc.setAttackComplete(true);
 
-            Vector2[] endPoints;
-            if (aTc.isTargetKnown()) {
-                endPoints = handleTargetKnown(entity);
-            } else {
-                endPoints = handleTargetUnknown(entity);
-            }
-            Vector2 scaledDirection = endPoints[SCALED_DIRECTION];
+                Vector2[] endPoints;
+                if (aTc.isTargetKnown()) {
+                    endPoints = handleTargetKnown(entity);
+                } else {
+                    endPoints = handleTargetUnknown(entity);
+                }
+                Vector2 scaledDirection = endPoints[SCALED_DIRECTION];
 
-            rayCast.rayCast(endPoints[START_POS], endPoints[END_POS]);
-            if (rayCast.hasCollided()) {
-                Entity collidedEntity = rayCast.getCollidedEntity();
-                handleKnockBack(collidedEntity, scaledDirection.nor().cpy(), 5);
-                handleDamage(collidedEntity, aTc.getAttackDamage());
+                rayCast.rayCast(endPoints[START_POS], endPoints[END_POS]);
+                if (rayCast.hasCollided()) {
+                    Entity collidedEntity = rayCast.getCollidedEntity();
+                    handleKnockBack(collidedEntity, scaledDirection.nor().cpy(), 5);
+
+                    if(Mappers.hm.has(collidedEntity)) {
+                        handleDamage(collidedEntity, aTc.getAttackDamage());
+                    }
+                }
             }
         }
 

@@ -6,12 +6,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.ct.game.model.components.*;
+import com.ct.game.model.utils.Box2DUtils;
 import com.ct.game.utils.Mappers;
 
 /**
  * Created by Cameron on 6/28/2017.
  */
-public class Friend extends Entity {
+public class Friend extends GameObject {
 
     public void init() {
         add(new TransformComponent(5, 10, 0));
@@ -28,5 +29,10 @@ public class Friend extends Entity {
                                     1));
 
         add(new FriendAIComponent());
+    }
+
+    @Override
+    public void dispose() {
+        Box2DUtils.destroyBody(Mappers.pHm.get(this).getBody());
     }
 }

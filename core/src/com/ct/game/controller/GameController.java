@@ -48,7 +48,7 @@ public class GameController {
 
         engine.addEntity(player);
         engine.addEntity(friend);
-        engine.addEntity(friend1);
+        //engine.addEntity(friend1);
 
         engine.addSystem(new CameraFocusSystem(viewportManager));
         engine.addSystem(new TileMapMouseSystem(inputHandler, engine, tileMap, viewportManager.getCamera()));
@@ -61,6 +61,7 @@ public class GameController {
         engine.addSystem(new StateSystem());
         engine.addSystem(new StateAnimationSystem());
         engine.addSystem(new DayNightSystem(rayHandler));
+        engine.addSystem(new HealthSystem());
 
         engine.addSystem(new AttackSystem(engine, world));
 

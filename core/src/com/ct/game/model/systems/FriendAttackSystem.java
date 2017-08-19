@@ -36,7 +36,7 @@ public class FriendAttackSystem extends IteratingSystem {
                     return;
                 }
 
-                AttackComponent aTc = new AttackComponent(logicEntity,1.5f, .8f, 15);
+                AttackComponent aTc = new AttackComponent(logicEntity,.6f, 1f, 15);
                 System.out.println("ATTACKING");
                 entity.add(aTc);
             }
