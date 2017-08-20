@@ -16,8 +16,6 @@ import com.ct.game.view.Assets;
 public class Player extends GameObject {
 
     public void init() {
-        add(new TransformComponent(0, 0, 0));
-        add(new RenderComponent(new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")))));
         add(new CameraFocusComponent());
         add(new PlayerControlledComponent());
         add(new AnimationComponent(Assets.getInstance().getAnimation("player-idle-right", "tiles.atlas"), 0));
@@ -35,5 +33,10 @@ public class Player extends GameObject {
         Mappers.pHm.get(this).setUserData(this);
 
         add(new BounceComponent());
+    }
+
+    @Override
+    public String toString() {
+        return "player";
     }
 }

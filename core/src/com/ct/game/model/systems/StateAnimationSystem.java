@@ -21,7 +21,7 @@ public class StateAnimationSystem extends IteratingSystem {
         StateComponent sc = Mappers.sm.get(entity);
         AnimationComponent ac = Mappers.am.get(entity);
         DirectionComponent dc = Mappers.dm.get(entity);
-        ac.setAnimation(Assets.getInstance().getAnimation("player" + "-" + sc.getState() + "-" + dc.getDirection(), "tiles" +
-                ".atlas"));
+        ac.setAnimation(Assets.getInstance().getAnimation(entity.toString() + "-" + sc.getState() + "-" + dc.getDirection(),
+                                                          "tiles" + ".atlas"));
     }
 }

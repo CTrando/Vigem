@@ -27,6 +27,8 @@ public class TileMap {
     private Array<Entity> entities;
     private Array<Entity> newEntities;
 
+    private TileMapExpansionThread expandThread;
+
     public void init() {
         this.quadMap = new QuadTree<Tile>(WIDTH);
         this.tileTypes = new HashMap<TileType, Array<Tile>>(TileType.values().length + 1);
@@ -49,7 +51,7 @@ public class TileMap {
     }
 
     public void initExpansion(ViewportManager viewportManager) {
-        Thread expandThread = new TileMapExpansionThread(viewportManager, this);
+        expandThread = new TileMapExpansionThread(viewportManager, this);
         ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         scheduledExecutorService.scheduleAtFixedRate(expandThread, 0, 100, TimeUnit.MILLISECONDS);
     }
@@ -181,6 +183,10 @@ public class TileMap {
 
     public QuadTree<Tile> getQuadMap() {
         return quadMap;
+    }
+
+    public void dispose() {
+        expandThread.interrupt();
     }
 }
 

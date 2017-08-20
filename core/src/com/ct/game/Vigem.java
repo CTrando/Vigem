@@ -34,6 +34,7 @@ public class Vigem extends Game {
     @Override
     public void dispose() {
         batch.dispose();
+        gameScreen.dispose();
         //client.end();
     }
 

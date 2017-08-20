@@ -5,13 +5,13 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
 import com.ct.game.model.components.*;
-import com.ct.game.model.entities.Friend;
+import com.ct.game.model.entities.Wolf;
 import com.ct.game.utils.Mappers;
 
-public class FriendMovementSystem extends IteratingSystem {
+public class WolfMovementSystem extends IteratingSystem {
     private Engine engine;
-    public FriendMovementSystem(Engine engine) {
-        super(Family.all(FriendAIComponent.class).get());
+    public WolfMovementSystem(Engine engine) {
+        super(Family.all(WolfAIComponent.class).get());
         this.engine = engine;
     }
 
@@ -22,11 +22,11 @@ public class FriendMovementSystem extends IteratingSystem {
 
         ImmutableArray<Entity> logicEntities = engine.getEntitiesFor(
                 Family.one(PlayerControlledComponent.class,
-                           FriendAIComponent.class).get());
+                           WolfAIComponent.class).get());
         TransformComponent entityTc = Mappers.tm.get(entity);
 
         for(Entity logicEntity: logicEntities) {
-            if (entity == logicEntity || logicEntity instanceof Friend) continue;
+            if (entity == logicEntity || logicEntity instanceof Wolf) continue;
 
             TransformComponent tc = Mappers.tm.get(logicEntity);
 

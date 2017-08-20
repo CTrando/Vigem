@@ -13,11 +13,12 @@ import com.ct.game.utils.Mappers;
 public class AnimationSystem extends IteratingSystem {
 
     public AnimationSystem() {
-        super(Family.all(AnimationComponent.class, RenderComponent.class).get());
+        super(Family.all(AnimationComponent.class).get());
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+        if(!Mappers.rm.has(entity)) entity.add(new RenderComponent());
         RenderComponent rc = Mappers.rm.get(entity);
         AnimationComponent ac = Mappers.am.get(entity);
 

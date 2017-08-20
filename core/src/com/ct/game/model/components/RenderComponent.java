@@ -14,6 +14,9 @@ public class RenderComponent implements Component {
     private float xOffset;
     private float yOffset;
 
+    public RenderComponent() {
+        this(null, 0, 0);
+    }
 
     public RenderComponent(TextureRegion texture){
         this(texture, -texture.getRegionWidth()/2/ GameScreen.PPM, -texture.getRegionHeight()/2/GameScreen.PPM);

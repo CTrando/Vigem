@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.ct.game.model.components.TransformComponent;
 import com.ct.game.model.entities.*;
 import com.ct.game.model.listeners.BounceListener;
 import com.ct.game.model.systems.*;
@@ -39,16 +40,9 @@ public class GameController {
         tileMap.initExpansion(viewportManager);
 
         Player player = new Player();
+        player.add(new TransformComponent(0,0,0));
         player.init();
-
-        Friend friend = new Friend();
-        friend.init();
-        Friend friend1 = new Friend();
-        friend1.init();
-
         engine.addEntity(player);
-        engine.addEntity(friend);
-        //engine.addEntity(friend1);
 
         engine.addSystem(new CameraFocusSystem(viewportManager));
         engine.addSystem(new TileMapMouseSystem(inputHandler, engine, tileMap, viewportManager.getCamera()));
@@ -62,12 +56,13 @@ public class GameController {
         engine.addSystem(new StateAnimationSystem());
         engine.addSystem(new DayNightSystem(rayHandler));
         engine.addSystem(new HealthSystem());
+        engine.addSystem(new WolfSpawnSystem());
 
         engine.addSystem(new AttackSystem(engine, world));
 
         engine.addSystem(new LightBodyAttachSystem());
-        engine.addSystem(new FriendAttackSystem(engine));
-        engine.addSystem(new FriendMovementSystem(engine));
+        engine.addSystem(new WolfAttackSystem(engine));
+        engine.addSystem(new WolfMovementSystem(engine));
 
         world.setContactListener(new BounceListener());
     }
@@ -110,6 +105,7 @@ public class GameController {
     }
 
     public void dispose() {
+        tileMap.dispose();
         world.dispose();
         rayHandler.dispose();
     }
