@@ -3,7 +3,7 @@ package com.ct.game.model.systems;
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.*;
 import com.ct.game.model.components.*;
 import com.ct.game.model.entities.Wolf;
 import com.ct.game.utils.Mappers;
@@ -28,18 +28,27 @@ public class WolfMovementSystem extends IteratingSystem {
         for(Entity logicEntity: logicEntities) {
             if (entity == logicEntity || logicEntity instanceof Wolf) continue;
 
+            if(!Mappers.mcm.has(entity)) {
+                entity.add(new MoveComponent(
+                        new Vector2().setToRandomDirection(),
+                        MathUtils.random(2)));
+            }
+            //position of the entity being tracked
             TransformComponent tc = Mappers.tm.get(logicEntity);
+            //move component of current entity
+            MoveComponent mc = Mappers.mcm.get(entity);
 
-            if (tc.getPos().dst(entityTc.getPos()) < 50) {
+            if (tc.getPos().dst(entityTc.getPos()) < 5) {
                 Vector2 direction = tc.getPos().cpy().sub(entityTc.getPos()).nor();
                 dc.setDirection(DirectionComponent.Direction.getClosestDirection(direction, 45));
 
                 Vector2 velocityDirection = tc.getPos().cpy().sub(entityTc.getPos().cpy());
                 velocityDirection.add(new Vector2().setToRandomDirection());
-                MoveComponent mc = new MoveComponent(velocityDirection, 10);
-                entity.add(mc);
+                mc.setSpeedMag(10);
+                mc.setMovementForce(velocityDirection);
             } else {
-                entity.remove(MoveComponent.class);
+                mc.setMovementForce(new Vector2().setToRandomDirection());
+                mc.setSpeedMag(1);
             }
         }
     }
