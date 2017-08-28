@@ -46,6 +46,7 @@ public class GameScreen implements Screen {
     public void show() {
         Assets.getInstance().load();
         Box2D.init();
+        ParticleManager.init();
         shaderManager.init();
         viewportManager.init();
         gameController.init(viewportManager);
@@ -70,6 +71,7 @@ public class GameScreen implements Screen {
         gameController.getWorld().step(dt, 6, 4);
         gameController.update(dt);
 
+        ParticleManager.render(batch);
         batch.end();
         gameController.getRayHandler().render();
         debugRenderer.render(gameController.getWorld(), viewportManager.getCamera().combined);

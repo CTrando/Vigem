@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.ct.game.model.components.*;
 import com.ct.game.model.listeners.AttackRayCast;
 import com.ct.game.utils.Mappers;
+import com.ct.game.view.ParticleManager;
 
 /**
  * Created by Cameron on 7/16/2017.
@@ -51,7 +52,9 @@ public class AttackSystem extends IteratingSystem {
                     if(Mappers.hm.has(collidedEntity)) {
                         handleDamage(collidedEntity, aTc.getAttackDamage());
                     }
+
                 }
+                ParticleManager.addParticle(Mappers.tm.get(entity).getPos());
             }
         }
 

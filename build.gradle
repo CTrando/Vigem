@@ -54,13 +54,5 @@ project(":core") {
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
-
-     /*   testCompile "junit:junit:4.4"
-        testCompile "org.mockito:mockito-core:2.2.7"
-        testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"*/
-        /*testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        testCompile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        testCompile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"*/
     }
 }
