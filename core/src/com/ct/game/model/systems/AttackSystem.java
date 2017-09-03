@@ -16,7 +16,7 @@ import com.ct.game.view.ParticleManager;
 public class AttackSystem extends IteratingSystem {
     private static final float EPSILON = .1f;
 
-    //the indices for specific information in the Vector2 array
+    //the indices for specific attack raycasting information in the Vector2 array
     private static final int START_POS = 0;
     private static final int END_POS = 1;
     private static final int SCALED_DIRECTION = 2;
@@ -52,9 +52,8 @@ public class AttackSystem extends IteratingSystem {
                     if(Mappers.hm.has(collidedEntity)) {
                         handleDamage(collidedEntity, aTc.getAttackDamage());
                     }
-
+                    ParticleManager.addParticle(Mappers.tm.get(collidedEntity));
                 }
-                ParticleManager.addParticle(Mappers.tm.get(entity).getPos());
             }
         }
 
